@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#333333"
+        android:clickable="true" >
+
+        <RelativeLayout
+                android:layout_width="53dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/button_selector"
+                android:layout_alignParentLeft="true"
+                android:clickable="true"
+                android:id="@+id/client_list_layout_back">
+            <ImageView
+                    android:layout_height="32dp"
+                    android:layout_width="32dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/back">
+            </ImageView>
+
+            <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:background="#4a4a4a">
+            </TextView>
+        </RelativeLayout>
+
+        <EditText
+            android:id="@+id/client_list_layout_filter_text"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:hint="search client"
+            android:textSize="17dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp">
+        </EditText>
+
+        <RelativeLayout
+                android:layout_width="53dp"
+                android:visibility="gone"
+                android:layout_height="fill_parent"
+                android:background="@drawable/button_selector"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:id="@+id/client_list_layout_help">
+            <ImageView
+                    android:layout_height="32dp"
+                    android:layout_width="32dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/help">
+            </ImageView>
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:background="#4a4a4a">
+            </TextView>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:layout_weight="1">
+
+        <ListView
+            android:paddingLeft="10dp"
+            android:paddingRight="4dp"
+            android:background="#e5e5e5"
+            android:id="@+id/client_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="@android:color/transparent"
+            android:scrollbarStyle="outsideInset"
+            android:divider="@drawable/list_seperator"
+            android:listSelector="@drawable/list_selctor"
+            android:dividerHeight="0dp">
+        </ListView>
+
+        <ViewStub
+            android:id="@+id/client_list_layout_empty_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout="@layout/empty">
+        </ViewStub>
+   	
+   	</LinearLayout>
+
+</LinearLayout>

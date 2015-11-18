@@ -20,7 +20,7 @@ import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
-import com.wasn.services.backgroundservices.SummaryPrintService;
+import com.wasn.services.printservices.SummaryPrintService;
 import com.wasn.utils.PrintUtils;
 
 import java.util.ArrayList;

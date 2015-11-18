@@ -24,7 +24,7 @@ import com.wasn.exceptions.EmptyPrinterAddressException;
 import com.wasn.exceptions.EmptyTelephoneNoException;
 import com.wasn.exceptions.UnTestedPrinterAddressException;
 import com.wasn.pojos.Settings;
-import com.wasn.services.backgroundservices.TestPrintService;
+import com.wasn.services.printservices.TestPrintService;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.SettingsUtils;
 

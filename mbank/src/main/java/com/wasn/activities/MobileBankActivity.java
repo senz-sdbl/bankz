@@ -24,6 +24,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
 
     // activity components
     RelativeLayout transactionLayout;
+    RelativeLayout balanceQueryLayout;
     RelativeLayout summaryLayout;
     RelativeLayout settingsLayout;
     //Button summaryButton;
@@ -55,7 +56,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     public void init() {
         application = (MobileBankApplication) MobileBankActivity.this.getApplication();
 
-        transactionLayout = (RelativeLayout) findViewById(R.id.transaction_layout);
+        balanceQueryLayout = (RelativeLayout) findViewById(R.id.transaction_layout);
         summaryLayout = (RelativeLayout) findViewById(R.id.summary_layout);
         settingsLayout = (RelativeLayout) findViewById(R.id.settings_layout);
         logout = (RelativeLayout) findViewById(R.id.mobile_bank_layout_logout);
@@ -83,7 +84,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
         mbankIcon = (TextView) findViewById(R.id.mbank_icon);
         mbankIcon.setTypeface(typeface, Typeface.BOLD);
 
-        transactionLayout.setOnClickListener(MobileBankActivity.this);
+        balanceQueryLayout.setOnClickListener(MobileBankActivity.this);
         summaryLayout.setOnClickListener(MobileBankActivity.this);
         settingsLayout.setOnClickListener(MobileBankActivity.this);
         logout.setOnClickListener(MobileBankActivity.this);
@@ -95,9 +96,9 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
      * @param view
      */
     public void onClick(View view) {
-        if(view == transactionLayout) {
+        if(view == balanceQueryLayout) {
             // display transaction activity
-            startActivity(new Intent(MobileBankActivity.this, TransactionActivity.class));
+            startActivity(new Intent(MobileBankActivity.this, BalanceQueryActivity.class));
             MobileBankActivity.this.finish();
         } else if(view == summaryLayout) {
             // get transactions from database

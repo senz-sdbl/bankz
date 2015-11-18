@@ -104,12 +104,30 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.BalanceQueryActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+
+        <activity
+            android:name=".activities.BalanceResultActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <service
             android:name="com.wasn.services.RemoteSenzService"

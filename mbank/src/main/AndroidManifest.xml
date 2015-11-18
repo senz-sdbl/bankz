@@ -101,6 +101,24 @@
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <activity
+            android:name=".BalanceQueryActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+
+        <activity
+            android:name=".BalanceResultActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+
+        <activity
             android:name=".SplashActivity"
             android:configChanges="orientation"
             android:launchMode="singleTask"

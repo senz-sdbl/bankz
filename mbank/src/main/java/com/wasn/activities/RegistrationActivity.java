@@ -28,6 +28,7 @@ import com.score.senz.ISenzService;
 import com.score.senzc.enums.SenzTypeEnum;
 import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
+import com.wasn.R;
 import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.services.RemoteSenzService;
 import com.wasn.utils.ActivityUtils;
@@ -171,9 +172,11 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                 Intent serviceIntent = new Intent(RegistrationActivity.this, RemoteSenzService.class);
                 startService(serviceIntent);
 
+                Log.d(TAG, "service started from reg");
+
                 // bind to service from here as well
                 Intent intent = new Intent();
-                intent.setClassName("com.score.senz", "com.score.senz.services.RemoteSenzService");
+                intent.setClassName("com.wasn", "com.wasn.services.RemoteSenzService");
                 bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
             } else {
                 // start to send senz to server form here

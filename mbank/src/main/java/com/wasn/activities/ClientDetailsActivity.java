@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Client;

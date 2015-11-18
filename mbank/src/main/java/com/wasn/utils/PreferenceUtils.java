@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.score.senzc.pojos.User;
-import com.wasn.activities.R;
+import com.wasn.R;
 import com.wasn.exceptions.NoUserException;
 
 /**

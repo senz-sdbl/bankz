@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.TextView;
 
+import com.wasn.R;
 import com.wasn.exceptions.NoUserException;
 import com.wasn.services.RemoteSenzService;
 import com.wasn.utils.PreferenceUtils;
@@ -49,7 +50,6 @@ public class SplashActivity extends Activity {
         // start service from here
         Intent serviceIntent = new Intent(SplashActivity.this, RemoteSenzService.class);
         startService(serviceIntent);
-
     }
 
     /**

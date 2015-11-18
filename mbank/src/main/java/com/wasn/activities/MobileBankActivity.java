@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.*;
+
+import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 
 /**

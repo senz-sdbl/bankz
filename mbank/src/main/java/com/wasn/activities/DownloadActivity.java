@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.services.backgroundservices.ClientDataDownloadService;
 import com.wasn.utils.NetworkUtil;

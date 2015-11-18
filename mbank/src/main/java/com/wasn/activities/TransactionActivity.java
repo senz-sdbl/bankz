@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.EmptyFieldsException;
 import com.wasn.exceptions.InvalidAccountException;

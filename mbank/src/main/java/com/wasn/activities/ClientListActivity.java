@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+
+import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.pojos.Client;
 

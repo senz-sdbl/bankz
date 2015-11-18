@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.wasn.R;
 import com.wasn.pojos.Client;
 
 import java.util.ArrayList;

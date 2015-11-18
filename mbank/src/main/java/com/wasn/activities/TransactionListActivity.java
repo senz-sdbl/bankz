@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.Window;
 import android.widget.*;
+
+import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.pojos.Transaction;
 import com.wasn.services.backgroundservices.ClientDataDownloadService;

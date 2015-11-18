@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.wasn.R;
 import com.wasn.pojos.Transaction;
 
 import java.util.ArrayList;

@@ -1,6 +1,7 @@
 package com.wasn.services.backgroundservices;
 
 import android.os.AsyncTask;
+
 import com.wasn.activities.TransactionDetailsActivity;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
@@ -23,8 +24,11 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
     TransactionDetailsActivity activity;
     MobileBankApplication application;
 
+    Transaction transaction;
+
     /**
      * Initialize class members
+     *
      * @param activity
      */
     public TransactionPrintService(TransactionDetailsActivity activity) {
@@ -42,9 +46,9 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
         String printState = "0";
 
         // send data to printer according to print state
-        if(printType.equals("PRINT")) {
+        if (printType.equals("PRINT")) {
             printState = print();
-        } else if(printType.equals("RE_PRINT")) {
+        } else if (printType.equals("RE_PRINT")) {
             printState = rePrint();
         }
 
@@ -53,10 +57,12 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
 
     /**
      * print receipt
+     *
      * @return
      */
     public String print() {
-        Transaction transaction = application.getTransaction();
+        // TODO get transaction
+        Transaction transaction = null;
 
         // printing attributes
         String printerAddress = application.getMobileBankData().getPrinterAddress();
@@ -66,7 +72,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
 
         // send data to printer
         try {
-            PrintUtils.printReceipt(application.getTransaction(), settings);
+            PrintUtils.printReceipt(transaction, settings);
 
             // after printing save transaction and receipt no
             // update client balance
@@ -101,6 +107,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
 
     /**
      * re print receipt
+     *
      * @return
      */
     public String rePrint() {
@@ -112,7 +119,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
 
         // send data to printer
         try {
-            PrintUtils.rePrintReceipt(application.getTransaction(), settings);
+            PrintUtils.rePrintReceipt(transaction, settings);
 
             return "1";
         } catch (IOException e) {

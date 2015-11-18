@@ -10,14 +10,12 @@ public class Summary {
     private String transactionCount;
     private String totalTransactionAmount;
     private String time;
-    private String lastReceiptId;
 
-    public Summary(String branchId, String transactionCount, String totalTransactionAmount, String time, String lastReceiptId) {
+    public Summary(String branchId, String transactionCount, String totalTransactionAmount, String time) {
         this.branchId = branchId;
         this.transactionCount = transactionCount;
         this.totalTransactionAmount = totalTransactionAmount;
         this.time = time;
-        this.lastReceiptId = lastReceiptId;
     }
 
     public String getBranchId() {
@@ -50,13 +48,5 @@ public class Summary {
 
     public void setTotalTransactionAmount(String totalTransactionAmount) {
         this.totalTransactionAmount = totalTransactionAmount;
-    }
-
-    public String getLastReceiptId() {
-        return lastReceiptId;
-    }
-
-    public void setLastReceiptId(String lastReceiptId) {
-        this.lastReceiptId = lastReceiptId;
     }
 }

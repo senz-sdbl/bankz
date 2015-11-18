@@ -3,8 +3,6 @@ package com.wasn.utils;
 import com.wasn.exceptions.EmptyFieldsException;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidBalanceAmountException;
-import com.wasn.pojos.Attribute;
-import com.wasn.pojos.Client;
 import com.wasn.pojos.Summary;
 import com.wasn.pojos.Transaction;
 
@@ -43,29 +41,23 @@ public class TransactionUtils {
     /**
      * Crete new transaction
      *
-     * @param branchId user's branch id
+     * @param branchId      user's branch id
      * @param transactionId current receipt no equals to transaction id
-     * @param amount  transaction amount
-     * @param client  transaction client
+     * @param amount        transaction amount
      * @return transaction
      * @throws InvalidAccountException
      */
-    public static Transaction createTransaction(String branchId, int transactionId, String amount, Client client) throws InvalidAccountException, InvalidBalanceAmountException {
-        Transaction transaction = new Transaction(transactionId,
-                                                  branchId,
-                                                  client.getName(),
-                                                  client.getNic(),
-                                                  client.getAccountNo(),
-                                                  client.getBalanceAmount(),
-                                                  amount,
-                                                  getBalanceAmount(client.getBalanceAmount(), amount),
-                                                  getCurrentTime(),
-                                                  getReceiptId(branchId, transactionId),
-                                                  client.getId(),
-                                                  "DEPOSIT",
-                                                  "check-no",
-                                                  "description",
-                                                  "0");
+    public static Transaction createTransaction(String branchId, int transactionId, String amount) throws InvalidAccountException, InvalidBalanceAmountException {
+        Transaction transaction = new Transaction(
+                3,
+                "Name",
+                "NIC",
+                "Acc no",
+                "Balance",
+                amount,
+                "3400.00",
+                getCurrentTime(),
+                "DEPOSIT");
 
         return transaction;
     }
@@ -93,6 +85,7 @@ public class TransactionUtils {
     /**
      * Get current date and time as transaction time
      * format - yyyy/MM/dd HH:mm:ss
+     *
      * @return
      */
     private static String getCurrentTime() {
@@ -108,6 +101,7 @@ public class TransactionUtils {
 
     /**
      * Generate receipt id according to receipt no and branch id
+     *
      * @param branchId  users branch id
      * @param receiptNo receipt no
      * @return receiptId
@@ -115,39 +109,21 @@ public class TransactionUtils {
     public static String getReceiptId(String branchId, int receiptNo) {
         String receiptId;
 
-        if(branchId.length()==1){
-            receiptId="0"+branchId + receiptNo;
+        if (branchId.length() == 1) {
+            receiptId = "0" + branchId + receiptNo;
         } else {
-            receiptId=branchId+receiptNo;
+            receiptId = branchId + receiptNo;
         }
 
         return receiptId;
     }
 
     /**
-     * Filter un synced transactions
-     * @param transactionList all transactions
-     * @return unSyncedTransactionList
-     */
-    public static ArrayList<Transaction> getUnSyncedTransactionList(ArrayList<Transaction> transactionList) {
-        ArrayList<Transaction> unSyncedTransactionList = new ArrayList<Transaction>();
-
-        // filter un synced transactions
-        for (int i=0; i<transactionList.size(); i++) {
-            if(transactionList.get(i).getSyncedState().equals("0")) {
-                unSyncedTransactionList.add(transactionList.get(i));
-            }
-        }
-
-        return unSyncedTransactionList;
-    }
-
-    /**
      * Get summary as a list of attributes
+     *
      * @param transactionList
      */
     public static Summary getSummary(ArrayList<Transaction> transactionList) {
-        String branchId = transactionList.get(0).getBranchId();
         int transactionCount = transactionList.size();
 
         // get formatted total transaction amount
@@ -161,21 +137,21 @@ public class TransactionUtils {
         }
 
         String currentTime = getCurrentTime();
-        String lastReceiptId = transactionList.get(transactionCount-1).getReceiptId();
 
         // new summary
-        return new Summary(branchId, Integer.toString(transactionCount), totalTransactionAmount, currentTime, lastReceiptId);
+        return new Summary("Branch", Integer.toString(transactionCount), totalTransactionAmount, currentTime);
     }
 
     /**
      * Get to total transaction amount
+     *
      * @param transactionList
      * @return deposit count
      */
     public static double getTotalTransactionAmount(ArrayList<Transaction> transactionList) throws NumberFormatException {
         double total = 0;
 
-        for(int i=0; i<transactionList.size(); i++) {
+        for (int i = 0; i < transactionList.size(); i++) {
             total = total + Double.parseDouble(transactionList.get(i).getTransactionAmount());
         }
 

@@ -8,7 +8,6 @@ package com.wasn.pojos;
 public class Transaction {
 
     int id;
-    String branchId;
     String clinetName;
     String clinetNic;
     String clientAccountNo;
@@ -16,15 +15,9 @@ public class Transaction {
     String transactionAmount;
     String currentBalance;
     String transactionTime;
-    String receiptId;
-    String clientId;
     String transactionType;
-    String checkNo;
-    String description;
-    String syncedState;
 
     public Transaction(int id,
-                       String branchId,
                        String clinetName,
                        String clinetNic,
                        String clientAccountNo,
@@ -32,14 +25,8 @@ public class Transaction {
                        String transactionAmount,
                        String currentBalance,
                        String transactionTime,
-                       String receiptId,
-                       String clientId,
-                       String transactionType,
-                       String checkNo,
-                       String description,
-                       String syncedState) {
+                       String transactionType) {
         this.id = id;
-        this.branchId = branchId;
         this.clinetName = clinetName;
         this.clinetNic = clinetNic;
         this.clientAccountNo = clientAccountNo;
@@ -47,12 +34,7 @@ public class Transaction {
         this.transactionAmount = transactionAmount;
         this.currentBalance = currentBalance;
         this.transactionTime = transactionTime;
-        this.receiptId = receiptId;
-        this.clientId = clientId;
         this.transactionType = transactionType;
-        this.checkNo = checkNo;
-        this.description = description;
-        this.syncedState = syncedState;
     }
 
     public int getId() {
@@ -61,14 +43,6 @@ public class Transaction {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(String branchId) {
-        this.branchId = branchId;
     }
 
     public String getClinetName() {
@@ -127,22 +101,6 @@ public class Transaction {
         this.transactionTime = transactionTime;
     }
 
-    public String getReceiptId() {
-        return receiptId;
-    }
-
-    public void setReceiptId(String receiptId) {
-        this.receiptId = receiptId;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
     public String getTransactionType() {
         return transactionType;
     }
@@ -151,27 +109,4 @@ public class Transaction {
         this.transactionType = transactionType;
     }
 
-    public String getCheckNo() {
-        return checkNo;
-    }
-
-    public void setCheckNo(String checkNo) {
-        this.checkNo = checkNo;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getSyncedState() {
-        return syncedState;
-    }
-
-    public void setSyncedState(String syncedState) {
-        this.syncedState = syncedState;
-    }
 }

@@ -39,7 +39,6 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         if (view == back) {
             startActivity(new Intent(BalanceQueryActivity.this, MobileBankActivity.class));
             BalanceQueryActivity.this.finish();
-            application.resetFields();
         } else if (view == done) {
             startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
             BalanceQueryActivity.this.finish();
@@ -51,6 +50,5 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         // back to main activity
         startActivity(new Intent(BalanceQueryActivity.this, MobileBankActivity.class));
         BalanceQueryActivity.this.finish();
-        application.resetFields();
     }
 }

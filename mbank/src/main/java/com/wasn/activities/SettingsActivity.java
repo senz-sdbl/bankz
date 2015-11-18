@@ -9,14 +9,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
-import com.wasn.exceptions.*;
+import com.wasn.exceptions.BluetoothNotAvailableException;
+import com.wasn.exceptions.BluetoothNotEnableException;
+import com.wasn.exceptions.EmptyBranchNameException;
+import com.wasn.exceptions.EmptyPrinterAddressException;
+import com.wasn.exceptions.EmptyTelephoneNoException;
+import com.wasn.exceptions.UnTestedPrinterAddressException;
 import com.wasn.pojos.Settings;
 import com.wasn.services.backgroundservices.TestPrintService;
-import com.wasn.utils.LoginUtils;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.SettingsUtils;
 
@@ -71,7 +79,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         // set custom font to header text
         headerText = (TextView) findViewById(R.id.settings_layout_header_text);
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face);
         headerText.setTypeface(null, Typeface.BOLD);
 
@@ -114,7 +122,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
             // save settings attributes in database
             // need admin privileges
-            displayAdminLoginDialog(settings);
+            //displayAdminLoginDialog(settings);
         } catch (UnTestedPrinterAddressException e) {
             // untested printer address
             // need to print test print and validate the printer address
@@ -143,7 +151,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
             // its already tested address
             // but need to print test print
-            if(PrintUtils.isEnableBluetooth()) {
+            if (PrintUtils.isEnableBluetooth()) {
                 // start background thread to print test print
                 progressDialog = ProgressDialog.show(SettingsActivity.this, "", "Printing test print, Please wait ...");
                 new TestPrintService(SettingsActivity.this).execute(printerAddress);
@@ -158,7 +166,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             // need to print here
             // since its untested address
             try {
-                if(PrintUtils.isEnableBluetooth()) {
+                if (PrintUtils.isEnableBluetooth()) {
                     // start background thread to print test print
                     progressDialog = ProgressDialog.show(SettingsActivity.this, "", "Printing test print, Please wait ...");
                     new TestPrintService(SettingsActivity.this).execute(printerAddress);
@@ -179,6 +187,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
     /**
      * Save printer address in database
+     *
      * @param printerAddress printer address
      */
     public void savePrinterAddress(String printerAddress) {
@@ -187,10 +196,11 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
     /**
      * Save telephone no in database
+     *
      * @param telephoneNo telephone no
      */
     public void saveTelephoneNo(String telephoneNo) {
-        if(!telephoneNo.equals(application.getMobileBankData().getTelephoneNo())) {
+        if (!telephoneNo.equals(application.getMobileBankData().getTelephoneNo())) {
             // save only different value
             application.getMobileBankData().setTelephoneNo(telephoneNo);
         }
@@ -198,10 +208,11 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
     /**
      * Save branch name in database
+     *
      * @param branchName branch name
      */
     public void saveBranchName(String branchName) {
-        if(!branchName.equals(application.getMobileBankData().getBranchName())) {
+        if (!branchName.equals(application.getMobileBankData().getBranchName())) {
             // save only different value
             application.getMobileBankData().setBranchName(branchName);
         }
@@ -211,7 +222,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
      * Display message dialog
      *
      * @param messageHeader message header
-     * @param message message to be display
+     * @param message       message to be display
      */
     public void displayMessageDialog(String messageHeader, String message) {
         final Dialog dialog = new Dialog(SettingsActivity.this);
@@ -229,7 +240,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         messageHeaderTextView.setTypeface(face);
         messageHeaderTextView.setTypeface(null, Typeface.BOLD);
         messageTextView.setTypeface(face);
@@ -247,75 +258,77 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         dialog.show();
     }
 
-    /**
-     * Display admin login dialog
-     * @param settings settings attributes
-     */
-    public void displayAdminLoginDialog(final Settings settings) {
-        final Dialog dialog = new Dialog(SettingsActivity.this);
-
-        //set layout for dialog
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.admin_login_dialog_layout);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog.setCancelable(true);
-
-        // set custom font
-        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.admin_login_layout_message_header_text);
-        TextView messageTextView = (TextView) dialog.findViewById(R.id.admin_login_layout_message_text);
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
-
-        //set ok button
-        Button okButton = (Button) dialog.findViewById(R.id.admin_login_layout_ok_button);
-        okButton.setTypeface(face);
-        okButton.setTypeface(null, Typeface.BOLD);
-        okButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    // validate password
-                    EditText passwordEditText = (EditText) dialog.findViewById(R.id.admin_login_layout_password);
-                    String password = passwordEditText.getText().toString().trim();
-                    LoginUtils.validateAdminPassword(password);
-
-                    // save fields in database
-                    savePrinterAddress(settings.getPrinterAddress());
-                    saveTelephoneNo(settings.getBranchTelephoeNo());
-                    saveBranchName(settings.getBranchName());
-                    displayToast("Settings saved successfully");
-
-                    // back to main activity
-                    startActivity(new Intent(SettingsActivity.this, MobileBankActivity.class));
-                    SettingsActivity.this.finish();
-
-                    dialog.cancel();
-                } catch (UnAuthenticatedUserException e) {
-                    e.printStackTrace();
-                    displayToast("Invalid password");
-                } catch (EmptyFieldsException e) {
-                    e.printStackTrace();
-                    displayToast("Password empty");
-                }
-            }
-        });
-
-        // cancel button
-        Button cancelButton = (Button) dialog.findViewById(R.id.admin_login_layout_cancel_button);
-        cancelButton.setTypeface(face);
-        cancelButton.setTypeface(null, Typeface.BOLD);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
-    }
+//    /**
+//     * Display admin login dialog
+//     *
+//     * @param settings settings attributes
+//     */
+//    public void displayAdminLoginDialog(final Settings settings) {
+//        final Dialog dialog = new Dialog(SettingsActivity.this);
+//
+//        //set layout for dialog
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.admin_login_dialog_layout);
+//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        dialog.setCancelable(true);
+//
+//        // set custom font
+//        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.admin_login_layout_message_header_text);
+//        TextView messageTextView = (TextView) dialog.findViewById(R.id.admin_login_layout_message_text);
+//        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+//        messageHeaderTextView.setTypeface(face);
+//        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
+//        messageTextView.setTypeface(face);
+//
+//        //set ok button
+//        Button okButton = (Button) dialog.findViewById(R.id.admin_login_layout_ok_button);
+//        okButton.setTypeface(face);
+//        okButton.setTypeface(null, Typeface.BOLD);
+//        okButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                try {
+//                    // validate password
+//                    EditText passwordEditText = (EditText) dialog.findViewById(R.id.admin_login_layout_password);
+//                    String password = passwordEditText.getText().toString().trim();
+//                    LoginUtils.validateAdminPassword(password);
+//
+//                    // save fields in database
+//                    savePrinterAddress(settings.getPrinterAddress());
+//                    saveTelephoneNo(settings.getBranchTelephoeNo());
+//                    saveBranchName(settings.getBranchName());
+//                    displayToast("Settings saved successfully");
+//
+//                    // back to main activity
+//                    startActivity(new Intent(SettingsActivity.this, MobileBankActivity.class));
+//                    SettingsActivity.this.finish();
+//
+//                    dialog.cancel();
+//                } catch (UnAuthenticatedUserException e) {
+//                    e.printStackTrace();
+//                    displayToast("Invalid password");
+//                } catch (EmptyFieldsException e) {
+//                    e.printStackTrace();
+//                    displayToast("Password empty");
+//                }
+//            }
+//        });
+//
+//        // cancel button
+//        Button cancelButton = (Button) dialog.findViewById(R.id.admin_login_layout_cancel_button);
+//        cancelButton.setTypeface(face);
+//        cancelButton.setTypeface(null, Typeface.BOLD);
+//        cancelButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                dialog.cancel();
+//            }
+//        });
+//
+//        dialog.show();
+//    }
 
     /**
      * Display toast message
+     *
      * @param message message tobe display
      */
     public void displayToast(String message) {
@@ -326,29 +339,30 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
      * Close progress dialog
      */
     public void closeProgressDialog() {
-        if(progressDialog!=null) {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
 
     /**
      * Call after printing test print
+     *
      * @param status print status
      */
     public void onPostPrint(String status) {
         closeProgressDialog();
 
-        if(status.equals("1")) {
+        if (status.equals("1")) {
             // valid print address
             displayMessageDialog("Receipt printed", "Valid printer address, Now you can save settings");
             isTestedPrintAddress = true;
-        } else if(status.equals("-2")) {
+        } else if (status.equals("-2")) {
             // bluetooth not enable
             displayToast("Bluetooth not enabled");
-        } else if(status.equals("-3")) {
+        } else if (status.equals("-3")) {
             // bluetooth not available
             displayToast("Bluetooth not available");
-        } else if(status.equals("-5")) {
+        } else if (status.equals("-5")) {
             // invalid bluetooth address
             displayMessageDialog("Error", "Invalid printer address, Please make sure printer address is correct");
         } else {
@@ -362,13 +376,13 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
      * {@inheritDoc}
      */
     public void onClick(View view) {
-        if(view == back) {
+        if (view == back) {
             // back to main activity
             startActivity(new Intent(SettingsActivity.this, MobileBankActivity.class));
             SettingsActivity.this.finish();
-        }else if(view == save) {
+        } else if (view == save) {
             save();
-        } else if(view == testPrint) {
+        } else if (view == testPrint) {
             print();
         }
     }

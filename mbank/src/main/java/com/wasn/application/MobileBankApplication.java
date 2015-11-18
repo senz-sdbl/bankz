@@ -1,11 +1,8 @@
 package com.wasn.application;
 
 import android.app.Application;
-import com.wasn.models.MobileBankData;
-import com.wasn.pojos.Client;
-import com.wasn.pojos.Transaction;
 
-import java.util.ArrayList;
+import com.wasn.models.MobileBankData;
 
 /**
  * Application object class of mobile-bank
@@ -15,17 +12,8 @@ import java.util.ArrayList;
  */
 public class MobileBankApplication extends Application {
 
-    // currently processing or selected transaction
-    Transaction transaction;
-
-    // currently selected client
-    Client client;
-
     // database class instance
     MobileBankData mobileBankData;
-
-    // hold transaction details
-    ArrayList<Transaction> transactionList;
 
     /**
      * {@inheritDoc}
@@ -33,7 +21,6 @@ public class MobileBankApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        resetFields();
 
         mobileBankData = new MobileBankData(MobileBankApplication.this);
     }
@@ -44,46 +31,13 @@ public class MobileBankApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        resetFields();
 
         // close database connections
         mobileBankData.close();
-    }
-
-    /**
-     * Reset shared object values
-     */
-    public void resetFields() {
-        transaction = null;
-        client = null;
-        transactionList = new ArrayList<Transaction>();
     }
 
     public MobileBankData getMobileBankData() {
         return mobileBankData;
     }
 
-    public Transaction getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public ArrayList<Transaction> getTransactionList() {
-        return transactionList;
-    }
-
-    public void setTransactionList(ArrayList<Transaction> transactionList) {
-        this.transactionList = transactionList;
-    }
 }

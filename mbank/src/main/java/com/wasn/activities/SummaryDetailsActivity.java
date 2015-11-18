@@ -3,25 +3,25 @@ package com.wasn.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
-import com.wasn.pojos.Summary;
 import com.wasn.services.backgroundservices.SummaryPrintService;
 import com.wasn.utils.PrintUtils;
-import com.wasn.utils.TransactionUtils;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ import java.util.ArrayList;
  *
  * @author erangaeb@gmail.com (eranga bandara)
  */
-public class SummaryDetailsActivity extends Activity implements View.OnClickListener{
+public class SummaryDetailsActivity extends Activity implements View.OnClickListener {
 
     MobileBankApplication application;
 
@@ -73,7 +73,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
         // set custom font for header text
         headerText = (TextView) findViewById(R.id.summary_details_list_layout_header_text);
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face);
         headerText.setTypeface(null, Typeface.BOLD);
 
@@ -82,21 +82,30 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         print.setOnClickListener(SummaryDetailsActivity.this);
 
         // populate list
-        Summary summary = TransactionUtils.getSummary(application.getTransactionList());
-        attributesList = new ArrayList<Attribute>();
-        attributesList.add(new Attribute("Time", summary.getTime()));
-        attributesList.add(new Attribute("Branch ID", summary.getBranchId()));
-        attributesList.add(new Attribute("Transaction Count", summary.getTransactionCount()));
-        attributesList.add(new Attribute("Total Amount", summary.getTotalTransactionAmount()));
-        attributesList.add(new Attribute("Last Receipt ID", summary.getLastReceiptId()));
-        summaryDetailsListView = (ListView) findViewById(R.id.summary_details_list);
+//        Summary summary = TransactionUtils.getSummary();
+//        attributesList = new ArrayList<Attribute>();
+//        attributesList.add(new Attribute("Time", summary.getTime()));
+//        attributesList.add(new Attribute("Branch ID", summary.getBranchId()));
+//        attributesList.add(new Attribute("Transaction Count", summary.getTransactionCount()));
+//        attributesList.add(new Attribute("Total Amount", summary.getTotalTransactionAmount()));
+//        attributesList.add(new Attribute("Last Receipt ID", summary.getLastReceiptId()));
+//        summaryDetailsListView = (ListView) findViewById(R.id.summary_details_list);
+//
+//        // need to disable print if un synced transaction available
+//        if (TransactionUtils.getUnSyncedTransactionList(application.getTransactionList()).size() > 0) {
+//            disableBottomPannel();
+//        } else {
+//            enableBottomPannel();
+//        }
 
-        // need to disable print if un synced transaction available
-        if(TransactionUtils.getUnSyncedTransactionList(application.getTransactionList()).size()>0) {
-            disableBottomPannel();
-        } else {
-            enableBottomPannel();
-        }
+
+        attributesList = new ArrayList<Attribute>();
+        attributesList.add(new Attribute("Time", "TIME"));
+        attributesList.add(new Attribute("Branch ID", "ID"));
+        attributesList.add(new Attribute("Transaction Count", "COUNT"));
+        attributesList.add(new Attribute("Total Amount", "AMOUNT"));
+
+        summaryDetailsListView = (ListView) findViewById(R.id.summary_details_list);
 
         // add header and footer
         View headerView = View.inflate(this, R.layout.header, null);
@@ -125,6 +134,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
     /**
      * Display message dialog when user going to logout
+     *
      * @param message
      */
     public void displayInformationMessageDialog(String message) {
@@ -142,7 +152,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         messageHeaderTextView.setTypeface(face);
         messageHeaderTextView.setTypeface(null, Typeface.BOLD);
         messageTextView.setTypeface(face);
@@ -157,14 +167,14 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
                 // print summary
                 try {
-                    if(PrintUtils.isEnableBluetooth()) {
+                    if (PrintUtils.isEnableBluetooth()) {
                         progressDialog = ProgressDialog.show(SummaryDetailsActivity.this, "", "Printing summary, Please wait ...");
                         new SummaryPrintService(SummaryDetailsActivity.this).execute("SUMMARY");
                     }
                 } catch (BluetoothNotEnableException e) {
-                    Toast.makeText(SummaryDetailsActivity.this,"Bluetooth not enabled",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SummaryDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
                 } catch (BluetoothNotAvailableException e) {
-                    Toast.makeText(SummaryDetailsActivity.this,"Bluetooth not available",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SummaryDetailsActivity.this, "Bluetooth not available", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -186,7 +196,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
      * Display message dialog
      *
      * @param messageHeader message header
-     * @param message message to be display
+     * @param message       message to be display
      */
     public void displayMessageDialog(String messageHeader, String message) {
         final Dialog dialog = new Dialog(SummaryDetailsActivity.this);
@@ -204,7 +214,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         messageHeaderTextView.setTypeface(face);
         messageHeaderTextView.setTypeface(null, Typeface.BOLD);
         messageTextView.setTypeface(face);
@@ -226,31 +236,32 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
      * Close progress dialog
      */
     public void closeProgressDialog() {
-        if(progressDialog!=null) {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
 
     /**
      * Execute after printing task
+     *
      * @param status print status
      */
     public void onPostPrint(String status) {
         // close progress dialog
         closeProgressDialog();
 
-        if(status.equals("1")) {
-            Toast.makeText(SummaryDetailsActivity.this,"Summary printed",Toast.LENGTH_LONG).show();
+        if (status.equals("1")) {
+            Toast.makeText(SummaryDetailsActivity.this, "Summary printed", Toast.LENGTH_LONG).show();
 
             // back to transaction list
             SummaryDetailsActivity.this.finish();
-        } else if(status.equals("0")) {
-            Toast.makeText(SummaryDetailsActivity.this,"Cannot print receipt",Toast.LENGTH_LONG).show();
-        } else if(status.equals("-2")) {
-            Toast.makeText(SummaryDetailsActivity.this,"Bluetooth not enabled",Toast.LENGTH_LONG).show();
-        } else if(status.equals("-3")) {
-            Toast.makeText(SummaryDetailsActivity.this,"Bluetooth not available",Toast.LENGTH_LONG).show();
-        } else if(status.equals("-5")) {
+        } else if (status.equals("0")) {
+            Toast.makeText(SummaryDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
+        } else if (status.equals("-2")) {
+            Toast.makeText(SummaryDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
+        } else if (status.equals("-3")) {
+            Toast.makeText(SummaryDetailsActivity.this, "Bluetooth not available", Toast.LENGTH_LONG).show();
+        } else if (status.equals("-5")) {
             // invalid bluetooth address
             displayMessageDialog("Error", "Invalid printer address, Please make sure correct printer address in Settings");
         } else {
@@ -264,11 +275,11 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
      * {@inheritDoc}
      */
     public void onClick(View view) {
-        if(view == back) {
+        if (view == back) {
             SummaryDetailsActivity.this.finish();
-        } else if(view == help) {
+        } else if (view == help) {
 
-        } else if(view == print) {
+        } else if (view == print) {
             displayInformationMessageDialog("Do you want to print the summary? After printing summary all the transaction will be deleted. make sure bluetooth is ON");
         }
     }

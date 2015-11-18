@@ -19,7 +19,6 @@ import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.EmptyFieldsException;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidBalanceAmountException;
-import com.wasn.pojos.Client;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.TransactionUtils;
 
@@ -60,8 +59,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     public void init() {
         application = (MobileBankApplication) TransactionActivity.this.getApplication();
 
-        accountEditText = (EditText)findViewById(R.id.transaction_layout_account_text);
-        amountEditText = (EditText)findViewById(R.id.transaction_layout_amount_text);
+        accountEditText = (EditText) findViewById(R.id.transaction_layout_account_text);
+        amountEditText = (EditText) findViewById(R.id.transaction_layout_amount_text);
         noteEditText = (EditText) findViewById(R.id.transaction_layout_note_text);
 
         back = (RelativeLayout) findViewById(R.id.transaction_layout_back);
@@ -72,7 +71,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         // set done keyboard option with note text
         noteEditText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(keyEvent.getAction() == keyEvent.ACTION_DOWN && i==keyEvent.KEYCODE_ENTER) {
+                if (keyEvent.getAction() == keyEvent.ACTION_DOWN && i == keyEvent.KEYCODE_ENTER) {
                     // transaction done event
                     initTransaction();
                 }
@@ -83,7 +82,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         // set custom font to header text
         headerText = (TextView) findViewById(R.id.transaction_layout_header_text);
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face);
         headerText.setTypeface(null, Typeface.BOLD);
 
@@ -92,21 +91,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         done.setOnClickListener(TransactionActivity.this);
         //done.setOnClickListener(TransactionActivity.this);
 
-        if(application.getTransaction() !=null) {
-            // have transaction
-            // set values for form fields
-            Transaction transaction = application.getTransaction();
-
-            accountEditText.setText(transaction.getClientAccountNo());
-            amountEditText.setText(transaction.getTransactionAmount());
-        } else {
-            if(application.getClient() != null) {
-                // no transaction, but have client
-                Client client = application.getClient();
-
-                accountEditText.setText(client.getAccountNo());
-            }
-        }
+        // set account no according to balance inquery
     }
 
     /**
@@ -120,10 +105,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             // validate form fields and get corresponding client to the account
             TransactionUtils.validateFields(accountNo, amount);
 
-            // get matching client and share in application
-            Client client = application.getMobileBankData().getClient(accountNo);
-            application.setClient(client);
-
             // get receipt no
             // database stored previous receipt no
             // receipt no equals to transaction id
@@ -134,9 +115,9 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             String branchId = application.getMobileBankData().getBranchId();
 
             // create transaction and share in application
-            Transaction transaction = TransactionUtils.createTransaction(branchId, transactionId, amount, client);
-            application.setTransaction(transaction);
+            Transaction transaction = TransactionUtils.createTransaction(branchId, transactionId, amount);
 
+            // TODO pass transaction via intent
             startActivity(new Intent(TransactionActivity.this, TransactionDetailsActivity.class));
             TransactionActivity.this.finish();
         } catch (NumberFormatException e) {
@@ -155,7 +136,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
      * Display message dialog
      *
      * @param messageHeader message header
-     * @param message message to be display
+     * @param message       message to be display
      */
     public void displayMessageDialog(String messageHeader, String message) {
         final Dialog dialog = new Dialog(TransactionActivity.this);
@@ -173,7 +154,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         messageHeaderTextView.setTypeface(face);
         messageHeaderTextView.setTypeface(null, Typeface.BOLD);
         messageTextView.setTypeface(face);
@@ -193,19 +174,15 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
     /**
      * Call when click on view
+     *
      * @param view
      */
     public void onClick(View view) {
-        if(view == back) {
+        if (view == back) {
             // back to main activity
             startActivity(new Intent(TransactionActivity.this, MobileBankActivity.class));
             TransactionActivity.this.finish();
-            application.resetFields();
-        }else if(view == search) {
-            // display search list
-            startActivity(new Intent(TransactionActivity.this, ClientListActivity.class));
-            TransactionActivity.this.finish();
-        } else if(view == done) {
+        } else if (view == done) {
             initTransaction();
         }
     }
@@ -218,6 +195,5 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         // back to main activity
         startActivity(new Intent(TransactionActivity.this, MobileBankActivity.class));
         TransactionActivity.this.finish();
-        application.resetFields();
     }
 }

@@ -1,8 +1,8 @@
 package com.wasn.services.backgroundservices;
 
 import android.os.AsyncTask;
+
 import com.wasn.activities.SummaryDetailsActivity;
-import com.wasn.activities.TransactionDetailsActivity;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
@@ -11,7 +11,6 @@ import com.wasn.exceptions.CannotPrintException;
 import com.wasn.pojos.Settings;
 import com.wasn.pojos.Summary;
 import com.wasn.utils.PrintUtils;
-import com.wasn.utils.TransactionUtils;
 
 import java.io.IOException;
 
@@ -27,6 +26,7 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
 
     /**
      * Initialize cass members
+     *
      * @param activity
      */
     public SummaryPrintService(SummaryDetailsActivity activity) {
@@ -45,10 +45,12 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
 
     /**
      * print summary receipt
+     *
      * @return print status
      */
     private String print() {
-        Summary summary = TransactionUtils.getSummary(application.getTransactionList());
+        // TODO create summary
+        Summary summary = new Summary("345", "343", "3454", "3454");
 
         // printing attributes
         String printerAddress = application.getMobileBankData().getPrinterAddress();
@@ -63,7 +65,6 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
             // print summary means day end
             // clear all data
             application.getMobileBankData().deleteAllTransaction(application.getMobileBankData().getBranchId());
-            application.resetFields();
 
             return "1";
         } catch (IOException e) {

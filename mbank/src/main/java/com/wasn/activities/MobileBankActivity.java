@@ -8,7 +8,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
@@ -96,28 +99,26 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
      * @param view
      */
     public void onClick(View view) {
-        if(view == balanceQueryLayout) {
+        if (view == balanceQueryLayout) {
             // display transaction activity
             startActivity(new Intent(MobileBankActivity.this, BalanceQueryActivity.class));
             MobileBankActivity.this.finish();
-        } else if(view == summaryLayout) {
-            // get transactions from database
-            application.setTransactionList(application.getMobileBankData().getAllTransactions(application.getMobileBankData().getBranchId()));
-
+        } else if (view == summaryLayout) {
             // display transaction list activity
             startActivity(new Intent(MobileBankActivity.this, TransactionListActivity.class));
             MobileBankActivity.this.finish();
-        } else if(view == settingsLayout) {
+        } else if (view == settingsLayout) {
             // display settings activity
             startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
             MobileBankActivity.this.finish();
-        } else if(view == logout) {
+        } else if (view == logout) {
             displayInformationMessageDialog("Are you sure, you want to logout? ");
         }
     }
 
     /**
      * Display message dialog when user going to logout
+     *
      * @param message
      */
     public void displayInformationMessageDialog(String message) {
@@ -135,7 +136,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         messageHeaderTextView.setTypeface(face);
         messageHeaderTextView.setTypeface(null, Typeface.BOLD);
         messageTextView.setTypeface(face);
@@ -146,9 +147,6 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
         okButton.setTypeface(null, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // todo set login state to false
-                application.resetFields();
-
                 // back to login activity
                 //startActivity(new Intent(MobileBankActivity.this, LoginActivity.class));
                 MobileBankActivity.this.finish();
@@ -171,6 +169,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
 
     /**
      * Display toast message
+     *
      * @param message message tobe display
      */
     public void displayToast(String message) {

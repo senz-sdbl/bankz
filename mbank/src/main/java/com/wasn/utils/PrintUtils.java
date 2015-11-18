@@ -121,8 +121,7 @@ public class PrintUtils {
         String type   = "      Transaction type   : "+transaction.getTransactionType()+"\r\n";
         String time   = "      Transaction time   : "+transaction.getTransactionTime()+"\r\n";
         String amount = "      Transaction amount : "+transaction.getTransactionAmount()+"\r\n";
-        String balance= "      Balance            : "+transaction.getCurrentBalance()+"\r\n";
-        String recNo  = "      Receipt No         : "+transaction.getReceiptId()+"\r\n\r\n\r\n";
+        String balance= "      Balance            : "+transaction.getCurrentBalance()+"\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -143,7 +142,6 @@ public class PrintUtils {
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
             outputStream.write(balance.getBytes());
-            outputStream.write(recNo.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 
@@ -168,7 +166,6 @@ public class PrintUtils {
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
             outputStream.write(balance.getBytes());
-            outputStream.write(recNo.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 
@@ -227,8 +224,7 @@ public class PrintUtils {
         String type   = "      Transaction type   : "+transaction.getTransactionType()+"\r\n";
         String time   = "      Transaction time   : "+transaction.getTransactionTime()+"\r\n";
         String amount = "      Transaction amount : "+transaction.getTransactionAmount()+"\r\n";
-        String balance= "      Balance            : "+transaction.getCurrentBalance()+"\r\n";
-        String recNo  = "      Receipt No         : "+transaction.getReceiptId()+"\r\n\r\n\r\n";
+        String balance= "      Balance            : "+transaction.getCurrentBalance()+"\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -249,7 +245,6 @@ public class PrintUtils {
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
             outputStream.write(balance.getBytes());
-            outputStream.write(recNo.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 

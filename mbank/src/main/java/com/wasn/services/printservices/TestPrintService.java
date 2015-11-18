@@ -1,7 +1,7 @@
 package com.wasn.services.printservices;
 
 import android.os.AsyncTask;
-import com.wasn.activities.SettingsActivity;
+import com.wasn.ui.SettingsActivity;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;

@@ -1,4 +1,4 @@
-package com.wasn.activities;
+package com.wasn.ui;
 
 import android.app.Activity;
 import android.app.Dialog;

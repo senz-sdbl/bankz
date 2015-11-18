@@ -81,15 +81,6 @@
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <activity
-            android:name=".activities.DownloadActivity"
-            android:clearTaskOnLaunch="true"
-            android:configChanges="orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-
-        <activity
             android:name=".activities.TransactionListActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation"
@@ -144,8 +135,7 @@
 
         <receiver
             android:name=".receivers.AlarmReceiver"
-            android:process=":remote">
-        </receiver>
+            android:process=":remote"></receiver>
 
     </application>
 

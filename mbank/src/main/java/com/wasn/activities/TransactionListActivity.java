@@ -4,23 +4,25 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.view.Window;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.pojos.Transaction;
-import com.wasn.services.backgroundservices.ClientDataDownloadService;
 import com.wasn.services.backgroundservices.TransactionSyncService;
 import com.wasn.utils.NetworkUtil;
-import com.wasn.utils.TransactionUtils;
 
 import java.util.ArrayList;
 
@@ -36,14 +38,10 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     // activity components
     RelativeLayout back;
     RelativeLayout help;
-    RelativeLayout unsyncedTransactionHeader;
-    RelativeLayout allTransactionHeader;
     LinearLayout bottomPannel;
     RelativeLayout done;
     TextView headerText;
     TextView doneText;
-    TextView unsyncedTransactionHeaderText;
-    TextView allTransactionHeaderText;
 
     // use to populate list
     ListView transactionListView;
@@ -51,10 +49,6 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     ViewStub emptyView;
 
     ArrayList<Transaction> allTransactionList;
-    ArrayList<Transaction> unSyncedTransactionList;
-
-    // default color of texts
-    ColorStateList defaultColors;
 
     // display when syncing
     public ProgressDialog progressDialog;
@@ -79,30 +73,20 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         // initialize
         back = (RelativeLayout) findViewById(R.id.transaction_list_layout_back);
         help = (RelativeLayout) findViewById(R.id.transaction_list_layout_help);
-        unsyncedTransactionHeader = (RelativeLayout) findViewById(R.id.transaction_list_layout_unsynced_transaction_header);
-        allTransactionHeader = (RelativeLayout) findViewById(R.id.transaction_list_layout_all_transaction_header);
         bottomPannel = (LinearLayout) findViewById(R.id.transaction_list_layout_bottom_pannel);
         done = (RelativeLayout) findViewById(R.id.transaction_list_layout_done);
         headerText = (TextView) findViewById(R.id.transaction_list_layout_header_text);
         doneText = (TextView) findViewById(R.id.transaction_list_layout_done_text);
-        unsyncedTransactionHeaderText = (TextView) findViewById(R.id.transaction_list_layout_unsynced_transaction_header_text);
-        allTransactionHeaderText = (TextView) findViewById(R.id.transaction_list_layout_all_transaction_header_text);
-
-        defaultColors = allTransactionHeaderText.getTextColors();
 
         // set custom font to header text
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face);
         headerText.setTypeface(null, Typeface.BOLD);
-        unsyncedTransactionHeaderText.setTypeface(face);
-        allTransactionHeaderText.setTypeface(face);
 
         // set click listeners
         back.setOnClickListener(TransactionListActivity.this);
         help.setOnClickListener(TransactionListActivity.this);
         done.setOnClickListener(TransactionListActivity.this);
-        unsyncedTransactionHeader.setOnClickListener(TransactionListActivity.this);
-        allTransactionHeader.setOnClickListener(TransactionListActivity.this);
 
         // populate list view
         transactionListView = (ListView) findViewById(R.id.transaction_list);
@@ -120,7 +104,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         transactionListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // get corresponding transaction and share in application
-                Transaction transaction = (Transaction)adapter.getItem(i-1);
+                Transaction transaction = (Transaction) adapter.getItem(i - 1);
                 application.setTransaction(transaction);
 
                 // start new activity
@@ -132,54 +116,19 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
             }
         });
 
-        // initially select unsynced transaction
-        selectUnsyncedTransactionHeader();
-        displayUnsyncedTransactionList();
-        changeDoneButtonText("Sync");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(unsyncedTransactionHeader.isSelected()) {
-            // display un synced list
-            displayUnsyncedTransactionList();
-        } else {
-            // all transactions
-            displayAllTransactionList();
-        }
-    }
-
-    /**
-     * Display un synced transaction list
-     */
-    public void displayUnsyncedTransactionList() {
-        // find un synced transactions and display in list
-        unSyncedTransactionList = TransactionUtils.getUnSyncedTransactionList(allTransactionList);
-
-        if(unSyncedTransactionList.size()>0) {
-            // have un synced transaction
-            adapter = new TransactionListAdapter(TransactionListActivity.this, unSyncedTransactionList);
-            transactionListView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            enableBottomPannel();
-        } else {
-            disableBottomPannel();
-            displayEmptyView();
-        }
+        displayAllTransactionList();
     }
 
     /**
      * Display all transaction list
      */
     public void displayAllTransactionList() {
-        allTransactionList = application.getTransactionList();
+        allTransactionList = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            allTransactionList.add(new Transaction(1, "test", "eranga", "34534", "sfsd", "334", "345", "345", "345", "4345", "34", "wer", "3453", "test", "werew"));
+        }
 
-        if(allTransactionList.size()>0) {
+        if (allTransactionList.size() > 0) {
             // have transaction
             adapter = new TransactionListAdapter(TransactionListActivity.this, allTransactionList);
             transactionListView.setAdapter(adapter);
@@ -202,34 +151,6 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     }
 
     /**
-     * Set selected state of unsynced transaction header
-     */
-    public void selectUnsyncedTransactionHeader() {
-        unsyncedTransactionHeader.setSelected(true);
-        allTransactionHeader.setSelected(false);
-
-        // change font color of text
-        unsyncedTransactionHeaderText.setTextColor(Color.parseColor("#ffffff"));
-        unsyncedTransactionHeaderText.setTypeface(null, Typeface.BOLD);
-        allTransactionHeaderText.setTextColor(defaultColors);
-        allTransactionHeaderText.setTypeface(null, Typeface.NORMAL);
-    }
-
-    /**
-     * Set selected state of all transaction header
-     */
-    public void selectAllTransactionHeader() {
-        unsyncedTransactionHeader.setSelected(false);
-        allTransactionHeader.setSelected(true);
-
-        // change font color of text
-        allTransactionHeaderText.setTextColor(Color.parseColor("#ffffff"));
-        allTransactionHeaderText.setTypeface(null, Typeface.BOLD);
-        unsyncedTransactionHeaderText.setTextColor(defaultColors);
-        unsyncedTransactionHeaderText.setTypeface(null, Typeface.NORMAL);
-    }
-
-    /**
      * disable bottom pannel
      */
     public void disableBottomPannel() {
@@ -245,6 +166,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
 
     /**
      * Change text of done button
+     *
      * @param text
      */
     public void changeDoneButtonText(String text) {
@@ -256,7 +178,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      */
     public void syncTransaction() {
         // sync, if only available network connection
-        if(NetworkUtil.isAvailableNetwork(TransactionListActivity.this)) {
+        if (NetworkUtil.isAvailableNetwork(TransactionListActivity.this)) {
             // start background thread to sync
             progressDialog = ProgressDialog.show(TransactionListActivity.this, "", "Syncing transactions, please wait...");
             new TransactionSyncService(TransactionListActivity.this).execute("SYNC");
@@ -267,6 +189,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
 
     /**
      * Execute after sync transactions
+     *
      * @param status sync status
      */
     public void onPostSync(int status) {
@@ -281,11 +204,11 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
             displayEmptyView();
 
             displayToast("Synced " + status + "transactions ");
-        } else if(status == -1) {
+        } else if (status == -1) {
             displayToast("Sync fail, error in synced record");
-        } else if(status == -2) {
+        } else if (status == -2) {
             displayToast("Sync fail, server response error");
-        } else if(status == -3) {
+        } else if (status == -3) {
             displayToast("Server response error");
         } else {
             displayToast("Sync fail");
@@ -296,13 +219,14 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      * Close progress dialog
      */
     public void closeProgressDialog() {
-        if(progressDialog!=null) {
+        if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
 
     /**
      * Display message dialog when user going to logout
+     *
      * @param message
      */
     public void displayInformationMessageDialog(String message) {
@@ -320,7 +244,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face= Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         messageHeaderTextView.setTypeface(face);
         messageHeaderTextView.setTypeface(null, Typeface.BOLD);
         messageTextView.setTypeface(face);
@@ -351,6 +275,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
 
     /**
      * Display toast message
+     *
      * @param message message tobe display
      */
     public void displayToast(String message) {
@@ -361,28 +286,16 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      * {@inheritDoc}
      */
     public void onClick(View view) {
-        if(view == back) {
+        if (view == back) {
             // back to main activity
             startActivity(new Intent(TransactionListActivity.this, MobileBankActivity.class));
             TransactionListActivity.this.finish();
             application.resetFields();
-        } else if(view == help) {
-
-        } else if(view == unsyncedTransactionHeader) {
-            // load un synced list
-            selectUnsyncedTransactionHeader();
-            displayUnsyncedTransactionList();
-            changeDoneButtonText("Sync");
-        } else if(view == allTransactionHeader) {
-            // load all transaction list
-            selectAllTransactionHeader();
-            displayAllTransactionList();
-            changeDoneButtonText("Summary");
-        } else if(view == done) {
-            if(doneText.getText().toString().equals("Sync")) {
+        } else if (view == done) {
+            if (doneText.getText().toString().equals("Sync")) {
                 // sync transactions
                 displayInformationMessageDialog("Are you sure you want to sync transactions? ");
-            } else if(doneText.getText().toString().equals("Summary")) {
+            } else if (doneText.getText().toString().equals("Summary")) {
                 // display summary activity
                 startActivity(new Intent(TransactionListActivity.this, SummaryDetailsActivity.class));
             }

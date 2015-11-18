@@ -79,7 +79,7 @@ public class TransactionListAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.transaction_list_row_layout, viewGroup, false);
 
             //create view holder to store reference to child views
-            holder=new ViewHolder();
+            holder = new ViewHolder();
             holder.transactionIcon = (ImageView) view.findViewById(R.id.transaction_list_row_layout_client_icon);
             holder.clientNameTextView = (TextView) view.findViewById(R.id.transaction_list_row_layout_client_name);
             //holder.clientBirthDateTextView = (TextView) view.findViewById(R.id.client_list_row_layout_birth_date);

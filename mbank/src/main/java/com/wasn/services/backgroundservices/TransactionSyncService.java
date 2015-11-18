@@ -1,9 +1,7 @@
 package com.wasn.services.backgroundservices;
 
-import android.content.Intent;
 import android.os.AsyncTask;
-import com.wasn.activities.DownloadActivity;
-import com.wasn.activities.MobileBankActivity;
+
 import com.wasn.activities.TransactionListActivity;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.CannotProcessRequestException;
@@ -29,6 +27,7 @@ public class TransactionSyncService extends AsyncTask<String, String, String> {
 
     /**
      * Initialize cass members
+     *
      * @param activity
      */
     public TransactionSyncService(TransactionListActivity activity) {
@@ -46,6 +45,7 @@ public class TransactionSyncService extends AsyncTask<String, String, String> {
 
     /**
      * Sync to bank server
+     *
      * @return sync status
      */
     public String sync() {

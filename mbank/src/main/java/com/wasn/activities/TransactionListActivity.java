@@ -292,13 +292,8 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
             TransactionListActivity.this.finish();
             application.resetFields();
         } else if (view == done) {
-            if (doneText.getText().toString().equals("Sync")) {
-                // sync transactions
-                displayInformationMessageDialog("Are you sure you want to sync transactions? ");
-            } else if (doneText.getText().toString().equals("Summary")) {
-                // display summary activity
-                startActivity(new Intent(TransactionListActivity.this, SummaryDetailsActivity.class));
-            }
+            // display summary activity
+            startActivity(new Intent(TransactionListActivity.this, SummaryDetailsActivity.class));
         }
     }
 

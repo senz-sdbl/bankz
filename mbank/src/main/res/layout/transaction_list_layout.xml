@@ -85,16 +85,18 @@
 
         <ListView
             android:id="@+id/transaction_list"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:background="#e5e5e5"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#e5e5e5"
+            android:listSelector="@android:color/transparent"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@drawable/list_seperator"
             android:dividerHeight="0dp"
-            android:listSelector="@drawable/list_selctor"
-            android:paddingLeft="10dp"
-            android:paddingRight="4dp"
-            android:scrollbarStyle="outsideInset"></ListView>
+            android:scrollbarStyle="outsideInset">
+
+        </ListView>
 
         <ViewStub
             android:id="@+id/transaction_list_layout_empty_view"
@@ -135,7 +137,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="Sync"
+                    android:text="View summary"
                     android:textColor="#ffffff"
                     android:textSize="15sp"></TextView>
             </RelativeLayout>

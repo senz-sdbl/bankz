@@ -147,7 +147,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
                 application.resetFields();
 
                 // back to login activity
-                startActivity(new Intent(MobileBankActivity.this, LoginActivity.class));
+                //startActivity(new Intent(MobileBankActivity.this, LoginActivity.class));
                 MobileBankActivity.this.finish();
                 dialog.cancel();
             }

@@ -23,6 +23,7 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
     ArrayList<Attribute> attributesList;
     AttributeListAdapter adapter;
     RelativeLayout back;
+    RelativeLayout done;
 
     //to populate list
 
@@ -37,7 +38,9 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
     public void init() {
 
         back = (RelativeLayout) findViewById(R.id.balance_query_result_layout_back);
+        done = (RelativeLayout) findViewById(R.id.balance_query_result_layout_done);
         back.setOnClickListener(BalanceResultActivity.this);
+        done.setOnClickListener(BalanceResultActivity.this);
 
         //Dummy data added
         attributesList = new ArrayList<>();
@@ -47,6 +50,12 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
         attributesList.add(new Attribute("Balance: ", "15,000.00"));
 
         balanceList = (ListView) findViewById(R.id.balance_result_list);
+        // add header and footer
+        View headerView = View.inflate(this, R.layout.header, null);
+        View footerView = View.inflate(this, R.layout.footer, null);
+
+        balanceList.addHeaderView(headerView);
+        balanceList.addFooterView(footerView);
         adapter = new AttributeListAdapter(BalanceResultActivity.this, attributesList);
         balanceList.setAdapter(adapter);
 
@@ -57,6 +66,12 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
         if (view == back) {
             //go back to BalanceQueryActivity
             startActivity(new Intent(BalanceResultActivity.this, BalanceQueryActivity.class));
+            BalanceResultActivity.this.finish();
+        }
+
+        if (view==done){
+            //go to TransactionActivity
+            startActivity(new Intent(BalanceResultActivity.this,TransactionActivity.class));
             BalanceResultActivity.this.finish();
         }
     }

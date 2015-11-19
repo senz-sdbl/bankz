@@ -4,7 +4,6 @@ package com.wasn.pojos;
  * POJO class to hold settings attributes
  */
 public class Settings {
-
     String printerAddress;
     String branchTelephoeNo;
     String branchName;

@@ -211,49 +211,6 @@ public class MobileBankData {
     }
 
     /**
-     * get data download state attribute from app_data table
-     *
-     * @return downloadState login state with server
-     */
-    public String getDownloadState() {
-        String downloadState = "0";
-
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        // create cursor for get app data   ( table name		     columns   		select		 	 	select args  		    groupby   having  orderby )
-        Cursor appDataCursor = db.query(DBHelper.TABLE_NAME_APP_DATA, null, "attribute_name=?", new String[]{"isDownloaded"}, null, null, null);
-
-        //has elements in cursor
-        if (appDataCursor.moveToNext()) {
-            appDataCursor.moveToLast();
-            downloadState = appDataCursor.getString(2);
-        }
-
-        appDataCursor.close();
-        db.close();
-
-        return downloadState;
-    }
-
-    /**
-     * update data download state attribute in app_data
-     *
-     * @param downloadState determine data downloaded in or not (1 or 0)
-     */
-    public void setDownloadState(String downloadState) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-
-        //create content values
-        ContentValues appDataValues = new ContentValues();
-        appDataValues.put("attribute_value", downloadState);
-
-        //update application data
-        db.update(DBHelper.TABLE_NAME_APP_DATA, appDataValues, "attribute_name=?", new String[]{"isDownloaded"});
-
-        db.close();
-    }
-
-    /**
      * get branch id attribute from app_data table
      *
      * @return branch id

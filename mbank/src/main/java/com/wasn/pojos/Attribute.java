@@ -4,6 +4,7 @@ package com.wasn.pojos;
  * To hold client and transaction attributes (key value pairs)
  *
  * @author erangaeb@gmail.com (eranga bandara)
+ * TODO implements Parcelable
  */
 public class Attribute {
 

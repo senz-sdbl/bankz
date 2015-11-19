@@ -115,7 +115,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     public void displayAllTransactionList() {
         allTransactionList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            allTransactionList.add(new Transaction(1, "test", "eranga", "34534", "34", "wer", "3453", "test", "werew"));
+            allTransactionList.add(new Transaction(1, "test", "eranga", "34", "wer", "3453", "test", "werew"));
         }
 
         if (allTransactionList.size() > 0) {

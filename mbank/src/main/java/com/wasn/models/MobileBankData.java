@@ -485,7 +485,6 @@ public class MobileBankData {
             String accountNo = transactionCursor.getString(5);
             String previousBalance = transactionCursor.getString(6);
             String transactionAmount = transactionCursor.getString(7);
-            String currentBalance = transactionCursor.getString(8);
             String transactionTime = transactionCursor.getString(9);
             String transactionType = transactionCursor.getString(10);
 
@@ -495,7 +494,6 @@ public class MobileBankData {
                     accountNo,
                     previousBalance,
                     transactionAmount,
-                    currentBalance,
                     transactionTime,
                     transactionType);
 
@@ -519,12 +517,11 @@ public class MobileBankData {
 
         //create content values for transaction record
         ContentValues transactionValues = new ContentValues();
-        transactionValues.put("client_name", transaction.getClinetName());
-        transactionValues.put("client_nic", transaction.getClinetNic());
+        transactionValues.put("client_name", transaction.getClientName());
+        transactionValues.put("client_nic", transaction.getClientNic());
         transactionValues.put("account_no", transaction.getClientAccountNo());
         transactionValues.put("previous_balance", transaction.getPreviousBalance());
         transactionValues.put("transaction_amount", transaction.getTransactionAmount());
-        transactionValues.put("current_balance", transaction.getCurrentBalance());
         transactionValues.put("transaction_time", transaction.getTransactionTime());
         transactionValues.put("transaction_type", transaction.getTransactionType());
 

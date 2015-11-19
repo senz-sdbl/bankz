@@ -53,7 +53,6 @@ public class TransactionUtils {
                 "Name",
                 "NIC",
                 "Acc no",
-                "Balance",
                 amount,
                 "3400.00",
                 getCurrentTime(),

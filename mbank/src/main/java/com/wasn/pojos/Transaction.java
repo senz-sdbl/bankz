@@ -4,35 +4,33 @@ package com.wasn.pojos;
  * To hold attributes of transaction
  *
  * @author erangaeb@gmail.com (eranga bandara)
+ * TODO implements Parcelable
  */
 public class Transaction {
 
     int id;
-    String clinetName;
-    String clinetNic;
+    String clientName;
+    String clientNic;
     String clientAccountNo;
     String previousBalance;
     String transactionAmount;
-    String currentBalance;
     String transactionTime;
     String transactionType;
 
     public Transaction(int id,
-                       String clinetName,
-                       String clinetNic,
+                       String clientName,
+                       String clientNic,
                        String clientAccountNo,
                        String previousBalance,
                        String transactionAmount,
-                       String currentBalance,
                        String transactionTime,
                        String transactionType) {
         this.id = id;
-        this.clinetName = clinetName;
-        this.clinetNic = clinetNic;
+        this.clientName = clientName;
+        this.clientNic = clientNic;
         this.clientAccountNo = clientAccountNo;
         this.previousBalance = previousBalance;
         this.transactionAmount = transactionAmount;
-        this.currentBalance = currentBalance;
         this.transactionTime = transactionTime;
         this.transactionType = transactionType;
     }
@@ -45,20 +43,20 @@ public class Transaction {
         this.id = id;
     }
 
-    public String getClinetName() {
-        return clinetName;
+    public String getClientName() {
+        return clientName;
     }
 
-    public void setClinetName(String clinetName) {
-        this.clinetName = clinetName;
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
     }
 
-    public String getClinetNic() {
-        return clinetNic;
+    public String getClientNic() {
+        return clientNic;
     }
 
-    public void setClinetNic(String clinetNic) {
-        this.clinetNic = clinetNic;
+    public void setClientNic(String clientNic) {
+        this.clientNic = clientNic;
     }
 
     public String getClientAccountNo() {
@@ -83,14 +81,6 @@ public class Transaction {
 
     public void setTransactionAmount(String transactionAmount) {
         this.transactionAmount = transactionAmount;
-    }
-
-    public String getCurrentBalance() {
-        return currentBalance;
-    }
-
-    public void setCurrentBalance(String currentBalance) {
-        this.currentBalance = currentBalance;
     }
 
     public String getTransactionTime() {

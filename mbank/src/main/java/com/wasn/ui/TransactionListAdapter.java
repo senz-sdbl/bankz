@@ -94,8 +94,7 @@ public class TransactionListAdapter extends BaseAdapter {
 
         // bind text with view holder text view to efficient use
         holder.transactionIcon.setImageResource(R.drawable.client_con);
-        holder.clientNameTextView.setText(transaction.getClinetName());
-        //holder.clientBirthDateTextView.setText(client.getBirthDate());
+        holder.clientNameTextView.setText(transaction.getClientName());
         holder.accountNoTextView.setText(transaction.getClientAccountNo());
         holder.transactionAmountTextView.setText(transaction.getTransactionAmount());
 

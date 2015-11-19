@@ -115,13 +115,12 @@ public class PrintUtils {
                                 + "PRINT\r\n";
 
         // transaction details that print in receipt
-        String name   = "      Name               : "+transaction.getClinetName()+"\r\n";
-        String nic    = "      NIC no             : "+transaction.getClinetNic()+"\r\n";
+        String name   = "      Name               : "+transaction.getClientName()+"\r\n";
+        String nic    = "      NIC no             : "+transaction.getClientNic()+"\r\n";
         String accNo  = "      Account No         : "+transaction.getClientAccountNo()+"\r\n";
         String type   = "      Transaction type   : "+transaction.getTransactionType()+"\r\n";
         String time   = "      Transaction time   : "+transaction.getTransactionTime()+"\r\n";
-        String amount = "      Transaction amount : "+transaction.getTransactionAmount()+"\r\n";
-        String balance= "      Balance            : "+transaction.getCurrentBalance()+"\r\n\r\n\r\n";
+        String amount = "      Transaction amount : "+transaction.getTransactionAmount()+"\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -141,7 +140,6 @@ public class PrintUtils {
             outputStream.write(type.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
-            outputStream.write(balance.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 
@@ -165,7 +163,6 @@ public class PrintUtils {
             outputStream.write(type.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
-            outputStream.write(balance.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 
@@ -218,13 +215,12 @@ public class PrintUtils {
                 + "PRINT\r\n";
 
         // transaction details that print in receipt
-        String name   = "      Name               : "+transaction.getClinetName()+"\r\n";
-        String nic    = "      NIC no             : "+transaction.getClinetNic()+"\r\n";
+        String name   = "      Name               : "+transaction.getClientName()+"\r\n";
+        String nic    = "      NIC no             : "+transaction.getClientNic()+"\r\n";
         String accNo  = "      Account No         : "+transaction.getClientAccountNo()+"\r\n";
         String type   = "      Transaction type   : "+transaction.getTransactionType()+"\r\n";
         String time   = "      Transaction time   : "+transaction.getTransactionTime()+"\r\n";
-        String amount = "      Transaction amount : "+transaction.getTransactionAmount()+"\r\n";
-        String balance= "      Balance            : "+transaction.getCurrentBalance()+"\r\n\r\n\r\n";
+        String amount = "      Transaction amount : "+transaction.getTransactionAmount()+"\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -244,7 +240,6 @@ public class PrintUtils {
             outputStream.write(type.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
-            outputStream.write(balance.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 

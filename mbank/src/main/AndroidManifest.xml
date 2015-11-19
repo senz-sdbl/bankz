@@ -45,6 +45,15 @@
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <activity
+            android:name=".ui.TransactionDetailsActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+
+        <activity
             android:name=".ui.SettingsActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation"

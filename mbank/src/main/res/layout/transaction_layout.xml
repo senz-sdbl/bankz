@@ -3,100 +3,97 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
-            android:layout_width="fill_parent"
-            android:background="#333333"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal">
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="#333333"
+        android:orientation="horizontal">
 
         <RelativeLayout
-                android:layout_width="53dp"
-                android:layout_height="fill_parent"
-                android:background="@drawable/button_selector"
-                android:layout_alignParentLeft="true"
-                android:clickable="true"
-                android:id="@+id/transaction_layout_back">
+            android:id="@+id/transaction_layout_back"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/button_selector"
+            android:clickable="true">
+
             <ImageView
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/back">
-            </ImageView>
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/back"></ImageView>
 
             <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentRight="true"
-                    android:background="#4a4a4a">
-            </TextView>
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:background="#4a4a4a"></TextView>
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_height="fill_parent"
             android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/transaction_layout_back">
 
             <TextView
                 android:id="@+id/transaction_layout_header_text"
-                android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
+                android:layout_centerVertical="true"
+                android:text="New Transaction"
                 android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:text="New Transaction">
-            </TextView>
+                android:textSize="18dp"
+                android:textStyle="bold"></TextView>
 
         </RelativeLayout>
 
 
         <RelativeLayout
-                android:layout_width="53dp"
-                android:layout_height="fill_parent"
-                android:background="@drawable/button_selector"
-                android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/transaction_layout_help">
+            android:id="@+id/transaction_layout_help"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_selector"
+            android:clickable="true">
+
             <ImageView
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/done">
-            </ImageView>
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/done"></ImageView>
 
             <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentLeft="true"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
 
-                    android:background="#4a4a4a">
-            </TextView>
+                android:background="#4a4a4a"></TextView>
         </RelativeLayout>
 
         <RelativeLayout
-                android:layout_width="53dp"
-                android:layout_height="fill_parent"
-                android:background="@drawable/button_selector"
-                android:clickable="true"
-                android:id="@+id/transaction_layout_search"
-                android:layout_toLeftOf="@+id/transaction_layout_help">
+            android:id="@+id/transaction_layout_search"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@+id/transaction_layout_help"
+            android:background="@drawable/button_selector"
+            android:clickable="true"
+            android:visibility="gone">
+
             <ImageView
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/search">
-            </ImageView>
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/search"></ImageView>
 
             <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentLeft="true"
-                    android:background="#4a4a4a">
-            </TextView>
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:background="#4a4a4a"></TextView>
         </RelativeLayout>
 
     </RelativeLayout>
@@ -110,12 +107,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -124,8 +121,7 @@
                     android:layout_marginTop="25dp"
                     android:text="Account No"
                     android:textColor="#4a4a4a"
-                    android:textSize="17dp" >
-                </TextView>
+                    android:textSize="17dp"></TextView>
 
                 <EditText
                     android:id="@+id/transaction_layout_account_text"
@@ -133,19 +129,18 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
+                    android:background="@drawable/text_filed_shape"
                     android:inputType="number"
                     android:padding="10dp"
-                    android:textCursorDrawable="@null"
                     android:textColor="#4a4a4a"
-                    android:background="@drawable/text_filed_shape"
-                    android:textSize="20dp" >
-                </EditText>
+                    android:textCursorDrawable="@null"
+                    android:textSize="20dp"></EditText>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -154,110 +149,106 @@
                     android:layout_marginTop="25dp"
                     android:text="Amount"
                     android:textColor="#4a4a4a"
-                    android:textSize="17dp" >
-                </TextView>
+                    android:textSize="17dp"></TextView>
 
                 <EditText
                     android:id="@+id/transaction_layout_amount_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:background="@drawable/text_filed_shape"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:padding="10dp"
+                    android:background="@drawable/text_filed_shape"
                     android:inputType="numberDecimal"
-                    android:textCursorDrawable="@null"
+                    android:padding="10dp"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp" >
-                </EditText>
+                    android:textCursorDrawable="@null"
+                    android:textSize="20dp"></EditText>
             </LinearLayout>
 
             <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="31dp"
-                        android:layout_marginTop="25dp"
-                        android:text="Note"
-                        android:textColor="#4a4a4a"
-                        android:textSize="17dp" >
-                </TextView>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="31dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Note"
+                    android:textColor="#4a4a4a"
+                    android:textSize="17dp"></TextView>
 
                 <EditText
-                        android:id="@+id/transaction_layout_note_text"
-                        android:layout_width="fill_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="30dp"
-                        android:gravity="top"
+                    android:id="@+id/transaction_layout_note_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/text_filed_shape"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:lines="3"
+                    android:padding="10dp"
+                    android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
-                        android:padding="10dp"
-                        android:textColor="#4a4a4a"
-                        android:background="@drawable/text_filed_shape"
-                        android:inputType="textMultiLine"
-                        android:lines="3"
-                        android:textSize="20dp" >
-                </EditText>
+                    android:textSize="20dp"></EditText>
             </LinearLayout>
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:visibility="gone"
         android:layout_gravity="bottom"
-        android:background="#333333" >
+        android:background="#333333"
+        android:visibility="gone">
 
-         <LinearLayout
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_centerVertical="true"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
-             <RelativeLayout
-                     android:layout_marginLeft="6dp"
-                     android:layout_marginRight="6dp"
-                     android:layout_marginTop="6dp"
-                     android:layout_marginBottom="6dp"
-                     android:layout_width="fill_parent"
-                     android:layout_height="fill_parent"
-                     android:background="@drawable/done_button_selector"
-                     android:clickable="true"
-                     android:layout_weight="1"
-                     android:id="@+id/transaction_layout_done">
-                 <TextView
-                         android:layout_height="wrap_content"
-                         android:layout_width="wrap_content"
-                         android:layout_centerInParent="true"
-                         android:text="Done">
-                 </TextView>
-             </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/transaction_layout_done"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/done_button_selector"
+                android:clickable="true">
 
-             <!--<RelativeLayout
-                     android:layout_marginLeft="3dp"
-                     android:layout_marginRight="6dp"
-                     android:layout_marginTop="6dp"
-                     android:layout_marginBottom="6dp"
-                     android:layout_width="fill_parent"
-                     android:layout_height="fill_parent"
-                     android:background="@drawable/done_button_selector"
-                     android:clickable="true"
-                     android:id="@+id/capture_layout_clear"
-                     android:layout_weight="1">
-                 <TextView
-                         android:layout_height="wrap_content"
-                         android:layout_width="wrap_content"
-                         android:layout_centerInParent="true"
-                         android:id="@+id/capture_layout_clear_icon"
-                         android:text="Cancel">
-                 </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Done"></TextView>
+            </RelativeLayout>
 
-             </RelativeLayout>-->
+            <!--<RelativeLayout
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@drawable/done_button_selector"
+                    android:clickable="true"
+                    android:id="@+id/capture_layout_clear"
+                    android:layout_weight="1">
+                <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/capture_layout_clear_icon"
+                        android:text="Cancel">
+                </TextView>
+
+            </RelativeLayout>-->
         </LinearLayout>
     </LinearLayout>
 

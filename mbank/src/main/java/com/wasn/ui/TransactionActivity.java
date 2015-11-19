@@ -37,7 +37,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     EditText noteEditText;
 
     RelativeLayout back;
-    RelativeLayout search;
     RelativeLayout done;
 
     TextView headerText;
@@ -64,7 +63,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         noteEditText = (EditText) findViewById(R.id.transaction_layout_note_text);
 
         back = (RelativeLayout) findViewById(R.id.transaction_layout_back);
-        search = (RelativeLayout) findViewById(R.id.transaction_layout_search);
         done = (RelativeLayout) findViewById(R.id.transaction_layout_help);
         //done = (RelativeLayout) findViewById(R.id.transaction_layout_done);
 
@@ -87,11 +85,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         headerText.setTypeface(null, Typeface.BOLD);
 
         back.setOnClickListener(TransactionActivity.this);
-        search.setOnClickListener(TransactionActivity.this);
         done.setOnClickListener(TransactionActivity.this);
-        //done.setOnClickListener(TransactionActivity.this);
-
-        // set account no according to balance inquery
     }
 
     /**

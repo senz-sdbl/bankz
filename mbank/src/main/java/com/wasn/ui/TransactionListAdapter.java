@@ -1,11 +1,11 @@
 package com.wasn.ui;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wasn.R;
@@ -23,6 +23,8 @@ public class TransactionListAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<Transaction> transactionList;
 
+    private Typeface typeface;
+
     /**
      * Set context and attribute list
      *
@@ -32,6 +34,8 @@ public class TransactionListAdapter extends BaseAdapter {
     public TransactionListAdapter(Context context, ArrayList<Transaction> transactionList) {
         this.context = context;
         this.transactionList = transactionList;
+
+        typeface = Typeface.createFromAsset(context.getAssets(), "fonts/vegur_2.otf");
     }
 
     /**
@@ -76,30 +80,29 @@ public class TransactionListAdapter extends BaseAdapter {
         if (view == null) {
             //inflate print_list_row layout
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.transaction_list_row_layout, viewGroup, false);
+            view = inflater.inflate(R.layout.transaction_row_layout, viewGroup, false);
 
             //create view holder to store reference to child views
             holder = new ViewHolder();
-            holder.transactionIcon = (ImageView) view.findViewById(R.id.transaction_list_row_layout_client_icon);
-            holder.clientNameTextView = (TextView) view.findViewById(R.id.transaction_list_row_layout_client_name);
-            //holder.clientBirthDateTextView = (TextView) view.findViewById(R.id.client_list_row_layout_birth_date);
-            holder.accountNoTextView = (TextView) view.findViewById(R.id.transaction_list_row_layout_account_no);
-            holder.transactionAmountTextView = (TextView) view.findViewById(R.id.transaction_list_row_layout_amount);
+            holder.iconText = (TextView) view.findViewById(R.id.icon_text);
+            holder.account = (TextView) view.findViewById(R.id.account_no);
+            holder.amount = (TextView) view.findViewById(R.id.amount);
+            holder.iconText.setTypeface(typeface, Typeface.BOLD);
+            holder.iconText.setTextColor(context.getResources().getColor(R.color.white));
+            holder.account.setTypeface(typeface, Typeface.BOLD);
+            holder.amount.setTypeface(typeface, Typeface.NORMAL);
 
             view.setTag(holder);
         } else {
-            //get view holder back
+            // get view holder back
             holder = (ViewHolder) view.getTag();
         }
 
-        // bind text with view holder text view to efficient use
-        holder.transactionIcon.setImageResource(R.drawable.client_con);
-        holder.clientNameTextView.setText(transaction.getClientName());
-        holder.accountNoTextView.setText(transaction.getClientAccountNo());
-        holder.transactionAmountTextView.setText(transaction.getTransactionAmount());
-
-        // set backgrounds of list view rows
-        view.setBackgroundResource(R.drawable.list_item_selector);
+        // bind text with view holder content view for efficient use
+        holder.iconText.setText("$");
+        holder.account.setText(transaction.getClientAccountNo());
+        holder.amount.setText(transaction.getTransactionAmount());
+        view.setBackgroundResource(R.drawable.more_layout_selector_normal);
 
         return view;
     }
@@ -108,11 +111,9 @@ public class TransactionListAdapter extends BaseAdapter {
      * Keep reference to children view to avoid unnecessary calls
      */
     static class ViewHolder {
-        ImageView transactionIcon;
-        TextView clientNameTextView;
-        //TextView clientBirthDateTextView;
-        TextView accountNoTextView;
-        TextView transactionAmountTextView;
+        TextView iconText;
+        TextView account;
+        TextView amount;
     }
 
 }

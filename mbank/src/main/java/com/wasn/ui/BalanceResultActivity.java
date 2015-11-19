@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.pojos.Attribute;
+import com.wasn.pojos.BalanceQuery;
 
 import java.util.ArrayList;
 
@@ -24,14 +25,14 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
     AttributeListAdapter adapter;
     RelativeLayout back;
     RelativeLayout done;
-
-    //to populate list
-
+    BalanceQuery balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.balance_query_result_layout);
+
+        balance = getIntent().getExtras().getParcelable("balance");
         init();
     }
 
@@ -44,10 +45,10 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
 
         //Dummy data added
         attributesList = new ArrayList<>();
-        attributesList.add(new Attribute("Acc No: ", "123"));
-        attributesList.add(new Attribute("Customer: ", "FirstName_LastName"));
-        attributesList.add(new Attribute("NIC: ", "000000000v"));
-        attributesList.add(new Attribute("Balance: ", "15,000.00"));
+        attributesList.add(new Attribute("Acc No: ", balance.getClientAccount()));
+        attributesList.add(new Attribute("Customer: ", balance.getClientName()));
+        attributesList.add(new Attribute("NIC: ", balance.getClientNic()));
+        attributesList.add(new Attribute("Balance: ", balance.getBalance()));
 
         balanceList = (ListView) findViewById(R.id.balance_result_list);
         // add header and footer
@@ -69,9 +70,11 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
             BalanceResultActivity.this.finish();
         }
 
-        if (view==done){
+        if (view == done) {
             //go to TransactionActivity
-            startActivity(new Intent(BalanceResultActivity.this,TransactionActivity.class));
+            Intent j = new Intent(BalanceResultActivity.this, TransactionActivity.class);
+            j.putExtra("balance", balance);
+            startActivity(j);
             BalanceResultActivity.this.finish();
         }
     }

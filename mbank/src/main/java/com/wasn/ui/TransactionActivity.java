@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.EmptyFieldsException;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidBalanceAmountException;
+import com.wasn.pojos.BalanceQuery;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
@@ -99,7 +101,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         init();
         registerReceiver(senzMessageReceiver, new IntentFilter("DATA"));
     }
-    private void connectWithService(){
+
+    private void connectWithService() {
         Intent intent = new Intent();
         intent.setClassName("com.wasn", "com.wasn.services.RemoteSenzService");
         bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
@@ -118,6 +121,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
      * Initialize form components and values
      */
     public void init() {
+        Intent i = getIntent();
+        BalanceQuery balance = i.getExtras().getParcelable("balance");
         application = (MobileBankApplication) TransactionActivity.this.getApplication();
 
         accountEditText = (EditText) findViewById(R.id.transaction_layout_account_text);
@@ -148,6 +153,9 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         back.setOnClickListener(TransactionActivity.this);
         done.setOnClickListener(TransactionActivity.this);
+        accountEditText.setText(balance.getClientAccount(), TextView.BufferType.NORMAL);
+        accountEditText.setEnabled(false);
+        accountEditText.setInputType(InputType.TYPE_NULL);
     }
 
     /**
@@ -323,10 +331,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             }*/
         }
     }
-
-
-
-
 
 
     /**

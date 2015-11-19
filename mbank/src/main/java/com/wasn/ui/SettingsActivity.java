@@ -45,7 +45,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     RelativeLayout back;
     RelativeLayout save;
     //RelativeLayout save;
-    Button testPrint;
+    RelativeLayout testPrint;
     TextView headerText;
     EditText printerAddressEditText;
     EditText telephoneNoEditText;
@@ -73,9 +73,9 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         isTestedPrintAddress = false;
 
         back = (RelativeLayout) findViewById(R.id.settings_layout_back);
-        save = (RelativeLayout) findViewById(R.id.settings_layout_help);
+        //save = (RelativeLayout) findViewById(R.id.settings_layout_help);
         //save = (RelativeLayout) findViewById(R.id.settings_layout_save);
-        testPrint = (Button) findViewById(R.id.settings_layout_test_print_button);
+        testPrint = (RelativeLayout) findViewById(R.id.settings_layout_test_print);
 
         // set custom font to header text
         headerText = (TextView) findViewById(R.id.settings_layout_header_text);
@@ -90,16 +90,16 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         // set text to telephone no
         // stored in database
-        telephoneNoEditText = (EditText) findViewById(R.id.settings_layout_telephone_no_text);
-        telephoneNoEditText.setText(application.getMobileBankData().getTelephoneNo());
+        //telephoneNoEditText = (EditText) findViewById(R.id.settings_layout_telephone_no_text);
+        //telephoneNoEditText.setText(application.getMobileBankData().getTelephoneNo());
 
         // set text to branch name
         // stored in database
-        branchNameEditText = (EditText) findViewById(R.id.settings_layout_branch_name_text);
-        branchNameEditText.setText(application.getMobileBankData().getBranchName());
+        //branchNameEditText = (EditText) findViewById(R.id.settings_layout_branch_name_text);
+        //branchNameEditText.setText(application.getMobileBankData().getBranchName());
 
         back.setOnClickListener(SettingsActivity.this);
-        save.setOnClickListener(SettingsActivity.this);
+        //save.setOnClickListener(SettingsActivity.this);
         //save.setOnClickListener(SettingsActivity.this);
         testPrint.setOnClickListener(SettingsActivity.this);
     }

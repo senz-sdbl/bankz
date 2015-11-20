@@ -25,6 +25,7 @@ import com.wasn.application.MobileBankApplication;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.RSAUtils;
+import com.wasn.pojos.BalanceQuery;
 
 import java.util.HashMap;
 
@@ -83,7 +84,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         unregisterReceiver(senzMessageReceiver);
     }
 
-    private void connectWithService(){
+    private void connectWithService() {
         Intent intent = new Intent();
         intent.setClassName("com.wasn", "com.wasn.services.RemoteSenzService");
         bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
@@ -99,9 +100,10 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
 
         back.setOnClickListener(BalanceQueryActivity.this);
         done.setOnClickListener(BalanceQueryActivity.this);
-        accountEditText=(EditText)findViewById(R.id.balance_query_layout_account_text);
+        accountEditText = (EditText) findViewById(R.id.balance_query_layout_account_text);
 
     }
+
     private void doQueryOverNetwork() {
         try {
 
@@ -131,18 +133,23 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             startActivity(new Intent(BalanceQueryActivity.this, MobileBankActivity.class));
             BalanceQueryActivity.this.finish();
         } else if (view == done) {
+            //preSendToNetwork(); ToDo have to remove this
+            Intent i = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
+            BalanceQuery balance = new BalanceQuery("123456789", "Name", "0000000v", "15,000");
+            i.putExtra("balance", balance);
+            startActivity(i);
             preSendToNetwork();
 
-            /*
-            startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
-            BalanceQueryActivity.this.finish();
-            */ //ToDo implement done code
+            
+            
         }
     }
-    public void preSendToNetwork(){//input validations are done here
-        String accno=accountEditText.getText().toString();
+
+    public void preSendToNetwork() {//input validations are done here
+        String accno = accountEditText.getText().toString();
         doQueryOverNetwork();
     }
+
     @Override
     public void onBackPressed() {
         // back to main activity
@@ -185,6 +192,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             handleMessage(intent);
         }
     };
+
     private void handleMessage(Intent intent) {
         String action = intent.getAction();
 
@@ -194,7 +202,9 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             //TransactionActivity.this.finish();
 
             Senz senz = intent.getExtras().getParcelable("SENZ");
-
+           /* startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
+            BalanceQueryActivity.this.finish();
+            */
            /* if (senz.getAttributes().containsKey("msg")) {
                 // msg response received
                 ActivityUtils.cancelProgressDialog();

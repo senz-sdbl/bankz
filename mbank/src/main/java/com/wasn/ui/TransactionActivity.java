@@ -98,7 +98,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction_layout);
         //Link to service
-        //addDummyData();
+        addDummyData();
         connectWithService();
         init();
         registerReceiver(senzMessageReceiver, new IntentFilter("DATA"));

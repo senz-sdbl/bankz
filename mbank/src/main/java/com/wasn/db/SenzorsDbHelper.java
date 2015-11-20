@@ -24,13 +24,13 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TRANSACTION =
             "CREATE TABLE " + SenzorsDbContract.Transaction.TABLE_NAME + " (" +
-                    SenzorsDbContract.Transaction._ID + " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_clientAccountNo + NUMBER_TYPE + " NOT NULL" + ", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_CLIENTNAME + TEXT_TYPE +  " NOT NULL" +", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance + NUMBER_TYPE +  " NOT NULL" +", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount + NUMBER_TYPE +  " NOT NULL" +", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime + NUMBER_TYPE +  " NOT NULL" +", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionType + TEXT_TYPE + " NOT NULL" + ", " +
+                    SenzorsDbContract.Transaction._ID +" "+ " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_clientAccountNo +" "+ NUMBER_TYPE + " NOT NULL" + ", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_CLIENTNAME +" "+ TEXT_TYPE +  " NOT NULL" +", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance +" "+ NUMBER_TYPE +  " NOT NULL" +", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount +" "+ NUMBER_TYPE +  " NOT NULL" +", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime +" "+ NUMBER_TYPE +  " NOT NULL" +", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionType +" "+ TEXT_TYPE + " NOT NULL" + ", " +
                    // "UNIQUE" + "(" + SenzorsDbContract.Senz.COLUMN_NAME_NAME + "," + SenzorsDbContract.Senz.COLUMN_NAME_USER + ")" +
                     ")";
     private static final String SQL_CREATE_METADATA =

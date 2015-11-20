@@ -42,7 +42,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     RelativeLayout save;
     //RelativeLayout save;
     RelativeLayout testPrint;
-    TextView headerText;
+    TextView headerText,LineText;
     EditText printerAddressEditText;
     EditText telephoneNoEditText;
     EditText branchNameEditText;
@@ -77,6 +77,12 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face);
         headerText.setTypeface(null, Typeface.BOLD);
+
+        // set custom font for text
+        LineText = (TextView) findViewById(R.id.settings_printer_bluetooth_address);
+        Typeface face1 = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        LineText.setTypeface(face1);
+        LineText.setTypeface(null, Typeface.BOLD);
 
         // set text to printer address
         // printer address stored in database

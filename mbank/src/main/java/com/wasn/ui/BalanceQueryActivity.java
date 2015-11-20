@@ -106,7 +106,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         done.setOnClickListener(BalanceQueryActivity.this);
         accountEditText = (EditText) findViewById(R.id.balance_query_layout_account_text);
 
-        // set custom font for header text
+        // set custom font for text
         LineText = (TextView) findViewById(R.id.balance_query_account_no);
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         LineText.setTypeface(face);

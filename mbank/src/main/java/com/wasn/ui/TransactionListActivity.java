@@ -100,6 +100,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
 
                 // start new activity
                 Intent intent = new Intent(TransactionListActivity.this, TransactionDetailsActivity.class);
+                intent.putExtra("transaction",transaction);
                 intent.putExtra("ACTIVITY_NAME", TransactionListActivity.class.getName());
                 startActivity(intent);
 

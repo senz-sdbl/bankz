@@ -93,7 +93,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         print.setOnClickListener(TransactionDetailsActivity.this);
 
         // TODO get transaction via intent
-        Transaction transaction = null;
+        Transaction transaction = getIntent().getParcelableExtra("transaction");
 
         // populate list only have transaction
         if (transaction != null) {
@@ -103,7 +103,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             attributesList.add(new Attribute("Client NIC", transaction.getClientNic()));
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
             attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
-            attributesList.add(new Attribute("Transaction Amount", transaction.getTransactionAmount()));
+            attributesList.add(new Attribute("Transaction Amount", Integer.toString(transaction.getTransactionAmount())));//ToDo handle the data type
             attributesList.add(new Attribute("Transaction Time", transaction.getTransactionType()));
 
             // populate list

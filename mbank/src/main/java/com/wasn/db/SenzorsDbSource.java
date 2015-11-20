@@ -55,7 +55,7 @@ public class SenzorsDbSource {
         String clientNic;
         String clientAccountNo;
         String previousBalance;
-        String transactionAmount;
+        int transactionAmount;
         String transactionTime;
         String transactionType;
 
@@ -69,7 +69,7 @@ public class SenzorsDbSource {
 
             clientAccountNo = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_clientAccountNo));
             previousBalance = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance));
-            transactionAmount = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount));
+            transactionAmount = cursor.getInt(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount));
             transactionTime = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime));
             transactionType = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionType));
             clientNic = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_clientNIC));

@@ -138,7 +138,10 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             BalanceQuery balance = new BalanceQuery("123456789", "Name", "0000000v", "15,000");
             i.putExtra("balance", balance);
             startActivity(i);
-            BalanceQueryActivity.this.finish();
+            preSendToNetwork();
+
+            
+            
         }
     }
 
@@ -199,8 +202,9 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             //TransactionActivity.this.finish();
 
             Senz senz = intent.getExtras().getParcelable("SENZ");
-            startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
+           /* startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
             BalanceQueryActivity.this.finish();
+            */
            /* if (senz.getAttributes().containsKey("msg")) {
                 // msg response received
                 ActivityUtils.cancelProgressDialog();

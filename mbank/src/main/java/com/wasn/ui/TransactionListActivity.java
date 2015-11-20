@@ -66,10 +66,10 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         // initialize
         back = (RelativeLayout) findViewById(R.id.transaction_list_layout_back);
         help = (RelativeLayout) findViewById(R.id.transaction_list_layout_help);
-        bottomPannel = (LinearLayout) findViewById(R.id.transaction_list_layout_bottom_pannel);
+        //bottomPannel = (LinearLayout) findViewById(R.id.transaction_list_layout_bottom_pannel);
         done = (RelativeLayout) findViewById(R.id.transaction_list_layout_done);
         headerText = (TextView) findViewById(R.id.transaction_list_layout_header_text);
-        doneText = (TextView) findViewById(R.id.transaction_list_layout_done_text);
+        //doneText = (TextView) findViewById(R.id.transaction_list_layout_done_text);
 
         // set custom font to header text
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
@@ -123,9 +123,9 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
             adapter = new TransactionListAdapter(TransactionListActivity.this, allTransactionList);
             transactionListView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-            enableBottomPannel();
+            //enableBottomPannel();
         } else {
-            disableBottomPannel();
+            //disableBottomPannel();
             displayEmptyView();
         }
     }
@@ -143,16 +143,16 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     /**
      * disable bottom pannel
      */
-    public void disableBottomPannel() {
-        bottomPannel.setVisibility(View.GONE);
-    }
+    //public void disableBottomPannel() {
+    //    bottomPannel.setVisibility(View.GONE);
+    //}
 
     /**
      * display bottom pannel
      */
-    public void enableBottomPannel() {
-        bottomPannel.setVisibility(View.VISIBLE);
-    }
+    //public void enableBottomPannel() {
+     //   bottomPannel.setVisibility(View.VISIBLE);
+    //}
 
     /**
      * Close progress dialog

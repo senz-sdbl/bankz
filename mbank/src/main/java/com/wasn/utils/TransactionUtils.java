@@ -54,7 +54,7 @@ public class TransactionUtils {
                 "NIC",
                 "Acc no",
                 amount,
-                "3400.00",
+                3400,
                 getCurrentTime(),
                 "DEPOSIT");
 
@@ -151,7 +151,7 @@ public class TransactionUtils {
         double total = 0;
 
         for (int i = 0; i < transactionList.size(); i++) {
-            total = total + Double.parseDouble(transactionList.get(i).getTransactionAmount());
+            total = total + transactionList.get(i).getTransactionAmount();
         }
 
         return total;

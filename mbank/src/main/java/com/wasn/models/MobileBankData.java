@@ -484,7 +484,7 @@ public class MobileBankData {
             String clientNic = transactionCursor.getString(4);
             String accountNo = transactionCursor.getString(5);
             String previousBalance = transactionCursor.getString(6);
-            String transactionAmount = transactionCursor.getString(7);
+            int transactionAmount = transactionCursor.getInt(7);
             String transactionTime = transactionCursor.getString(9);
             String transactionType = transactionCursor.getString(10);
 

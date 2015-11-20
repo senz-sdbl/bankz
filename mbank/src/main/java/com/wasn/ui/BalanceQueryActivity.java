@@ -135,7 +135,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         } else if (view == done) {
             //preSendToNetwork(); ToDo have to remove this
             Intent i = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
-            BalanceQuery balance = new BalanceQuery("123456789", "Name", "0000000v", "15,000");
+            BalanceQuery balance = new BalanceQuery(accountEditText.getText().toString(), "Name", "0000000v", "15,000");
             i.putExtra("balance", balance);
             startActivity(i);
             preSendToNetwork();

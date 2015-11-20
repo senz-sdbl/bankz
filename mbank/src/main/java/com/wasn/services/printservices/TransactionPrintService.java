@@ -79,7 +79,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
             // update previous transaction amount
             application.getMobileBankData().insertTransaction(transaction);
             application.getMobileBankData().setReceiptNo(Integer.toString(transaction.getId()));
-            application.getMobileBankData().updatePreviousTransactionAmount(transaction.getClientAccountNo(), transaction.getTransactionAmount());
+            application.getMobileBankData().updatePreviousTransactionAmount(transaction.getClientAccountNo(), Integer.toString(transaction.getTransactionAmount()));
 
             return "1";
         } catch (IOException e) {

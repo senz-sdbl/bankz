@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.IBinder;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.score.senz.ISenzService;
 import com.score.senzc.enums.SenzTypeEnum;
@@ -36,6 +38,8 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     MobileBankApplication application;
     RelativeLayout back;
     RelativeLayout done;
+    TextView LineText;
+
     private static final String TAG = BalanceQueryActivity.class.getName();
 
     private EditText accountEditText;
@@ -101,6 +105,12 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         back.setOnClickListener(BalanceQueryActivity.this);
         done.setOnClickListener(BalanceQueryActivity.this);
         accountEditText = (EditText) findViewById(R.id.balance_query_layout_account_text);
+
+        // set custom font for header text
+        LineText = (TextView) findViewById(R.id.balance_query_account_no);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        LineText.setTypeface(face);
+        LineText.setTypeface(null, Typeface.BOLD);
 
     }
 

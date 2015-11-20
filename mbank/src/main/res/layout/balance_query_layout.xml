@@ -93,12 +93,13 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/balance_query_account_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="31dp"
                     android:layout_marginTop="25dp"
                     android:text="Account No"
-                    android:textColor="#4a4a4a"
+                    android:textColor="#f79239"
                     android:textSize="17dp" >
                 </TextView>
                 <EditText

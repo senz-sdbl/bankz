@@ -238,7 +238,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
             // need to go back to transaction activity
             startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
-            TransactionDetailsActivity.this.finish();
+            //TransactionDetailsActivity.this.finish();
         } else if (status.equals("0")) {
             Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
         } else if (status.equals("-2")) {

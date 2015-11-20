@@ -156,6 +156,18 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         accountEditText.setText(balance.getClientAccount(), TextView.BufferType.NORMAL);
         accountEditText.setEnabled(false);
         accountEditText.setInputType(InputType.TYPE_NULL);
+
+        // set custom font for transaction account no
+        headerText = (TextView) findViewById(R.id.transaction_account_no);
+        Typeface face1 = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        headerText.setTypeface(face1);
+        headerText.setTypeface(null, Typeface.BOLD);
+
+        // set custom font for transaction amount
+        headerText = (TextView) findViewById(R.id.transaction_amount);
+        Typeface face2 = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        headerText.setTypeface(face2);
+        headerText.setTypeface(null, Typeface.BOLD);
     }
 
     /**

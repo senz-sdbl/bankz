@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
+import com.wasn.db.SenzorsDbSource;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
+import com.wasn.pojos.Transaction;
 import com.wasn.services.printservices.SummaryPrintService;
 import com.wasn.utils.PrintUtils;
 
@@ -97,13 +99,15 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 //        } else {
 //            enableBottomPannel();
 //        }
+        SenzorsDbSource senzorsDbSource=new SenzorsDbSource(getApplicationContext());
+        //Transaction tr=new Transaction(5,"abc","159789456V","1255555","1000",100000,"120000000","deposit");
 
 
         attributesList = new ArrayList<Attribute>();
         attributesList.add(new Attribute("Time", "TIME"));
         attributesList.add(new Attribute("Branch ID", "ID"));
         attributesList.add(new Attribute("Transaction Count", "COUNT"));
-        attributesList.add(new Attribute("Total Amount", "AMOUNT"));
+        attributesList.add(new Attribute("Total Amount", senzorsDbSource.getSummeryAmmount()+""));
 
         summaryDetailsListView = (ListView) findViewById(R.id.summary_details_list);
 

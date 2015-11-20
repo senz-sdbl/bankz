@@ -16,10 +16,10 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
     private static SenzorsDbHelper senzorsDbHelper;
 
     // If you change the database schema, you must increment the database version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "Senz.db";
     private static final String TEXT_TYPE = " TEXT";
-    private static final String NUMBER_TYPE = "NUM";
+    private static final String NUMBER_TYPE = " NUM";
 
 
     private static final String SQL_CREATE_TRANSACTION =
@@ -56,8 +56,6 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_TRANSACTION);
-
-
     }
 
     @Override

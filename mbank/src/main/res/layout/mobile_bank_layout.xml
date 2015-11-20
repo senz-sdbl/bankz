@@ -11,14 +11,13 @@
         android:background="#333333"
         android:layout_marginBottom="12dp">
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:id="@+id/mbank_icon"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
+            android:layout_height="60dp"
             android:gravity="center"
-            android:text="M"
+            android:text="#"
             android:textColor="#ffffff"
-            android:textSize="32sp"
+            android:textSize="40sp"
             android:layout_centerInParent="true"
             android:background="@drawable/circle_shape_green"
             android:layout_centerVertical="true"/>

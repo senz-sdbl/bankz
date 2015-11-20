@@ -75,4 +75,28 @@ public class PreferenceUtils {
         return preferences.getString(keyType, "");
     }
 
+    /**
+     * Save printer bluetooth address in shared preference
+     *
+     * @param context        application context
+     * @param printerAddress printer bluetooth address
+     */
+    public static void savePrinterAddress(Context context, String printerAddress) {
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("PRINTER_ADDRESS", printerAddress);
+        editor.commit();
+    }
+
+    /**
+     * Get saved printer bluetooth address from shared preference
+     *
+     * @param context
+     * @return
+     */
+    public static String getPrinterAddress(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return preferences.getString("PRINTER_ADDRESS", "");
+    }
+
 }

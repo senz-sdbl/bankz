@@ -16,15 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
-import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
-import com.wasn.exceptions.EmptyBranchNameException;
 import com.wasn.exceptions.EmptyPrinterAddressException;
-import com.wasn.exceptions.EmptyTelephoneNoException;
 import com.wasn.exceptions.UnTestedPrinterAddressException;
 import com.wasn.pojos.Settings;
 import com.wasn.services.printservices.TestPrintService;
+import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.SettingsUtils;
 
@@ -34,8 +32,6 @@ import com.wasn.utils.SettingsUtils;
  * @author erangaeb@gmail.com (eranga bandara)
  */
 public class SettingsActivity extends Activity implements View.OnClickListener {
-
-    MobileBankApplication application;
 
     // keep track with weather tested printer address
     // testing via printing a test print
@@ -69,7 +65,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
      * Initialize activity components and valuesdi
      */
     public void init() {
-        application = (MobileBankApplication) getApplication();
         isTestedPrintAddress = false;
 
         back = (RelativeLayout) findViewById(R.id.settings_layout_back);
@@ -86,7 +81,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         // set text to printer address
         // printer address stored in database
         printerAddressEditText = (EditText) findViewById(R.id.settings_layout_printer_address_text);
-        printerAddressEditText.setText(application.getMobileBankData().getPrinterAddress());
+        printerAddressEditText.setText(PreferenceUtils.getPrinterAddress(this));
 
         // set text to telephone no
         // stored in database
@@ -116,9 +111,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         try {
             // validate settings fields
-            SettingsUtils.validatePrinterAddress(printerAddress, application.getMobileBankData().getPrinterAddress(), isTestedPrintAddress);
-            SettingsUtils.validateTelephoneNo(telephoneNo);
-            SettingsUtils.validateBranchName(branchName);
+            SettingsUtils.validatePrinterAddress(printerAddress, PreferenceUtils.getPrinterAddress(this), isTestedPrintAddress);
 
             // save settings attributes in database
             // need admin privileges
@@ -131,12 +124,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         } catch (EmptyPrinterAddressException e) {
             displayMessageDialog("Error", "Empty printer address, make sure not empty printer address");
             e.printStackTrace();
-        } catch (EmptyBranchNameException e) {
-            displayToast("Empty branch name");
-            e.printStackTrace();
-        } catch (EmptyTelephoneNoException e) {
-            displayToast("Empty telephone no");
-            e.printStackTrace();
         }
     }
 
@@ -147,7 +134,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         String printerAddress = printerAddressEditText.getText().toString();
 
         try {
-            SettingsUtils.validatePrinterAddress(printerAddress, application.getMobileBankData().getPrinterAddress(), isTestedPrintAddress);
+            SettingsUtils.validatePrinterAddress(printerAddress, PreferenceUtils.getPrinterAddress(this), isTestedPrintAddress);
 
             // its already tested address
             // but need to print test print
@@ -182,39 +169,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         } catch (EmptyPrinterAddressException e) {
             displayToast("Empty printer address");
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Save printer address in database
-     *
-     * @param printerAddress printer address
-     */
-    public void savePrinterAddress(String printerAddress) {
-        application.getMobileBankData().setPrinterAddress(printerAddress);
-    }
-
-    /**
-     * Save telephone no in database
-     *
-     * @param telephoneNo telephone no
-     */
-    public void saveTelephoneNo(String telephoneNo) {
-        if (!telephoneNo.equals(application.getMobileBankData().getTelephoneNo())) {
-            // save only different value
-            application.getMobileBankData().setTelephoneNo(telephoneNo);
-        }
-    }
-
-    /**
-     * Save branch name in database
-     *
-     * @param branchName branch name
-     */
-    public void saveBranchName(String branchName) {
-        if (!branchName.equals(application.getMobileBankData().getBranchName())) {
-            // save only different value
-            application.getMobileBankData().setBranchName(branchName);
         }
     }
 
@@ -356,6 +310,10 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             // valid print address
             displayMessageDialog("Receipt printed", "Valid printer address, Now you can save settings");
             isTestedPrintAddress = true;
+
+            // save printer address
+            String printerAddress = printerAddressEditText.getText().toString().trim();
+            PreferenceUtils.savePrinterAddress(this, printerAddress);
         } else if (status.equals("-2")) {
             // bluetooth not enable
             displayToast("Bluetooth not enabled");

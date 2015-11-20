@@ -2,7 +2,6 @@ package com.wasn.services.printservices;
 
 import android.os.AsyncTask;
 
-import com.wasn.ui.TransactionDetailsActivity;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
@@ -10,6 +9,8 @@ import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
 import com.wasn.pojos.Settings;
 import com.wasn.pojos.Transaction;
+import com.wasn.ui.TransactionDetailsActivity;
+import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
 
 import java.io.IOException;
@@ -31,9 +32,11 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
      *
      * @param activity
      */
-    public TransactionPrintService(TransactionDetailsActivity activity) {
+    public TransactionPrintService(TransactionDetailsActivity activity, Transaction transaction) {
         this.activity = activity;
         application = (MobileBankApplication) activity.getApplication();
+
+        this.transaction = transaction;
     }
 
     /**
@@ -49,7 +52,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
         if (printType.equals("PRINT")) {
             printState = print();
         } else if (printType.equals("RE_PRINT")) {
-            printState = rePrint();
+            printState = print();
         }
 
         return printState;
@@ -61,13 +64,10 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
      * @return
      */
     public String print() {
-        // TODO get transaction
-        Transaction transaction = null;
-
         // printing attributes
-        String printerAddress = application.getMobileBankData().getPrinterAddress();
-        String telephoneNo = application.getMobileBankData().getTelephoneNo();
-        String branchName = application.getMobileBankData().getBranchName();
+        String printerAddress = PreferenceUtils.getPrinterAddress(activity);
+        String telephoneNo = "Telephone";
+        String branchName = "Branch";
         Settings settings = new Settings(printerAddress, telephoneNo, branchName);
 
         // send data to printer

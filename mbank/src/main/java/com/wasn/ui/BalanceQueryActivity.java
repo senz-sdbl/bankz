@@ -134,7 +134,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             preSendToNetwork();
 
             /*
-\\            startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
+            startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
             BalanceQueryActivity.this.finish();
             */ //ToDo implement done code
         }
@@ -194,8 +194,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             //TransactionActivity.this.finish();
 
             Senz senz = intent.getExtras().getParcelable("SENZ");
-            startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
-            BalanceQueryActivity.this.finish();
+
            /* if (senz.getAttributes().containsKey("msg")) {
                 // msg response received
                 ActivityUtils.cancelProgressDialog();

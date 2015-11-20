@@ -66,7 +66,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
     public void init() {
         application = (MobileBankApplication) SummaryDetailsActivity.this.getApplication();
 
-        bottomPannel = (LinearLayout) findViewById(R.id.summary_details_layout_bottom_pannel);
+        //bottomPannel = (LinearLayout) findViewById(R.id.summary_details_layout_bottom_pannel);
         back = (RelativeLayout) findViewById(R.id.summary_details_layout_back);
         help = (RelativeLayout) findViewById(R.id.summary_details_layout_help);
         print = (RelativeLayout) findViewById(R.id.summary_details_layout_print);

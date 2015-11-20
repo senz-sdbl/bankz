@@ -66,7 +66,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     }
 
     /**
-     * Initialize activity components and values
+     * Initialize activity components and valuesdi
      */
     public void init() {
         application = (MobileBankApplication) getApplication();

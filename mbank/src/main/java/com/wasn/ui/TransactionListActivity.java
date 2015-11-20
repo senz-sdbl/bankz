@@ -118,7 +118,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     SenzorsDbSource dbSource=new SenzorsDbSource(TransactionListActivity.this);
         allTransactionList =dbSource.getAllTransactions();
 
-
+        System.out.println("All transaction done");
         if (allTransactionList.size() > 0) {
             // have transaction
             adapter = new TransactionListAdapter(TransactionListActivity.this, allTransactionList);

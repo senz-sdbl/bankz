@@ -39,8 +39,8 @@ public class SenzorsDbSource {
 
     }
 
-    public List<Transaction> getAllTransactions(){
-        List<Transaction> sensorList = new ArrayList();
+    public ArrayList<Transaction> getAllTransactions(){
+        ArrayList<Transaction> sensorList = new ArrayList();
 
         SQLiteDatabase db = SenzorsDbHelper.getInstance(context).getReadableDatabase();
 
@@ -99,5 +99,13 @@ public class SenzorsDbSource {
         db.close();
     }
 
+    public int getSummeryAmmount(){
+        ArrayList<Transaction> transactions=getAllTransactions();
+        int total=0;
+        for (int i=0; i<transactions.size(); i++) {
+          total=total+  transactions.get(i).getTransactionAmount();
+        }
+        return total;
+    }
 
 }

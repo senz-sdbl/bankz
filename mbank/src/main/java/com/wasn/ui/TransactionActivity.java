@@ -30,6 +30,7 @@ import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
+import com.wasn.db.SenzorsDbSource;
 import com.wasn.exceptions.EmptyFieldsException;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidBalanceAmountException;
@@ -97,6 +98,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction_layout);
         //Link to service
+        addDummyData();
         connectWithService();
         init();
         registerReceiver(senzMessageReceiver, new IntentFilter("DATA"));
@@ -157,7 +159,21 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         accountEditText.setEnabled(false);
         accountEditText.setInputType(InputType.TYPE_NULL);
     }
-
+public void addDummyData(){
+    SenzorsDbSource senzorsDbSource=new SenzorsDbSource(getApplicationContext());
+    Transaction tr=new Transaction(5,"abc","159789456V","1255555","1000",100000,"120000000","deposit");
+            /*
+            * (int id,
+                       String clientName,
+                       String clientNic,
+                       String clientAccountNo,
+                       String previousBalance,
+                       int transactionAmount,
+                       String transactionTime,
+                       String transactionType) {
+                       */
+    senzorsDbSource.createTransaction(tr);
+}
     /**
      * Initialize new transaction
      */
@@ -186,7 +202,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             startActivity(intent);
             TransactionActivity.this.finish();
 
-            //doTransactionoverNetwork();
+            doTransactionoverNetwork();
         } catch (NumberFormatException e) {
             displayMessageDialog("Error", "Invalid amount, make sure amount is correct");
         } catch (EmptyFieldsException e) {

@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 public class SenzorsDbContract {
 
     public static abstract class Transaction implements BaseColumns {
-        public static final String TABLE_NAME = "transaction";
+        public static final String TABLE_NAME = "transaction_table";
         public static final String COLUMN_NAME_ID = "id";
         public static final String COLUMN_NAME_CLIENTNAME = "client_name";
         public static final String COLUMN_NAME_clientAccountNo = "client_account_no";

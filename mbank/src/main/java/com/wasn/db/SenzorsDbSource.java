@@ -33,6 +33,8 @@ public class SenzorsDbSource {
         values.put(SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount, transaction.getTransactionAmount());
         values.put(SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime, transaction.getTransactionTime());
         values.put(SenzorsDbContract.Transaction.COLUMN_NAME_transactionType, transaction.getTransactionType());
+        values.put(SenzorsDbContract.Transaction.COLUMN_NAME_clientNIC, transaction.getClientNic());
+        values.put(SenzorsDbContract.Transaction.COLUMN_NAME_ID, transaction.getId());
 
         long id = db.insert(SenzorsDbContract.Transaction.TABLE_NAME, null, values);
         db.close();
@@ -46,8 +48,8 @@ public class SenzorsDbSource {
 
         // join query to retrieve data
         String query = "SELECT * " +
-                "FROM " +SenzorsDbContract.Transaction.TABLE_NAME+
-                "";
+                "FROM " +SenzorsDbContract.Transaction.TABLE_NAME;
+
         Cursor cursor = db.rawQuery(query, null);
 // sensor/user attributes
         int id;
@@ -58,27 +60,47 @@ public class SenzorsDbSource {
         int transactionAmount;
         String transactionTime;
         String transactionType;
-
+        Log.e(TAG,cursor.getCount()+"f");
         // extract attributes
         while (cursor.moveToNext()) {
             HashMap<String, String> senzAttributes = new HashMap<>();
 
             // get senz attributes
-            id = cursor.getInt(cursor.getColumnIndex(SenzorsDbContract.Transaction._ID));
+
+            id = cursor.getInt(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_ID));
+
             clientName = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_CLIENTNAME));
 
             clientAccountNo = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_clientAccountNo));
-            previousBalance = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance));
-            transactionAmount = cursor.getInt(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount));
-            transactionTime = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime));
-            transactionType = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionType));
-            clientNic = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_clientNIC));
 
+            previousBalance = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance));
+
+            transactionAmount = cursor.getInt(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount));
+
+            transactionTime = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime));
+
+            transactionType = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionType));
+
+            clientNic = cursor.getString(cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_clientNIC));
+            System.out.println(id+" "+clientName+" "+clientAccountNo+" "+previousBalance+" "+transactionAmount+" "+transactionTime+" "+transactionType);
             Transaction transaction=new Transaction(id,clientName,clientNic,clientAccountNo,previousBalance,transactionAmount,transactionTime,transactionType);
             //senzAttributes.put(_senzName, _senzValue);
 
+/*
+
+            Log.d(TAG,cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_ID)+"");
+            Log.d(TAG,cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance)+"");
+            Log.d(TAG,cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime)+"");
+            Log.d(TAG,cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionType)+"");
+            Log.d(TAG,cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_clientAccountNo)+"");
+            Log.d(TAG,cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_CLIENTNAME)+"");
+            Log.d(TAG,cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_clientNIC)+"");
+            Log.d(TAG,cursor.getColumnIndex(SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount)+"");
+
+*/
 
             // fill senz list
+            System.out.println("Done in Create object");
             sensorList.add(transaction);
         }
 

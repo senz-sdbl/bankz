@@ -52,6 +52,28 @@
         </TextView>
 
     </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/button_selector"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:id="@+id/balance_query_layout_get_balance">
+            <ImageView
+                android:layout_height="32dp"
+                android:layout_width="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/done">
+            </ImageView>
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+
+                android:background="#4a4a4a">
+            </TextView>
+        </RelativeLayout>
 </RelativeLayout>
 
     <ScrollView
@@ -95,39 +117,39 @@
         </LinearLayout>
         </LinearLayout>
 </ScrollView>
+    <!--<LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="#333333" >
+
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
-            android:background="#333333" >
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal" >
 
-            <LinearLayout
+            <RelativeLayout
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal" >
-
-                <RelativeLayout
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@drawable/done_button_selector"
-                    android:clickable="true"
-                    android:layout_weight="1"
-                    android:id="@+id/balance_query_layout_get_balance">
-                    <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:textColor="#ffffff"
-                        android:textStyle="normal"
-                        android:id="@+id/capture_layout_clear_icon"
-                        android:text="Get Balance">
-                    </TextView>
-                </RelativeLayout>
-            </LinearLayout>
+                android:background="@drawable/done_button_selector"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:id="@+id/balance_query_layout_get_balance">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="#ffffff"
+                    android:textStyle="normal"
+                    android:id="@+id/capture_layout_clear_icon"
+                    android:text="Get Balance">
+                </TextView>
+            </RelativeLayout>
         </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>

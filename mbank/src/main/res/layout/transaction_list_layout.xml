@@ -74,6 +74,27 @@
                 android:layout_alignParentLeft="true"
                 android:background="#4a4a4a"></TextView>
         </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/transaction_list_layout_done"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_selector"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/done"></ImageView>
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+
+                android:background="#4a4a4a"></TextView>
+        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -107,7 +128,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/transaction_list_layout_bottom_pannel"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
@@ -142,7 +163,7 @@
                     android:textSize="15sp"></TextView>
             </RelativeLayout>
 
-            <!--<RelativeLayout
+            <RelativeLayout
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="6dp"
                     android:layout_marginTop="6dp"
@@ -161,8 +182,8 @@
                         android:text="Cancel">
                 </TextView>
 
-            </RelativeLayout>-->
+            </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
 
 </LinearLayout>

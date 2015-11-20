@@ -35,9 +35,6 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
     MobileBankApplication application;
 
-    // previous activity name
-    private static String previousActivity;
-
     // use to populate list
     ListView transactionDetailsListView;
     ArrayList<Attribute> attributesList;
@@ -51,6 +48,8 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
     // display when printing
     public ProgressDialog progressDialog;
+
+    private Transaction transaction;
 
     /**
      * {@inheritDoc}
@@ -69,15 +68,6 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
     public void init() {
         application = (MobileBankApplication) TransactionDetailsActivity.this.getApplication();
 
-        // get extra values
-        // previous activity name comes with extras
-        Bundle extra = getIntent().getExtras();
-        if (extra != null) {
-            previousActivity = extra.getString("ACTIVITY_NAME");
-        } else {
-            previousActivity = MobileBankActivity.class.getName();
-        }
-
         back = (RelativeLayout) findViewById(R.id.transaction_details_layout_back);
         help = (RelativeLayout) findViewById(R.id.transaction_details_layout_help);
         print = (RelativeLayout) findViewById(R.id.transaction_details_layout_print);
@@ -92,8 +82,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         help.setOnClickListener(TransactionDetailsActivity.this);
         print.setOnClickListener(TransactionDetailsActivity.this);
 
-        // TODO get transaction via intent
-        Transaction transaction = getIntent().getParcelableExtra("transaction");
+        this.transaction = getIntent().getParcelableExtra("transaction");
 
         // populate list only have transaction
         if (transaction != null) {
@@ -103,7 +92,8 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             attributesList.add(new Attribute("Client NIC", transaction.getClientNic()));
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
             attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
-            attributesList.add(new Attribute("Transaction Amount", Integer.toString(transaction.getTransactionAmount())));//ToDo handle the data type
+            attributesList.add(new Attribute("Transaction Amount", Integer.toString(transaction.getTransactionAmount())));
+            //ToDo handle the data type
             attributesList.add(new Attribute("Transaction Time", transaction.getTransactionType()));
 
             // populate list
@@ -155,36 +145,18 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // printing event need to handle according to previous activity
-                if (previousActivity.equals(MobileBankActivity.class.getName())) {
-                    dialog.cancel();
-                    // print and save transaction in database
-                    // print two receipts
-                    try {
-                        if (PrintUtils.isEnableBluetooth()) {
-                            progressDialog = ProgressDialog.show(TransactionDetailsActivity.this, "", "Printing receipt, Please wait ...");
-                            new TransactionPrintService(TransactionDetailsActivity.this).execute("PRINT");
-                        }
-                    } catch (BluetoothNotEnableException e) {
-                        Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
-                    } catch (BluetoothNotAvailableException e) {
-                        Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not available", Toast.LENGTH_LONG).show();
+                dialog.cancel();
+                // print and save transaction in database
+                // print two receipts
+                try {
+                    if (PrintUtils.isEnableBluetooth()) {
+                        progressDialog = ProgressDialog.show(TransactionDetailsActivity.this, "", "Printing receipt, Please wait ...");
+                        new TransactionPrintService(TransactionDetailsActivity.this, transaction).execute("PRINT");
                     }
-                } else {
-                    dialog.cancel();
-                    // print only one receipt
-                    // reprint
-                    try {
-                        if (PrintUtils.isEnableBluetooth()) {
-                            progressDialog = ProgressDialog.show(TransactionDetailsActivity.this, "", "Printing receipt, Please wait ...");
-                            new TransactionPrintService(TransactionDetailsActivity.this).execute("RE_PRINT");
-                        }
-
-
-                    } catch (BluetoothNotEnableException e) {
-                        Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
-                    } catch (BluetoothNotAvailableException e) {
-                        Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not available", Toast.LENGTH_LONG).show();
-                    }
+                } catch (BluetoothNotEnableException e) {
+                    Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
+                } catch (BluetoothNotAvailableException e) {
+                    Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not available", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -260,48 +232,26 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         // close progress dialog
         closeProgressDialog();
 
-        if (previousActivity.equals(MobileBankActivity.class.getName())) {
-            if (status.equals("1")) {
-                // clear shared objects
-                Toast.makeText(TransactionDetailsActivity.this, "Transaction saved", Toast.LENGTH_LONG).show();
+        if (status.equals("1")) {
+            // clear shared objects
+            Toast.makeText(TransactionDetailsActivity.this, "Transaction saved", Toast.LENGTH_LONG).show();
 
-                // need to go back to transaction activity
-                startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
-                TransactionDetailsActivity.this.finish();
-            } else if (status.equals("0")) {
-                Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
-            } else if (status.equals("-2")) {
-                Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
-            } else if (status.equals("-3")) {
-                Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not available", Toast.LENGTH_LONG).show();
-            } else if (status.equals("-5")) {
-                // invalid bluetooth address
-                displayMessageDialog("Error", "Invalid printer address, Please make sure correct printer address in Settings");
-            } else {
-                // cannot print
-                // may be invalid printer address
-                displayMessageDialog("Cannot print", "Printer address might be incorrect, Please make sure correct printer address in Settings and printer switched ON");
-            }
+            // need to go back to transaction activity
+            startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
+            TransactionDetailsActivity.this.finish();
+        } else if (status.equals("0")) {
+            Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
+        } else if (status.equals("-2")) {
+            Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
+        } else if (status.equals("-3")) {
+            Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not available", Toast.LENGTH_LONG).show();
+        } else if (status.equals("-5")) {
+            // invalid bluetooth address
+            displayMessageDialog("Error", "Invalid printer address, Please make sure correct printer address in Settings");
         } else {
-            if (status.equals("1")) {
-                Toast.makeText(TransactionDetailsActivity.this, "Receipt printed", Toast.LENGTH_LONG).show();
-
-                // back to transaction list
-                TransactionDetailsActivity.this.finish();
-            } else if (status.equals("0")) {
-                Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
-            } else if (status.equals("-2")) {
-                Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
-            } else if (status.equals("-3")) {
-                Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not available", Toast.LENGTH_LONG).show();
-            } else if (status.equals("-5")) {
-                // invalid bluetooth address
-                displayMessageDialog("Error", "Invalid printer address, Please make sure correct printer address in Settings");
-            } else {
-                // cannot print
-                // may be invalid printer address
-                displayMessageDialog("Cannot print", "Printer address might be incorrect, Please make sure correct printer address in Settings and printer switched ON");
-            }
+            // cannot print
+            // may be invalid printer address
+            displayMessageDialog("Cannot print", "Printer address might be incorrect, Please make sure correct printer address in Settings and printer switched ON");
         }
     }
 
@@ -310,30 +260,17 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
      */
     public void onClick(View view) {
         if (view == back) {
-            if (previousActivity.equals(MobileBankActivity.class.getName())) {
-                // comes from mobile bank activity
-                startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
-            }
-
-            TransactionDetailsActivity.this.finish();
+//            if (previousActivity.equals(MobileBankActivity.class.getName())) {
+//                // comes from mobile bank activity
+//                startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
+//            }
+//
+//            TransactionDetailsActivity.this.finish();
         } else if (view == help) {
 
         } else if (view == print) {
             displayInformationMessageDialog("Do you wnt to print the receipt? make sure bluetooth is ON");
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onBackPressed() {
-        if (previousActivity.equals(MobileBankActivity.class.getName())) {
-            // comes from mobile bank activity
-            startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
-        }
-
-        TransactionDetailsActivity.this.finish();
     }
 
 }

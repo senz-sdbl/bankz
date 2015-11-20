@@ -181,11 +181,12 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             // create transaction and share in application
             Transaction transaction = TransactionUtils.createTransaction(branchId, transactionId, amount);
 
-            // TODO pass transaction via intent
-            startActivity(new Intent(TransactionActivity.this, TransactionDetailsActivity.class));
+            Intent intent = new Intent(this, TransactionDetailsActivity.class);
+            intent.putExtra("transaction", transaction);
+            startActivity(intent);
             TransactionActivity.this.finish();
 
-            doTransactionoverNetwork();
+            //doTransactionoverNetwork();
         } catch (NumberFormatException e) {
             displayMessageDialog("Error", "Invalid amount, make sure amount is correct");
         } catch (EmptyFieldsException e) {

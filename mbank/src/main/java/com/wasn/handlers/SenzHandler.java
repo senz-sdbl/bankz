@@ -59,6 +59,7 @@ public class SenzHandler {
                     break;
                 case DATA:
                     Log.d(TAG, "DATA received");
+                    System.out.println("DATA");
                     handleDataSenz(senz);
                     break;
             }

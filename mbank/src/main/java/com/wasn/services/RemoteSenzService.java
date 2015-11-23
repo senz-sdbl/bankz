@@ -48,7 +48,7 @@ public class RemoteSenzService extends Service implements ShareSenzListener {
     private static final String TAG = RemoteSenzService.class.getName();
 
     // senz service host and port
-    private static final String SENZ_HOST = "udp.mysensors.info";
+    private static final String SENZ_HOST = "192.168.1.2";
     //private static final String SENZ_HOST = "192.168.59.103";
     private static final int SENZ_PORT = 9090;
 
@@ -209,8 +209,8 @@ public class RemoteSenzService extends Service implements ShareSenzListener {
                         socket.receive(receivePacket);
                         String senz = new String(message, 0, receivePacket.getLength());
 
-                        Log.d(TAG, "SenZ received: " + senz);
-
+                        Log.e(TAG, "SenZ received: " + senz);
+                        //System.out.println(senz);
                         SenzHandler.getInstance(RemoteSenzService.this, RemoteSenzService.this).handleSenz(senz);
                     }
                 } catch (IOException e) {

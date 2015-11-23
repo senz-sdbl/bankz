@@ -114,21 +114,25 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
 
     }
 
-    private void doQueryOverNetwork() {
+    private void doQueryOverNetwork(String accno) {
         try {
 
             // first create create senz
             HashMap<String, String> senzAttributes = new HashMap<>();
+            senzAttributes.put("accno", (accno));
+            senzAttributes.put("clnm","");
+            senzAttributes.put("curbal", "");
+            senzAttributes.put("nic","");
             senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
             senzAttributes.put("pubkey", PreferenceUtils.getRsaKey(this, RSAUtils.PUBLIC_KEY));
-            senzAttributes.put("testkey", "fgsfgdfg");
+
 
             // new senz
             String id = "_ID";
             String signature = "";
             SenzTypeEnum senzType = SenzTypeEnum.GET;
-            User sender = new User("", "registeringUser.getUsername()");
-            User receiver = new User("", "mysensors");
+            User sender = new User("", "user1");
+            User receiver = new User("", "balancqr");
             Senz senz = new Senz(id, signature, senzType, sender, receiver, senzAttributes);
 
             senzService.send(senz);
@@ -144,10 +148,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             BalanceQueryActivity.this.finish();
         } else if (view == done) {
             //preSendToNetwork(); ToDo have to remove this
-            Intent i = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
-            BalanceQuery balance = new BalanceQuery(accountEditText.getText().toString(), "Name", "0000000v", "15,000");
-            i.putExtra("balance", balance);
-            startActivity(i);
+
             preSendToNetwork();
 
             
@@ -157,7 +158,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
 
     public void preSendToNetwork() {//input validations are done here
         String accno = accountEditText.getText().toString();
-        doQueryOverNetwork();
+        doQueryOverNetwork(accno);
     }
 
     @Override
@@ -199,6 +200,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "Got message from Senz service");
+            //System.out.println("awa bn awa");
             handleMessage(intent);
         }
     };
@@ -212,6 +214,18 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             //TransactionActivity.this.finish();
 
             Senz senz = intent.getExtras().getParcelable("SENZ");
+            /*System.out.println(senz.getSenzType());
+            System.out.println(senz.getAttributes().get("nic"));
+            System.out.println(senz.getAttributes().get("clnm"));
+            System.out.println(senz.getAttributes().get("accno"));
+            System.out.println(senz.getAttributes().get("curbal"));
+            */
+
+            Intent i = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
+            BalanceQuery balance = new BalanceQuery(senz.getAttributes().get("accno"), senz.getAttributes().get("clnm"), senz.getAttributes().get("nic"), senz.getAttributes().get("curbal"));
+            i.putExtra("balance", balance);
+            startActivity(i);
+
            /* startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
             BalanceQueryActivity.this.finish();
             */

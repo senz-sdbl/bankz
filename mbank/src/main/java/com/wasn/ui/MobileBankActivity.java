@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +41,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     TextView summaryIcon;
     TextView settingsText;
     TextView settingsIcon;
-    TextView mbankIcon;
+    //ImageView mbankIcon;
 
     /**
      * {@inheritDoc}
@@ -84,8 +85,8 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
         settingsIcon.setTypeface(typeface, Typeface.BOLD);
         settingsText.setTypeface(typeface, Typeface.BOLD);
 
-        mbankIcon = (TextView) findViewById(R.id.mbank_icon);
-        mbankIcon.setTypeface(typeface, Typeface.BOLD);
+        //mbankIcon = (ImageView) findViewById(R.id.mbank_icon);
+        //mbankIcon.setTypeface(typeface, Typeface.BOLD);
 
         balanceQueryLayout.setOnClickListener(MobileBankActivity.this);
         summaryLayout.setOnClickListener(MobileBankActivity.this);

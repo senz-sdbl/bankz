@@ -15,6 +15,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/sdbl_logo"
+            android:id="@+id/mbank_icon"
             android:layout_centerHorizontal="true"/>
 
         <!--<TextView

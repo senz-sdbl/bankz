@@ -1,14 +1,18 @@
 package com.wasn.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +46,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     TextView settingsText;
     TextView settingsIcon;
     //ImageView mbankIcon;
+    private TextView resultText;
 
     /**
      * {@inheritDoc}
@@ -109,9 +114,10 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
             startActivity(new Intent(MobileBankActivity.this, TransactionListActivity.class));
             MobileBankActivity.this.finish();
         } else if (view == settingsLayout) {
+            showPasswordInputDialog();
             // display settings activity
-            startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
-            MobileBankActivity.this.finish();
+            //startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
+            //MobileBankActivity.this.finish();
         } else if (view == logout) {
             displayInformationMessageDialog("Are you sure, you want to logout? ");
         }
@@ -183,5 +189,41 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     @Override
     public void onBackPressed() {
         displayInformationMessageDialog("Are you sure, you want to logout? ");
+    }
+
+    // password popup....
+    protected void showPasswordInputDialog(){
+
+        //get prompt.xml view
+        LayoutInflater layoutInflater = LayoutInflater.from(MobileBankActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.input_password_dialog_layout, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MobileBankActivity.this);
+        alertDialogBuilder.setView(promptView);
+
+        final EditText editText = (EditText) promptView.findViewById(R.id.settings_password);
+
+        alertDialogBuilder.setTitle("Enter Password");
+
+        // setup a dialog window
+        AlertDialog.Builder builder = alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                //resultText.setText("hello," + editText.getText());
+                String password = editText.getText().toString();
+                if(new String("admin").equals(password)){
+                    startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
+                    MobileBankActivity.this.finish();
+                }
+
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        // cerate an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+
     }
 }

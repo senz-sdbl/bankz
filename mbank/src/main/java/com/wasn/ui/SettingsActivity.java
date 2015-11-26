@@ -42,7 +42,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     RelativeLayout save;
     //RelativeLayout save;
     RelativeLayout testPrint;
-    TextView headerText,LineText;
+    TextView headerText;
+    TextView labelText;
     EditText printerAddressEditText;
     EditText telephoneNoEditText;
     EditText branchNameEditText;
@@ -65,6 +66,8 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
      * Initialize activity components and valuesdi
      */
     public void init() {
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+
         isTestedPrintAddress = false;
 
         back = (RelativeLayout) findViewById(R.id.settings_layout_back);
@@ -74,19 +77,17 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         // set custom font to header text
         headerText = (TextView) findViewById(R.id.settings_layout_header_text);
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face);
         headerText.setTypeface(null, Typeface.BOLD);
 
-        // set custom font for text
-        LineText = (TextView) findViewById(R.id.settings_printer_bluetooth_address);
-        Typeface face1 = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        LineText.setTypeface(face1);
+        labelText = (TextView) findViewById(R.id.settings_printer_bluetooth_address);
+        labelText.setTypeface(face);
 
         // set text to printer address
         // printer address stored in database
         printerAddressEditText = (EditText) findViewById(R.id.settings_layout_printer_address_text);
         printerAddressEditText.setText(PreferenceUtils.getPrinterAddress(this));
+        printerAddressEditText.setTypeface(face);
 
         // set text to telephone no
         // stored in database

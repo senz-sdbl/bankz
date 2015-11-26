@@ -103,6 +103,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         //Transaction tr=new Transaction(5,"abc","159789456V","1255555","1000",100000,"120000000","deposit");
 
 
+
         attributesList = new ArrayList<Attribute>();
         attributesList.add(new Attribute("Time", "TIME"));
         attributesList.add(new Attribute("Branch ID", "ID"));

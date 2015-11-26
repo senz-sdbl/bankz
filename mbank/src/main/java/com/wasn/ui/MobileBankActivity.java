@@ -61,6 +61,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
      * Initialize activity components
      */
     public void init() {
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         application = (MobileBankApplication) MobileBankActivity.this.getApplication();
 
         balanceQueryLayout = (RelativeLayout) findViewById(R.id.transaction_layout);
@@ -70,7 +71,6 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
 
         // set custom font
         logoutText = (TextView) findViewById(R.id.mobile_bank_layout_logout_text);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         logoutText.setTypeface(typeface, Typeface.BOLD);
 
         tranactionIcon = (TextView) findViewById(R.id.transaction_icon);

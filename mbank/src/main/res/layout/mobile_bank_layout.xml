@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:background="#333333"
+        android:background="#2c5d98"
         android:layout_marginBottom="12dp">
 
         <!--<ImageView-->
@@ -24,10 +24,10 @@
             android:layout_height="60dp"
             android:gravity="center"
             android:text="#"
-            android:textColor="#ffffff"
+            android:textColor="#457ab1"
             android:textSize="40sp"
             android:layout_centerInParent="true"
-            android:background="@drawable/circle_shape_green"
+            android:background="@drawable/circle_shape_white"
             android:layout_centerVertical="true"/>
         <!--<TextView-->
             <!--android:layout_width="wrap_content"-->
@@ -76,10 +76,10 @@
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="$"
-                android:textColor="#ffffff"
+                android:textColor="#fff"
                 android:textSize="30sp"
                 android:layout_alignParentLeft="true"
-                android:background="@drawable/circle_shape_gray"
+                android:background="@drawable/circle_shape_blue"
                 android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -89,7 +89,7 @@
                 android:id="@+id/tranaction_text"
                 android:layout_toRightOf="@+id/transaction_icon"
                 android:text="Transaction"
-                android:textColor="#f79239"
+                android:textColor="#306d97"
                 android:layout_height="wrap_content" />
          </RelativeLayout>
 
@@ -108,10 +108,10 @@
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="%"
-                android:textColor="#ffffff"
+                android:textColor="#fff"
                 android:textSize="30sp"
                 android:layout_alignParentLeft="true"
-                android:background="@drawable/circle_shape_gray"
+                android:background="@drawable/circle_shape_blue"
                 android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -121,7 +121,7 @@
                 android:id="@+id/summary_text"
                 android:layout_toRightOf="@+id/summary_icon"
                 android:text="Summary"
-                android:textColor="#f79239"
+                android:textColor="#306d97"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
@@ -170,10 +170,10 @@
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
                 android:text="!"
-                android:textColor="#ffffff"
+                android:textColor="#fff"
                 android:textSize="30sp"
                 android:layout_alignParentLeft="true"
-                android:background="@drawable/circle_shape_gray"
+                android:background="@drawable/circle_shape_blue"
                 android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -183,7 +183,7 @@
                 android:id="@+id/settings_text"
                 android:layout_toRightOf="@+id/settings_icon"
                 android:text="Settings"
-                android:textColor="#f79239"
+                android:textColor="#306d97"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
@@ -210,7 +210,7 @@
                 android:layout_marginRight="15dp"
                 android:textSize="16sp"
                 android:id="@+id/mobile_bank_layout_logout_text"
-                android:textColor="#f79239">
+                android:textColor="#457ab1">
             </TextView>
             <!--<ImageView-->
                 <!--android:layout_height="25dp"-->

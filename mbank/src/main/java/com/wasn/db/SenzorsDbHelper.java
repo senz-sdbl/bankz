@@ -17,7 +17,7 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
     private static SenzorsDbHelper senzorsDbHelper;
 
     // If you change the database schema, you must increment the database version
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
     private static final String DATABASE_NAME = "Senz2.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String NUMBER_TYPE = " NUM";

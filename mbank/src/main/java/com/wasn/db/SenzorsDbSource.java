@@ -9,7 +9,9 @@ import android.util.Log;
 import com.wasn.pojos.Summary;
 import com.wasn.pojos.Transaction;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -126,19 +128,25 @@ public class SenzorsDbSource {
                 " FROM " +SenzorsDbContract.Transaction.TABLE_NAME;
         Log.e(TAG,query);
         Cursor cursor = db.rawQuery(query, null);
-        String tcount;
-        String tamount;
+        int tcount;
+        int tamount;
         if(cursor.moveToFirst()){
-            tcount = cursor.getString(cursor.getColumnIndex("trcount"));
+            tcount = cursor.getInt(cursor.getColumnIndex("trcount"));
 
-            tamount = cursor.getString(cursor.getColumnIndex("total"));
+            tamount = cursor.getInt(cursor.getColumnIndex("total"));
         }
         else{
-            tcount = "0";
+            tcount = 0;
 
-            tamount = "0";
+            tamount = 0;
         }
-        Summary tempsum=new Summary("10255",tcount,tamount,"");
+
+        Calendar cp = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = df.format(cp.getTime());
+
+        Summary tempsum=new Summary("10255",""+tcount,""+tamount,formattedDate);
 
 
 

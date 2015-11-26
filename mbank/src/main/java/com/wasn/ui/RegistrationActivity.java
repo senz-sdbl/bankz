@@ -129,6 +129,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         if (v == signUpButton) {
             if (NetworkUtil.isAvailableNetwork(this)) {
                 onClickRegister();
+                //navigateToHome();
             } else {
                 Toast.makeText(this, "No network connection available", Toast.LENGTH_LONG).show();
             }

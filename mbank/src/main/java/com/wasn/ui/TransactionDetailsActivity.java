@@ -237,8 +237,8 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             Toast.makeText(TransactionDetailsActivity.this, "Transaction saved", Toast.LENGTH_LONG).show();
 
             // need to go back to transaction activity
-            startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
-            //TransactionDetailsActivity.this.finish();
+            startActivity(new Intent(TransactionDetailsActivity.this, BalanceQueryActivity.class));
+            TransactionDetailsActivity.this.finish();
         } else if (status.equals("0")) {
             Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
         } else if (status.equals("-2")) {

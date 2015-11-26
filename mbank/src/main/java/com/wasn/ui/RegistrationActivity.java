@@ -240,6 +240,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
             if (!isResponseReceived) {
                 String message = "<font color=#000000>Seems we couldn't reach the senz service at this moment</font>";
                 displayInformationMessageDialog("#Registration Fail", message);
+                //navigateToHome();
             }
         }
     }

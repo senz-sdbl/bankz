@@ -10,6 +10,7 @@ import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
 import com.wasn.pojos.Settings;
 import com.wasn.pojos.Summary;
+import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
 
 import java.io.IOException;
@@ -53,18 +54,16 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
         Summary summary = new Summary("345", "343", "3454", "3454");
 
         // printing attributes
-        String printerAddress = application.getMobileBankData().getPrinterAddress();
-        String telephoneNo = application.getMobileBankData().getTelephoneNo();
-        String branchName = application.getMobileBankData().getBranchName();
+        String printerAddress = PreferenceUtils.getPrinterAddress(application);
+        String telephoneNo = "0775432015";
+        String branchName = "Kirulapana";
         Settings settings = new Settings(printerAddress, telephoneNo, branchName);
 
         // send ate to printer
         try {
             PrintUtils.printSummary(summary, settings);
 
-            // print summary means day end
-            // clear all data
-            application.getMobileBankData().deleteAllTransaction(application.getMobileBankData().getBranchId());
+            // TODO print summary means day end(delete all transaction)
 
             return "1";
         } catch (IOException e) {

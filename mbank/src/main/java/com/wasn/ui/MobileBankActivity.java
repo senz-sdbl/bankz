@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,8 +44,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     TextView summaryIcon;
     TextView settingsText;
     TextView settingsIcon;
-    //ImageView mbankIcon;
-    private TextView resultText;
+    TextView mbankIcon;
 
     /**
      * {@inheritDoc}
@@ -90,8 +88,8 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
         settingsIcon.setTypeface(typeface, Typeface.BOLD);
         settingsText.setTypeface(typeface, Typeface.BOLD);
 
-        //mbankIcon = (ImageView) findViewById(R.id.mbank_icon);
-        //mbankIcon.setTypeface(typeface, Typeface.BOLD);
+        mbankIcon = (TextView) findViewById(R.id.mbank_icon);
+        mbankIcon.setTypeface(typeface, Typeface.BOLD);
 
         balanceQueryLayout.setOnClickListener(MobileBankActivity.this);
         summaryLayout.setOnClickListener(MobileBankActivity.this);
@@ -192,7 +190,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     }
 
     // password popup....
-    protected void showPasswordInputDialog(){
+    protected void showPasswordInputDialog() {
 
         //get prompt.xml view
         LayoutInflater layoutInflater = LayoutInflater.from(MobileBankActivity.this);
@@ -209,7 +207,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
             public void onClick(DialogInterface dialog, int id) {
                 //resultText.setText("hello," + editText.getText());
                 String password = editText.getText().toString();
-                if(new String("admin").equals(password)){
+                if (new String("admin").equals(password)) {
                     startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
                     MobileBankActivity.this.finish();
                 }

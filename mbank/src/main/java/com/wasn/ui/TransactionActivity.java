@@ -32,8 +32,6 @@ import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.db.SenzorsDbSource;
 import com.wasn.exceptions.EmptyFieldsException;
-import com.wasn.exceptions.InvalidAccountException;
-import com.wasn.exceptions.InvalidBalanceAmountException;
 import com.wasn.pojos.BalanceQuery;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
@@ -171,9 +169,10 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         headerText.setTypeface(face2);
         headerText.setTypeface(null, Typeface.BOLD);
     }
-public void addDummyData(){
-    SenzorsDbSource senzorsDbSource=new SenzorsDbSource(getApplicationContext());
-    Transaction tr=new Transaction(5,"abc","159789456V","1255555","1000",100000,"120000000","deposit");
+
+    public void addDummyData() {
+        SenzorsDbSource senzorsDbSource = new SenzorsDbSource(getApplicationContext());
+        Transaction tr = new Transaction(5, "abc", "159789456V", "1255555", "1000", 100000, "120000000", "deposit");
             /*
             * (int id,
                        String clientName,
@@ -184,8 +183,9 @@ public void addDummyData(){
                        String transactionTime,
                        String transactionType) {
                        */
-    senzorsDbSource.createTransaction(tr);
-}
+        senzorsDbSource.createTransaction(tr);
+    }
+
     /**
      * Initialize new transaction
      */
@@ -200,29 +200,16 @@ public void addDummyData(){
             // get receipt no
             // database stored previous receipt no
             // receipt no equals to transaction id
-            int transactionId = Integer.parseInt(application.getMobileBankData().getReceiptNo()) + 1;
-
-            // get branch id
-            // database stored branch id as well
-            String branchId = application.getMobileBankData().getBranchId();
-
-            // create transaction and share in application
-            Transaction transaction = TransactionUtils.createTransaction(branchId, transactionId, amount);
-
             Intent intent = new Intent(this, TransactionDetailsActivity.class);
-            intent.putExtra("transaction", transaction);
+            intent.putExtra("transaction", new Transaction(1, "Test1", "345", "3454", "450", 45, "34543", "Deposit"));
             startActivity(intent);
             TransactionActivity.this.finish();
 
-            doTransactionoverNetwork(accountNo,amount);
+            //doTransactionoverNetwork(accountNo,amount);
         } catch (NumberFormatException e) {
             displayMessageDialog("Error", "Invalid amount, make sure amount is correct");
         } catch (EmptyFieldsException e) {
             displayMessageDialog("Error", "Empty fields, make sure not empty account and amount");
-        } catch (InvalidAccountException e) {
-            displayMessageDialog("Error", "Invalid account, make sure account is correct");
-        } catch (InvalidBalanceAmountException e) {
-            displayMessageDialog("Error", "Invalid balance amount, please recheck corresponding client details");
         }
     }
 
@@ -270,7 +257,7 @@ public void addDummyData(){
 
     //Do transaction over network
 
-    private void doTransactionoverNetwork(String accno,String amnt) {//ToDo amnt datatype
+    private void doTransactionoverNetwork(String accno, String amnt) {//ToDo amnt datatype
         try {
             // first create create senz
             HashMap<String, String> senzAttributes = new HashMap<>();

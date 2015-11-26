@@ -24,10 +24,10 @@ import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
+import com.wasn.pojos.BalanceQuery;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.RSAUtils;
-import com.wasn.pojos.BalanceQuery;
 
 import java.util.HashMap;
 
@@ -120,9 +120,9 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             // first create create senz
             HashMap<String, String> senzAttributes = new HashMap<>();
             senzAttributes.put("accno", (accno));
-            senzAttributes.put("clnm","");
+            senzAttributes.put("clnm", "");
             senzAttributes.put("curbal", "");
-            senzAttributes.put("nic","");
+            senzAttributes.put("nic", "");
             senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
             senzAttributes.put("pubkey", PreferenceUtils.getRsaKey(this, RSAUtils.PUBLIC_KEY));
 
@@ -148,11 +148,11 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             BalanceQueryActivity.this.finish();
         } else if (view == done) {
             //preSendToNetwork(); ToDo have to remove this
-
+            Intent i = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
+            BalanceQuery balance = new BalanceQuery(accountEditText.getText().toString(), "Name", "0000000v", "15,000");
+            i.putExtra("balance", balance);
+            startActivity(i);
             preSendToNetwork();
-
-            
-            
         }
     }
 
@@ -250,7 +250,6 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             }*/
         }
     }
-
 
 
 }

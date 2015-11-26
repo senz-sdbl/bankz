@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#B1ADBB"
+    android:background="#e4e4e4"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -11,14 +11,14 @@
         android:background="#333333"
         android:layout_marginBottom="12dp">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/sdbl_logo"
-            android:id="@+id/mbank_icon"
-            android:layout_centerHorizontal="true"/>
+        <!--<ImageView-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:src="@drawable/sdbl_logo"-->
+            <!--android:id="@+id/mbank_icon"-->
+            <!--android:layout_centerHorizontal="true"/>-->
 
-        <!--<TextView
+        <TextView
             android:layout_width="60dp"
             android:id="@+id/mbank_icon"
             android:layout_height="60dp"
@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:background="@drawable/circle_shape_green"
             android:layout_centerVertical="true"/>
-        <TextView-->
+        <!--<TextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:textSize="35sp"-->
             <!--android:layout_marginLeft="38dp"-->

@@ -98,7 +98,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             //ToDo handle the data type
             Calendar cp = Calendar.getInstance();
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss aa");
             String formattedDate = df.format(cp.getTime());
             attributesList.add(new Attribute("Transaction Time", formattedDate));
 

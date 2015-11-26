@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:background="#333333"
+        android:background="#306d97"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:orientation="horizontal">
@@ -30,7 +30,7 @@
             android:layout_width="1dp"
             android:layout_height="fill_parent"
             android:layout_alignParentRight="true"
-            android:background="#4a4a4a">
+            android:background="#306d97">
         </TextView>
     </RelativeLayout>
 
@@ -71,7 +71,7 @@
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
 
-                android:background="#4a4a4a">
+                android:background="#306d97">
             </TextView>
         </RelativeLayout>
 </RelativeLayout>
@@ -96,24 +96,24 @@
                     android:id="@+id/balance_query_account_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="31dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:text="Account No"
-                    android:textColor="#f79239"
-                    android:textSize="17dp" >
+                    android:textColor="#4a4a4a"
+                    android:textSize="20dp" >
                 </TextView>
                 <EditText
                     android:id="@+id/balance_query_layout_account_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:inputType="number"
                     android:padding="10dp"
                     android:textCursorDrawable="@null"
                     android:textColor="#4a4a4a"
                     android:background="@drawable/text_filed_shape"
-                    android:textSize="20dp" >
+                    android:textSize="18dp" >
                 </EditText>
         </LinearLayout>
         </LinearLayout>

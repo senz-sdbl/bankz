@@ -2,8 +2,6 @@ package com.wasn.application;
 
 import android.app.Application;
 
-import com.wasn.models.MobileBankData;
-
 /**
  * Application object class of mobile-bank
  * Keep shared objects
@@ -12,17 +10,12 @@ import com.wasn.models.MobileBankData;
  */
 public class MobileBankApplication extends Application {
 
-    // database class instance
-    MobileBankData mobileBankData;
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void onCreate() {
         super.onCreate();
-
-        mobileBankData = new MobileBankData(MobileBankApplication.this);
     }
 
     /**
@@ -31,13 +24,6 @@ public class MobileBankApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-
-        // close database connections
-        mobileBankData.close();
-    }
-
-    public MobileBankData getMobileBankData() {
-        return mobileBankData;
     }
 
 }

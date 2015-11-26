@@ -123,8 +123,8 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.information_message_dialog_layout);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.share_confirm_message_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 
         // set dialog texts
@@ -181,17 +181,17 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
      * @param message       message to be display
      */
     public void displayMessageDialog(String messageHeader, String message) {
-        final Dialog dialog = new Dialog(TransactionDetailsActivity.this);
+        final Dialog dialog = new Dialog(this);
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.message_dialog_layout);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.information_message_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 
         // set dialog texts
-        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.message_dialog_layout_message_header_text);
-        TextView messageTextView = (TextView) dialog.findViewById(R.id.message_dialog_layout_message_text);
+        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
+        TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
         messageHeaderTextView.setText(messageHeader);
         messageTextView.setText(message);
 
@@ -202,7 +202,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         messageTextView.setTypeface(face);
 
         //set ok button
-        Button okButton = (Button) dialog.findViewById(R.id.message_dialog_layout_yes_button);
+        Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
         okButton.setTypeface(face);
         okButton.setTypeface(null, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -237,8 +237,8 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             Toast.makeText(TransactionDetailsActivity.this, "Transaction saved", Toast.LENGTH_LONG).show();
 
             // need to go back to transaction activity
-            startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
-            //TransactionDetailsActivity.this.finish();
+            startActivity(new Intent(TransactionDetailsActivity.this, BalanceQueryActivity.class));
+            TransactionDetailsActivity.this.finish();
         } else if (status.equals("0")) {
             Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
         } else if (status.equals("-2")) {

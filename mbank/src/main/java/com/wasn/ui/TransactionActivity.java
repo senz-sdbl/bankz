@@ -32,8 +32,6 @@ import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.db.SenzorsDbSource;
 import com.wasn.exceptions.EmptyFieldsException;
-import com.wasn.exceptions.InvalidAccountException;
-import com.wasn.exceptions.InvalidBalanceAmountException;
 import com.wasn.pojos.BalanceQuery;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
@@ -98,7 +96,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction_layout);
         //Link to service
-        addDummyData();
         connectWithService();
         init();
         registerReceiver(senzMessageReceiver, new IntentFilter("DATA"));
@@ -163,29 +160,16 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         headerText = (TextView) findViewById(R.id.transaction_account_no);
         Typeface face1 = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face1);
-        headerText.setTypeface(null, Typeface.BOLD);
 
         // set custom font for transaction amount
         headerText = (TextView) findViewById(R.id.transaction_amount);
         Typeface face2 = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face2);
-        headerText.setTypeface(null, Typeface.BOLD);
     }
-public void addDummyData(){
-    SenzorsDbSource senzorsDbSource=new SenzorsDbSource(getApplicationContext());
-    Transaction tr=new Transaction(5,"abc","159789456V","1255555","1000",100000,"120000000","deposit");
-            /*
-            * (int id,
-                       String clientName,
-                       String clientNic,
-                       String clientAccountNo,
-                       String previousBalance,
-                       int transactionAmount,
-                       String transactionTime,
-                       String transactionType) {
-                       */
-    senzorsDbSource.createTransaction(tr);
-}
+
+    public void addDummyData() {
+    }
+
     /**
      * Initialize new transaction
      */
@@ -196,33 +180,22 @@ public void addDummyData(){
         try {
             // validate form fields and get corresponding client to the account
             TransactionUtils.validateFields(accountNo, amount);
+            Transaction transaction = new Transaction(1, "Test1", "345", accountNo, "450", Integer.parseInt(amount), "34543", "Deposit");
+            new SenzorsDbSource(this).createTransaction(transaction);
 
             // get receipt no
             // database stored previous receipt no
             // receipt no equals to transaction id
-            int transactionId = Integer.parseInt(application.getMobileBankData().getReceiptNo()) + 1;
-
-            // get branch id
-            // database stored branch id as well
-            String branchId = application.getMobileBankData().getBranchId();
-
-            // create transaction and share in application
-            Transaction transaction = TransactionUtils.createTransaction(branchId, transactionId, amount);
-
             Intent intent = new Intent(this, TransactionDetailsActivity.class);
             intent.putExtra("transaction", transaction);
             startActivity(intent);
             TransactionActivity.this.finish();
 
-            doTransactionoverNetwork(accountNo,amount);
+            //doTransactionoverNetwork(accountNo,amount);
         } catch (NumberFormatException e) {
             displayMessageDialog("Error", "Invalid amount, make sure amount is correct");
         } catch (EmptyFieldsException e) {
             displayMessageDialog("Error", "Empty fields, make sure not empty account and amount");
-        } catch (InvalidAccountException e) {
-            displayMessageDialog("Error", "Invalid account, make sure account is correct");
-        } catch (InvalidBalanceAmountException e) {
-            displayMessageDialog("Error", "Invalid balance amount, please recheck corresponding client details");
         }
     }
 
@@ -234,17 +207,17 @@ public void addDummyData(){
      * @param message       message to be display
      */
     public void displayMessageDialog(String messageHeader, String message) {
-        final Dialog dialog = new Dialog(TransactionActivity.this);
+        final Dialog dialog = new Dialog(this);
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.message_dialog_layout);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.information_message_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 
         // set dialog texts
-        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.message_dialog_layout_message_header_text);
-        TextView messageTextView = (TextView) dialog.findViewById(R.id.message_dialog_layout_message_text);
+        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
+        TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
         messageHeaderTextView.setText(messageHeader);
         messageTextView.setText(message);
 
@@ -255,7 +228,7 @@ public void addDummyData(){
         messageTextView.setTypeface(face);
 
         //set ok button
-        Button okButton = (Button) dialog.findViewById(R.id.message_dialog_layout_yes_button);
+        Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
         okButton.setTypeface(face);
         okButton.setTypeface(null, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -270,7 +243,7 @@ public void addDummyData(){
 
     //Do transaction over network
 
-    private void doTransactionoverNetwork(String accno,String amnt) {//ToDo amnt datatype
+    private void doTransactionoverNetwork(String accno, String amnt) {//ToDo amnt datatype
         try {
             // first create create senz
             HashMap<String, String> senzAttributes = new HashMap<>();

@@ -25,7 +25,7 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TRANSACTION =
             "CREATE TABLE IF NOT EXISTS " + SenzorsDbContract.Transaction.TABLE_NAME + " (" +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_ID +" "+ " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
+                    SenzorsDbContract.Transaction._ID +" "+ " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
                     SenzorsDbContract.Transaction.COLUMN_NAME_clientAccountNo +" "+ NUMBER_TYPE + " NOT NULL" + ", " +
                     SenzorsDbContract.Transaction.COLUMN_NAME_CLIENTNAME +" "+ TEXT_TYPE +  " NOT NULL" +", " +
                     SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance +" "+ NUMBER_TYPE +  " NOT NULL" +", " +

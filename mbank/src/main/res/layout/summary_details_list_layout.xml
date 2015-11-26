@@ -119,7 +119,7 @@
 
         <ListView
                 android:paddingLeft="10dp"
-                android:paddingRight="4dp"
+                android:paddingRight="0dp"
                 android:background="#e5e5e5"
                 android:id="@+id/summary_details_list"
                 android:layout_width="fill_parent"

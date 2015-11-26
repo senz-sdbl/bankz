@@ -112,10 +112,9 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
             startActivity(new Intent(MobileBankActivity.this, TransactionListActivity.class));
             MobileBankActivity.this.finish();
         } else if (view == settingsLayout) {
-            showPasswordInputDialog();
             // display settings activity
-            //startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
-            //MobileBankActivity.this.finish();
+            startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
+            MobileBankActivity.this.finish();
         } else if (view == logout) {
             displayInformationMessageDialog("Are you sure, you want to logout? ");
         }
@@ -187,63 +186,5 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     @Override
     public void onBackPressed() {
         displayInformationMessageDialog("Are you sure, you want to logout? ");
-    }
-
-    // password popup....
-    protected void showPasswordInputDialog() {
-
-
-        //final Dialog dialog = new Dialog(MobileBankActivity.this);
-
-
-        setContentView(R.layout.input_password_dialog_layout);
-
-        final EditText editText = (EditText) findViewById(R.id.settings_password);
-
-        final Button btnOk = (Button) findViewById(R.id.information_message_dialog_layout_ok_button);
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String password = editText.getText().toString();
-                if (new String("admin").equals(password)) {
-                    startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
-                    MobileBankActivity.this.finish();
-                }
-            }
-        });
-        final Button btnCancel = (Button) findViewById(R.id.information_message_dialog_layout_cancel_button);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-
-            }
-        });
-
-        
-
-        //alertDialogBuilder.setTitle("Enter Password");
-
-        // setup a dialog window
-
-        /*
-        AlertDialog.Builder builder = alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //resultText.setText("hello," + editText.getText());
-                String password = editText.getText().toString();
-                if (new String("admin").equals(password)) {
-                    startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
-                    MobileBankActivity.this.finish();
-                }
-
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.cancel();
-            }
-        }); */
-
-        // cerate an alert dialog
-        //AlertDialog alert = alertDialogBuilder.create();
-        //alert.show();
-
     }
 }

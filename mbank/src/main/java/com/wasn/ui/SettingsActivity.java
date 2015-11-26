@@ -22,6 +22,7 @@ import com.wasn.exceptions.EmptyPrinterAddressException;
 import com.wasn.exceptions.UnTestedPrinterAddressException;
 import com.wasn.pojos.Settings;
 import com.wasn.services.printservices.TestPrintService;
+import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.SettingsUtils;
@@ -218,73 +219,52 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         dialog.show();
     }
 
-//    /**
-//     * Display admin login dialog
-//     *
-//     * @param settings settings attributes
-//     */
-//    public void displayAdminLoginDialog(final Settings settings) {
-//        final Dialog dialog = new Dialog(SettingsActivity.this);
-//
-//        //set layout for dialog
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.admin_login_dialog_layout);
-//        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//        dialog.setCancelable(true);
-//
-//        // set custom font
-//        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.admin_login_layout_message_header_text);
-//        TextView messageTextView = (TextView) dialog.findViewById(R.id.admin_login_layout_message_text);
-//        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-//        messageHeaderTextView.setTypeface(face);
-//        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-//        messageTextView.setTypeface(face);
-//
-//        //set ok button
-//        Button okButton = (Button) dialog.findViewById(R.id.admin_login_layout_ok_button);
-//        okButton.setTypeface(face);
-//        okButton.setTypeface(null, Typeface.BOLD);
-//        okButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                try {
-//                    // validate password
-//                    EditText passwordEditText = (EditText) dialog.findViewById(R.id.admin_login_layout_password);
-//                    String password = passwordEditText.getText().toString().trim();
-//                    LoginUtils.validateAdminPassword(password);
-//
-//                    // save fields in database
-//                    savePrinterAddress(settings.getPrinterAddress());
-//                    saveTelephoneNo(settings.getBranchTelephoeNo());
-//                    saveBranchName(settings.getBranchName());
-//                    displayToast("Settings saved successfully");
-//
-//                    // back to main activity
-//                    startActivity(new Intent(SettingsActivity.this, MobileBankActivity.class));
-//                    SettingsActivity.this.finish();
-//
-//                    dialog.cancel();
-//                } catch (UnAuthenticatedUserException e) {
-//                    e.printStackTrace();
-//                    displayToast("Invalid password");
-//                } catch (EmptyFieldsException e) {
-//                    e.printStackTrace();
-//                    displayToast("Password empty");
-//                }
-//            }
-//        });
-//
-//        // cancel button
-//        Button cancelButton = (Button) dialog.findViewById(R.id.admin_login_layout_cancel_button);
-//        cancelButton.setTypeface(face);
-//        cancelButton.setTypeface(null, Typeface.BOLD);
-//        cancelButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                dialog.cancel();
-//            }
-//        });
-//
-//        dialog.show();
-//    }
+    // password popup....
+    protected void showPasswordInputDialog() {
+        final Dialog dialog = new Dialog(this);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+
+        //set layout for dialog
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.input_password_dialog_layout);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+
+        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
+        final EditText passwordText = (EditText) dialog.findViewById(R.id.settings_password);
+
+        final Button btnOk = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
+        btnOk.setTypeface(face);
+        btnOk.setTypeface(null, Typeface.BOLD);
+
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String password = passwordText.getText().toString();
+                if (password.equals("admin")) {
+                    ActivityUtils.hideSoftKeyboard(SettingsActivity.this);
+                    dialog.cancel();
+
+                    // start to print
+                    print();
+                }
+            }
+        });
+
+        final Button btnCancel = (Button) dialog.findViewById(R.id.information_message_dialog_layout_cancel_button);
+        btnCancel.setTypeface(face);
+        btnCancel.setTypeface(null, Typeface.BOLD);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        messageHeaderTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
+        passwordText.setTypeface(face);
+
+        dialog.show();
+    }
 
     /**
      * Display toast message
@@ -347,7 +327,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         } else if (view == save) {
             save();
         } else if (view == testPrint) {
-            print();
+            showPasswordInputDialog();
         }
     }
 

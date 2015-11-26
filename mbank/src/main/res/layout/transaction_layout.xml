@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="#333333"
+        android:background="#306d97"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -30,7 +30,7 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
-                android:background="#4a4a4a"></TextView>
+                android:background="#306d97"></TextView>
         </RelativeLayout>
 
         <RelativeLayout
@@ -71,7 +71,7 @@
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
 
-                android:background="#4a4a4a"></TextView>
+                android:background="#306d97"></TextView>
         </RelativeLayout>
 
         <RelativeLayout
@@ -121,7 +121,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:text="Account No"
-                    android:textColor="#f79239"
+                    android:textColor="#4a4a4a"
                     android:textSize="20dp"></TextView>
 
                 <EditText
@@ -150,7 +150,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:text="Amount"
-                    android:textColor="#f79239"
+                    android:textColor="#4a4a4a"
                     android:textSize="20dp"></TextView>
 
                 <EditText

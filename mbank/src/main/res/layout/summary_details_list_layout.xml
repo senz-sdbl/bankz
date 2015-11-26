@@ -8,7 +8,7 @@
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:background="#333333"
+            android:background="#306d97"
             android:clickable="true" >
 
         <RelativeLayout
@@ -32,7 +32,7 @@
 
                     android:layout_height="fill_parent"
                     android:layout_alignParentRight="true"
-                    android:background="#4a4a4a">
+                    android:background="#306d97">
             </TextView>
         </RelativeLayout>
 
@@ -72,11 +72,10 @@
             </ImageView>
 
             <TextView
-                    android:id="@+id/tab_splitter"
                     android:layout_width="1dp"
                     android:layout_height="fill_parent"
                     android:layout_alignParentLeft="true"
-                    android:background="#4a4a4a">
+                    android:background="#306d97">
             </TextView>
         </RelativeLayout>
         <RelativeLayout

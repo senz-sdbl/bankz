@@ -146,8 +146,8 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.information_message_dialog_layout);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.share_confirm_message_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 
         // set dialog texts
@@ -207,13 +207,13 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.message_dialog_layout);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.information_message_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 
         // set dialog texts
-        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.message_dialog_layout_message_header_text);
-        TextView messageTextView = (TextView) dialog.findViewById(R.id.message_dialog_layout_message_text);
+        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
+        TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
         messageHeaderTextView.setText(messageHeader);
         messageTextView.setText(message);
 
@@ -224,7 +224,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         messageTextView.setTypeface(face);
 
         //set ok button
-        Button okButton = (Button) dialog.findViewById(R.id.message_dialog_layout_yes_button);
+        Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
         okButton.setTypeface(face);
         okButton.setTypeface(null, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -235,6 +235,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
         dialog.show();
     }
+
 
     /**
      * Close progress dialog

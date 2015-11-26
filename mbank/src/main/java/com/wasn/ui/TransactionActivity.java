@@ -96,7 +96,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction_layout);
         //Link to service
-        addDummyData();
         connectWithService();
         init();
         registerReceiver(senzMessageReceiver, new IntentFilter("DATA"));
@@ -161,29 +160,14 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         headerText = (TextView) findViewById(R.id.transaction_account_no);
         Typeface face1 = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face1);
-        headerText.setTypeface(null, Typeface.BOLD);
 
         // set custom font for transaction amount
         headerText = (TextView) findViewById(R.id.transaction_amount);
         Typeface face2 = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face2);
-        headerText.setTypeface(null, Typeface.BOLD);
     }
 
     public void addDummyData() {
-        SenzorsDbSource senzorsDbSource = new SenzorsDbSource(getApplicationContext());
-        Transaction tr = new Transaction(5, "abc", "159789456V", "1255555", "1000", 100000, "120000000", "deposit");
-            /*
-            * (int id,
-                       String clientName,
-                       String clientNic,
-                       String clientAccountNo,
-                       String previousBalance,
-                       int transactionAmount,
-                       String transactionTime,
-                       String transactionType) {
-                       */
-        senzorsDbSource.createTransaction(tr);
     }
 
     /**
@@ -196,12 +180,14 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         try {
             // validate form fields and get corresponding client to the account
             TransactionUtils.validateFields(accountNo, amount);
+            Transaction transaction = new Transaction(1, "Test1", "345", accountNo, "450", Integer.parseInt(amount), "34543", "Deposit");
+            new SenzorsDbSource(this).createTransaction(transaction);
 
             // get receipt no
             // database stored previous receipt no
             // receipt no equals to transaction id
             Intent intent = new Intent(this, TransactionDetailsActivity.class);
-            intent.putExtra("transaction", new Transaction(1, "Test1", "345", "3454", "450", 45, "34543", "Deposit"));
+            intent.putExtra("transaction", transaction);
             startActivity(intent);
             TransactionActivity.this.finish();
 
@@ -221,17 +207,17 @@ public class TransactionActivity extends Activity implements View.OnClickListene
      * @param message       message to be display
      */
     public void displayMessageDialog(String messageHeader, String message) {
-        final Dialog dialog = new Dialog(TransactionActivity.this);
+        final Dialog dialog = new Dialog(this);
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.message_dialog_layout);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setContentView(R.layout.information_message_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 
         // set dialog texts
-        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.message_dialog_layout_message_header_text);
-        TextView messageTextView = (TextView) dialog.findViewById(R.id.message_dialog_layout_message_text);
+        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
+        TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
         messageHeaderTextView.setText(messageHeader);
         messageTextView.setText(message);
 
@@ -242,7 +228,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         messageTextView.setTypeface(face);
 
         //set ok button
-        Button okButton = (Button) dialog.findViewById(R.id.message_dialog_layout_yes_button);
+        Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
         okButton.setTypeface(face);
         okButton.setTypeface(null, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {

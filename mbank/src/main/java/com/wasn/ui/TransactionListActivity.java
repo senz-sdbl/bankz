@@ -100,7 +100,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
 
                 // start new activity
                 Intent intent = new Intent(TransactionListActivity.this, TransactionDetailsActivity.class);
-                intent.putExtra("transaction",transaction);
+                intent.putExtra("transaction", transaction);
                 intent.putExtra("ACTIVITY_NAME", TransactionListActivity.class.getName());
                 startActivity(intent);
 
@@ -115,8 +115,8 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      * Display all transaction list
      */
     public void displayAllTransactionList() {
-    SenzorsDbSource dbSource=new SenzorsDbSource(TransactionListActivity.this);
-        allTransactionList =dbSource.getAllTransactions();
+        SenzorsDbSource dbSource = new SenzorsDbSource(TransactionListActivity.this);
+        allTransactionList = dbSource.getAllTransactions();
 
         System.out.println("All transaction done");
         if (allTransactionList.size() > 0) {
@@ -152,7 +152,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      * display bottom pannel
      */
     //public void enableBottomPannel() {
-     //   bottomPannel.setVisibility(View.VISIBLE);
+    //   bottomPannel.setVisibility(View.VISIBLE);
     //}
 
     /**

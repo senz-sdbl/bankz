@@ -23,7 +23,6 @@ import com.score.senzc.enums.SenzTypeEnum;
 import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
-import com.wasn.application.MobileBankApplication;
 import com.wasn.pojos.BalanceQuery;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
@@ -35,7 +34,6 @@ import java.util.HashMap;
  * Created by root on 11/18/15.
  */
 public class BalanceQueryActivity extends Activity implements View.OnClickListener {
-    MobileBankApplication application;
     RelativeLayout back;
     RelativeLayout done;
     TextView LineText;
@@ -98,20 +96,19 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
 
 
     public void init() {
-        application = (MobileBankApplication) BalanceQueryActivity.this.getApplication();
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+
         back = (RelativeLayout) findViewById(R.id.balance_query_layout_back);
         done = (RelativeLayout) findViewById(R.id.balance_query_layout_get_balance);
 
         back.setOnClickListener(BalanceQueryActivity.this);
         done.setOnClickListener(BalanceQueryActivity.this);
         accountEditText = (EditText) findViewById(R.id.balance_query_layout_account_text);
+        accountEditText.setTypeface(face);
 
         // set custom font for text
         LineText = (TextView) findViewById(R.id.balance_query_account_no);
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         LineText.setTypeface(face);
-        LineText.setTypeface(null, Typeface.BOLD);
-
     }
 
     private void doQueryOverNetwork(String accno) {
@@ -152,7 +149,6 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             BalanceQuery balance = new BalanceQuery(accountEditText.getText().toString(), "Name", "0000000v", "15,000");
             i.putExtra("balance", balance);
             startActivity(i);
-            preSendToNetwork();
         }
     }
 

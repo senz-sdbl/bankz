@@ -118,24 +118,24 @@
                     android:id="@+id/transaction_account_no"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="31dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:text="Account No"
                     android:textColor="#f79239"
-                    android:textSize="17dp"></TextView>
+                    android:textSize="20dp"></TextView>
 
                 <EditText
                     android:id="@+id/transaction_layout_account_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
                     android:inputType="number"
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
-                    android:textSize="20dp"></EditText>
+                    android:textSize="18dp"></EditText>
             </LinearLayout>
 
             <LinearLayout
@@ -147,24 +147,24 @@
                     android:id="@+id/transaction_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="31dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:text="Amount"
                     android:textColor="#f79239"
-                    android:textSize="17dp"></TextView>
+                    android:textSize="20dp"></TextView>
 
                 <EditText
                     android:id="@+id/transaction_layout_amount_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
                     android:inputType="numberDecimal"
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
-                    android:textSize="20dp"></EditText>
+                    android:textSize="18dp"></EditText>
             </LinearLayout>
 
             <LinearLayout

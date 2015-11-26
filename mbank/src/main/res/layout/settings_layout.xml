@@ -102,25 +102,25 @@
                     android:id="@+id/settings_printer_bluetooth_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="31dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
-                    android:text="Printer bluetooth address"
-                    android:textColor="#f79239"
-                    android:textSize="17dp" >
+                    android:text="Printer address"
+                    android:textColor="#4a4a4a"
+                    android:textSize="20dp" >
                 </TextView>
 
                 <EditText
                     android:id="@+id/settings_layout_printer_address_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="20dp"
                     android:padding="10dp"
                     android:textCursorDrawable="@null"
                     android:textColor="#4a4a4a"
                     android:background="@drawable/text_filed_shape"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginRight="20dp"
                     android:inputType="text"
-                    android:textSize="20dp" >
+                    android:textSize="18dp" >
                 </EditText>
 
             </LinearLayout>

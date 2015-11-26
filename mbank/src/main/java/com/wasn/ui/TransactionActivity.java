@@ -342,6 +342,17 @@ public void addDummyData(){
 
             Senz senz = intent.getExtras().getParcelable("SENZ");
 
+            String status=senz.getAttributes().get("msg");
+
+            if(status.equals("DoneTrans")) {
+                //ToDo do when success
+                startActivity(new Intent(TransactionActivity.this, TransactionDetailsActivity.class));//ToDo Fix to appropriate place
+                TransactionActivity.this.finish();
+            }
+            else{
+
+            }
+
            /* if (senz.getAttributes().containsKey("msg")) {
                 // msg response received
                 ActivityUtils.cancelProgressDialog();

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.wasn.pojos.Summary;
 import com.wasn.pojos.Transaction;
 
 import java.util.ArrayList;
@@ -121,13 +122,29 @@ public class SenzorsDbSource {
         db.close();
     }
 
-    public int getSummeryAmmount(){
-        ArrayList<Transaction> transactions=getAllTransactions();
-        int total=0;
-        for (int i=0; i<transactions.size(); i++) {
-          total=total+  transactions.get(i).getTransactionAmount();
+    public Summary getSummeryAmmount(){
+        SQLiteDatabase db = SenzorsDbHelper.getInstance(context).getWritableDatabase();
+        String query = "SELECT COUNT("+SenzorsDbContract.Transaction.COLUMN_NAME_ID+") AS trcount, SUM("+SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount+") AS total" +
+                " FROM " +SenzorsDbContract.Transaction.TABLE_NAME;
+        Log.e(TAG,query);
+        Cursor cursor = db.rawQuery(query, null);
+        String tcount;
+        String tamount;
+        if(cursor.moveToFirst()){
+            tcount = cursor.getString(cursor.getColumnIndex("trcount"));
+
+            tamount = cursor.getString(cursor.getColumnIndex("total"));
         }
-        return total;
+        else{
+            tcount = "0";
+
+            tamount = "0";
+        }
+        Summary tempsum=new Summary("10255",tcount,tamount,"");
+
+
+
+        return tempsum;
     }
 
 }

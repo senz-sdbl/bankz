@@ -192,17 +192,39 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     // password popup....
     protected void showPasswordInputDialog() {
 
-        //get prompt.xml view
-        LayoutInflater layoutInflater = LayoutInflater.from(MobileBankActivity.this);
-        View promptView = layoutInflater.inflate(R.layout.input_password_dialog_layout, null);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MobileBankActivity.this);
-        alertDialogBuilder.setView(promptView);
 
-        final EditText editText = (EditText) promptView.findViewById(R.id.settings_password);
+        //final Dialog dialog = new Dialog(MobileBankActivity.this);
 
-        alertDialogBuilder.setTitle("Enter Password");
+
+        setContentView(R.layout.input_password_dialog_layout);
+
+        final EditText editText = (EditText) findViewById(R.id.settings_password);
+
+        final Button btnOk = (Button) findViewById(R.id.information_message_dialog_layout_ok_button);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String password = editText.getText().toString();
+                if (new String("admin").equals(password)) {
+                    startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
+                    MobileBankActivity.this.finish();
+                }
+            }
+        });
+        final Button btnCancel = (Button) findViewById(R.id.information_message_dialog_layout_cancel_button);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+            }
+        });
+
+        
+
+        //alertDialogBuilder.setTitle("Enter Password");
 
         // setup a dialog window
+
+        /*
         AlertDialog.Builder builder = alertDialogBuilder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 //resultText.setText("hello," + editText.getText());
@@ -217,11 +239,11 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
             }
-        });
+        }); */
 
         // cerate an alert dialog
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
+        //AlertDialog alert = alertDialogBuilder.create();
+        //alert.show();
 
     }
 }

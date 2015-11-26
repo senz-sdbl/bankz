@@ -214,7 +214,7 @@ public void addDummyData(){
             startActivity(intent);
             TransactionActivity.this.finish();
 
-            doTransactionoverNetwork();
+            doTransactionoverNetwork(accountNo,amount);
         } catch (NumberFormatException e) {
             displayMessageDialog("Error", "Invalid amount, make sure amount is correct");
         } catch (EmptyFieldsException e) {
@@ -270,21 +270,24 @@ public void addDummyData(){
 
     //Do transaction over network
 
-    private void doTransactionoverNetwork() {
+    private void doTransactionoverNetwork(String accno,String amnt) {//ToDo amnt datatype
         try {
             // first create create senz
             HashMap<String, String> senzAttributes = new HashMap<>();
+            senzAttributes.put("accno", accno);
+            senzAttributes.put("amount", amnt);
+            senzAttributes.put("typ", "dp");
             senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
             senzAttributes.put("pubkey", PreferenceUtils.getRsaKey(this, RSAUtils.PUBLIC_KEY));
-            senzAttributes.put("testkey", "fgsfgdfg");
+
 
             // new senz
             String id = "_ID";
             String signature = "";
             SenzTypeEnum senzType = SenzTypeEnum.SHARE;
             //User sender = new User("", registeringUser.getUsername());
-            User sender = new User("", "ge");
-            User receiver = new User("", "mysensors");
+            User sender = new User("", "user1");
+            User receiver = new User("", "transac");
             Senz senz = new Senz(id, signature, senzType, sender, receiver, senzAttributes);
 
             senzService.send(senz);

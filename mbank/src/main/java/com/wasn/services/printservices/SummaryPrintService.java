@@ -24,14 +24,16 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
 
     SummaryDetailsActivity activity;
     MobileBankApplication application;
+    Summary summary;
 
     /**
      * Initialize cass members
      *
      * @param activity
      */
-    public SummaryPrintService(SummaryDetailsActivity activity) {
+    public SummaryPrintService(SummaryDetailsActivity activity, Summary summary) {
         this.activity = activity;
+        this.summary = summary;
         application = (MobileBankApplication) activity.getApplication();
     }
 
@@ -50,9 +52,6 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
      * @return print status
      */
     private String print() {
-        // TODO create summary
-        Summary summary = new Summary("345", "343", "3454", "3454");
-
         // printing attributes
         String printerAddress = PreferenceUtils.getPrinterAddress(application);
         String telephoneNo = "0775432015";

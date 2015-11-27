@@ -24,9 +24,7 @@ import com.wasn.pojos.Transaction;
 import com.wasn.services.printservices.TransactionPrintService;
 import com.wasn.utils.PrintUtils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * Activity class to display transaction details
@@ -95,12 +93,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
             attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
             attributesList.add(new Attribute("Transaction Amount", Integer.toString(transaction.getTransactionAmount())));
-            //ToDo handle the data type
-            Calendar cp = Calendar.getInstance();
-
-            SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss aa");
-            String formattedDate = df.format(cp.getTime());
-            attributesList.add(new Attribute("Transaction Time", formattedDate));
+            attributesList.add(new Attribute("Transaction Time", transaction.getTransactionTime()));
 
             // populate list
             transactionDetailsListView = (ListView) findViewById(R.id.transaction_details_list);

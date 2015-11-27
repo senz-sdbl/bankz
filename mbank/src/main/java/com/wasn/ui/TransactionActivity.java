@@ -39,6 +39,8 @@ import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.RSAUtils;
 import com.wasn.utils.TransactionUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -180,7 +182,12 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         try {
             // validate form fields and get corresponding client to the account
             TransactionUtils.validateFields(accountNo, amount);
-            Transaction transaction = new Transaction(1, "Test1", "345", accountNo, "450", Integer.parseInt(amount), "34543", "Deposit");
+
+            Calendar cp = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("hh:mm:ss aa");
+            String transactionTime = df.format(cp.getTime());
+
+            Transaction transaction = new Transaction(1, "Test1", "345", accountNo, "450", Integer.parseInt(amount), transactionTime, "Deposit");
             new SenzorsDbSource(this).createTransaction(transaction);
 
             // get receipt no

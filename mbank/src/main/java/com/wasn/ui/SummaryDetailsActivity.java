@@ -51,6 +51,8 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
     // display when printing
     public ProgressDialog progressDialog;
 
+    private Summary summary;
+
     /**
      * {@inheritDoc}
      */
@@ -101,16 +103,13 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 //        }
 
 
-        SenzorsDbSource senzorsDbSource = new SenzorsDbSource(getApplicationContext());
-        Summary current_summery = senzorsDbSource.getSummeryAmmount();
-        //Transaction tr=new Transaction(5,"abc","159789456V","1255555","1000",100000,"120000000","deposit");
-
+        summary = new SenzorsDbSource(getApplicationContext()).getSummeryAmmount();
 
         attributesList = new ArrayList<Attribute>();
-        attributesList.add(new Attribute("Date", current_summery.getTime()));
-        attributesList.add(new Attribute("Branch ID", current_summery.getBranchId()));
-        attributesList.add(new Attribute("Transaction Count", current_summery.getTransactionCount()));
-        attributesList.add(new Attribute("Total Amount", current_summery.getTotalTransactionAmount()));
+        attributesList.add(new Attribute("Date", summary.getTime()));
+        attributesList.add(new Attribute("Branch ID", summary.getBranchId()));
+        attributesList.add(new Attribute("Transaction Count", summary.getTransactionCount()));
+        attributesList.add(new Attribute("Total Amount", summary.getTotalTransactionAmount()));
 
         summaryDetailsListView = (ListView) findViewById(R.id.summary_details_list);
 
@@ -176,7 +175,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
                         progressDialog = ProgressDialog.show(SummaryDetailsActivity.this, "", "Printing summary, Please wait ...");
-                        new SummaryPrintService(SummaryDetailsActivity.this).execute("SUMMARY");
+                        new SummaryPrintService(SummaryDetailsActivity.this, summary).execute("SUMMARY");
                     }
                 } catch (BluetoothNotEnableException e) {
                     Toast.makeText(SummaryDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();

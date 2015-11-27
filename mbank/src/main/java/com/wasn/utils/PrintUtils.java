@@ -282,7 +282,7 @@ public class PrintUtils {
 
         // printing receipt type
         // customer copy/ agent copy
-        String receiptType  = "           (Reprint Agent/Customer copy)      \r\n\r\n";
+        String receiptType  = "                (Day end summary)      \r\n\r\n";
 
         // logo printing command
         // ZPL(Zebra Program Language)
@@ -294,7 +294,8 @@ public class PrintUtils {
         // transaction details that print in receipt
         //String branch = "      Branch Id          : "+summary.getBranchId()+"\r\n";
         String depositCount  = "      Deposit count      : "+summary.getTransactionCount()+"\r\n";
-        String depositAmount = "      Deposit amount     : "+summary.getTotalTransactionAmount()+"\r\n\r\n\r\n";
+        String depositAmount = "      Deposit amount     : "+summary.getTotalTransactionAmount()+"\r\n";
+        String date          = "      Date               : "+summary.getTime()+"\r\n\r\n\r\n";
 
         String sign          = "             ....................             \r\n";
         String end           = "                    Agent             \r\n\r\n\r\n";
@@ -310,6 +311,7 @@ public class PrintUtils {
             outputStream.write(receiptType.getBytes());
             outputStream.write(depositCount.getBytes());
             outputStream.write(depositAmount.getBytes());
+            outputStream.write(date.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 

@@ -11,31 +11,24 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wasn.R;
-import com.wasn.application.MobileBankApplication;
 
 /**
  * Main activity class of the application
  *
  * @author erangaeb@gmail.com (eranga bandara)
  */
-public class MobileBankActivity extends Activity implements View.OnClickListener {
-
-    MobileBankApplication application;
+public class BankzActivity extends Activity implements View.OnClickListener {
 
     // activity components
-    RelativeLayout transactionLayout;
     RelativeLayout balanceQueryLayout;
     RelativeLayout summaryLayout;
     RelativeLayout settingsLayout;
-    //Button summaryButton;
-    //Button settingsButton;
     RelativeLayout logout;
     TextView logoutText;
-    TextView tranactionText;
-    TextView tranactionIcon;
+    TextView transactionText;
+    TextView transactionIcon;
     TextView summaryText;
     TextView summaryIcon;
     TextView settingsText;
@@ -58,7 +51,6 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
      */
     public void init() {
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        application = (MobileBankApplication) MobileBankActivity.this.getApplication();
 
         balanceQueryLayout = (RelativeLayout) findViewById(R.id.transaction_layout);
         summaryLayout = (RelativeLayout) findViewById(R.id.summary_layout);
@@ -69,10 +61,10 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
         logoutText = (TextView) findViewById(R.id.mobile_bank_layout_logout_text);
         logoutText.setTypeface(typeface, Typeface.BOLD);
 
-        tranactionIcon = (TextView) findViewById(R.id.transaction_icon);
-        tranactionText = (TextView) findViewById(R.id.tranaction_text);
-        tranactionIcon.setTypeface(typeface, Typeface.BOLD);
-        tranactionText.setTypeface(typeface, Typeface.BOLD);
+        transactionIcon = (TextView) findViewById(R.id.transaction_icon);
+        transactionText = (TextView) findViewById(R.id.tranaction_text);
+        transactionIcon.setTypeface(typeface, Typeface.BOLD);
+        transactionText.setTypeface(typeface, Typeface.BOLD);
 
         summaryIcon = (TextView) findViewById(R.id.summary_icon);
         summaryText = (TextView) findViewById(R.id.summary_text);
@@ -87,10 +79,10 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
         mbankIcon = (TextView) findViewById(R.id.mbank_icon);
         mbankIcon.setTypeface(typeface, Typeface.BOLD);
 
-        balanceQueryLayout.setOnClickListener(MobileBankActivity.this);
-        summaryLayout.setOnClickListener(MobileBankActivity.this);
-        settingsLayout.setOnClickListener(MobileBankActivity.this);
-        logout.setOnClickListener(MobileBankActivity.this);
+        balanceQueryLayout.setOnClickListener(BankzActivity.this);
+        summaryLayout.setOnClickListener(BankzActivity.this);
+        settingsLayout.setOnClickListener(BankzActivity.this);
+        logout.setOnClickListener(BankzActivity.this);
     }
 
     /**
@@ -101,16 +93,16 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
     public void onClick(View view) {
         if (view == balanceQueryLayout) {
             // display transaction activity
-            startActivity(new Intent(MobileBankActivity.this, BalanceQueryActivity.class));
-            MobileBankActivity.this.finish();
+            startActivity(new Intent(BankzActivity.this, BalanceQueryActivity.class));
+            BankzActivity.this.finish();
         } else if (view == summaryLayout) {
             // display transaction list activity
-            startActivity(new Intent(MobileBankActivity.this, TransactionListActivity.class));
-            MobileBankActivity.this.finish();
+            startActivity(new Intent(BankzActivity.this, TransactionListActivity.class));
+            BankzActivity.this.finish();
         } else if (view == settingsLayout) {
             // display settings activity
-            startActivity(new Intent(MobileBankActivity.this, SettingsActivity.class));
-            MobileBankActivity.this.finish();
+            startActivity(new Intent(BankzActivity.this, SettingsActivity.class));
+            BankzActivity.this.finish();
         } else if (view == logout) {
             displayInformationMessageDialog("Are you sure, you want to logout? ");
         }
@@ -122,7 +114,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
      * @param message
      */
     public void displayInformationMessageDialog(String message) {
-        final Dialog dialog = new Dialog(MobileBankActivity.this);
+        final Dialog dialog = new Dialog(BankzActivity.this);
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -149,7 +141,7 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
             public void onClick(View v) {
                 // back to login activity
                 //startActivity(new Intent(MobileBankActivity.this, LoginActivity.class));
-                MobileBankActivity.this.finish();
+                BankzActivity.this.finish();
                 dialog.cancel();
             }
         });
@@ -167,20 +159,4 @@ public class MobileBankActivity extends Activity implements View.OnClickListener
         dialog.show();
     }
 
-    /**
-     * Display toast message
-     *
-     * @param message message tobe display
-     */
-    public void displayToast(String message) {
-        Toast.makeText(MobileBankActivity.this, message, Toast.LENGTH_LONG).show();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onBackPressed() {
-        displayInformationMessageDialog("Are you sure, you want to logout? ");
-    }
 }

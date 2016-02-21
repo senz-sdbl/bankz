@@ -131,7 +131,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view == back) {
-            startActivity(new Intent(BalanceQueryActivity.this, MobileBankActivity.class));
+            startActivity(new Intent(BalanceQueryActivity.this, BankzActivity.class));
             BalanceQueryActivity.this.finish();
         } else if (view == done) {
             // TODO remote this[temporary solution]
@@ -283,7 +283,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     @Override
     public void onBackPressed() {
         // back to main activity
-        startActivity(new Intent(BalanceQueryActivity.this, MobileBankActivity.class));
+        startActivity(new Intent(BalanceQueryActivity.this, BankzActivity.class));
         BalanceQueryActivity.this.finish();
     }
 }

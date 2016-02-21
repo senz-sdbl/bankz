@@ -322,7 +322,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         if (view == back) {
             // back to main activity
-            startActivity(new Intent(SettingsActivity.this, MobileBankActivity.class));
+            startActivity(new Intent(SettingsActivity.this, BankzActivity.class));
             SettingsActivity.this.finish();
         } else if (view == save) {
             save();
@@ -337,7 +337,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     @Override
     public void onBackPressed() {
         // back to main activity
-        startActivity(new Intent(SettingsActivity.this, MobileBankActivity.class));
+        startActivity(new Intent(SettingsActivity.this, BankzActivity.class));
         SettingsActivity.this.finish();
     }
 }

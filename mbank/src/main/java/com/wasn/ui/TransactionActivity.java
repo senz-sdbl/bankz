@@ -150,7 +150,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     public void onClick(View view) {
         if (view == back) {
             // back to main activity
-            startActivity(new Intent(TransactionActivity.this, MobileBankActivity.class));
+            startActivity(new Intent(TransactionActivity.this, BankzActivity.class));
             TransactionActivity.this.finish();
         } else if (view == done) {
             onClickPut();
@@ -308,7 +308,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     @Override
     public void onBackPressed() {
         // back to main activity
-        startActivity(new Intent(TransactionActivity.this, MobileBankActivity.class));
+        startActivity(new Intent(TransactionActivity.this, BankzActivity.class));
         TransactionActivity.this.finish();
     }
 }

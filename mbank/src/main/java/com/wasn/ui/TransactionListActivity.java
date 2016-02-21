@@ -170,7 +170,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     public void onClick(View view) {
         if (view == back) {
             // back to main activity
-            startActivity(new Intent(TransactionListActivity.this, MobileBankActivity.class));
+            startActivity(new Intent(TransactionListActivity.this, BankzActivity.class));
             TransactionListActivity.this.finish();
         } else if (view == done) {
             // display summary activity
@@ -184,7 +184,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     @Override
     public void onBackPressed() {
         // back to main activity
-        startActivity(new Intent(TransactionListActivity.this, MobileBankActivity.class));
+        startActivity(new Intent(TransactionListActivity.this, BankzActivity.class));
         TransactionListActivity.this.finish();
     }
 }

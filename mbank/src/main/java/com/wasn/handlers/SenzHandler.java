@@ -49,17 +49,15 @@ public class SenzHandler {
                 case PING:
                     Log.d(TAG, "PING received");
                     break;
+                case GET:
+                    Log.d(TAG, "GET received");
+                    break;
                 case SHARE:
                     Log.d(TAG, "SHARE received");
                     handleShareSenz(senz);
                     break;
-                case GET:
-                    Log.d(TAG, "GET received");
-                    handleGetSenz(senz);
-                    break;
                 case DATA:
                     Log.d(TAG, "DATA received");
-                    System.out.println("DATA");
                     handleDataSenz(senz);
                     break;
             }
@@ -81,32 +79,15 @@ public class SenzHandler {
         //SenzorsDbSource dbSource = new SenzorsDbSource(context);
         //User sender = dbSource.getOrCreateUser(senz.getSender().getUsername());
         //senz.setSender(sender);
-    }
 
-    private void handleGetSenz(Senz senz) {
-        Log.d("Tag", senz.getSender() + " : " + senz.getSenzType().toString());
-
-        //Intent serviceIntent = new Intent(context, LocationService.class);
-        //serviceIntent.putExtra("USER", senz.getSender());
-
-        //context.startService(serviceIntent);
+        sendShareResponse(senz.getSender(), true);
     }
 
     private void handleDataSenz(Senz senz) {
-        // sync data with db data
-        //SenzorsDbSource dbSource = new SenzorsDbSource(context);
-        //User sender = dbSource.getOrCreateUser(senz.getSender().getUsername());
-        //senz.setSender(sender);
-
         // we broadcast data senz
-        Intent intent = new Intent("DATA");
+        Intent intent = new Intent("com.wasn.bankz.DATA_SENZ");
         intent.putExtra("SENZ", senz);
         context.sendBroadcast(intent);
-
-        // broadcast received senz
-        Intent newSenzIntent = new Intent("com.score.senz.NEW_SENZ");
-        newSenzIntent.putExtra("SENZ", senz);
-        context.sendBroadcast(newSenzIntent);
     }
 
     private void sendShareResponse(User receiver, boolean isDone) {

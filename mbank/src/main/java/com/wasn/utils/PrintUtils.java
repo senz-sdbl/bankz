@@ -120,7 +120,7 @@ public class PrintUtils {
         String accNo  = "      Account No         : "+transaction.getClientAccountNo()+"\r\n";
         String type   = "      Transaction type   : "+transaction.getTransactionType()+"\r\n";
         String time   = "      Transaction time   : "+transaction.getTransactionTime()+"\r\n";
-        String amount = "      Transaction amount : "+transaction.getTransactionAmount()+"\r\n\r\n\r\n";
+        String amount = "      Transaction amount : "+transaction.getTransactionAmount()+ ".00" + "\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -294,7 +294,7 @@ public class PrintUtils {
         // transaction details that print in receipt
         //String branch = "      Branch Id          : "+summary.getBranchId()+"\r\n";
         String depositCount  = "      Deposit count      : "+summary.getTransactionCount()+"\r\n";
-        String depositAmount = "      Deposit amount     : "+summary.getTotalTransactionAmount()+"\r\n";
+        String depositAmount = "      Deposit amount     : "+summary.getTotalTransactionAmount()+ ".00" +"\r\n";
         String date          = "      Date               : "+summary.getTime()+"\r\n\r\n\r\n";
 
         String sign          = "             ....................             \r\n";

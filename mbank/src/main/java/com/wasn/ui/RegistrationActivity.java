@@ -95,7 +95,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         senzCountDownTimer = new SenzCountDownTimer(16000, 5000);
 
         initUi();
-        registerReceiver(senzMessageReceiver, new IntentFilter("DATA"));
+        registerReceiver(senzMessageReceiver, new IntentFilter("com.wasn.bankz.DATA_SENZ"));
     }
 
     /**
@@ -263,7 +263,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
     private void handleMessage(Intent intent) {
         String action = intent.getAction();
 
-        if (action.equals("DATA")) {
+        if (action.equals("com.wasn.bankz.DATA_SENZ")) {
             Senz senz = intent.getExtras().getParcelable("SENZ");
 
             if (senz.getAttributes().containsKey("msg")) {
@@ -273,7 +273,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                 senzCountDownTimer.cancel();
 
                 String msg = senz.getAttributes().get("msg");
-                if (msg != null && msg.equalsIgnoreCase("UserCreated")) {
+                if (msg != null && msg.equalsIgnoreCase("REGISTRATION_DONE")) {
                     Toast.makeText(this, "Successfully registered", Toast.LENGTH_LONG).show();
 
                     // save user

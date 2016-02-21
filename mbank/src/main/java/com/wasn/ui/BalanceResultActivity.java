@@ -8,7 +8,6 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.wasn.R;
-import com.wasn.application.MobileBankApplication;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.BalanceQuery;
 
@@ -18,8 +17,6 @@ import java.util.ArrayList;
  * Created by root on 11/18/15.
  */
 public class BalanceResultActivity extends Activity implements View.OnClickListener {
-    MobileBankApplication application;
-
     ListView balanceList;
     ArrayList<Attribute> attributesList;
     AttributeListAdapter adapter;

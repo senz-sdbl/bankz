@@ -60,8 +60,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     private boolean isResponseReceived;
 
     // service interface
-    private ISenzService senzService = null;
-    private boolean isServiceBound = false;
+    private ISenzService senzService;
+    private boolean isServiceBound;
 
     // service connection
     private ServiceConnection senzServiceConnection = new ServiceConnection() {
@@ -69,9 +69,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             Log.d("TAG", "Connected with senz service");
             isServiceBound = true;
             senzService = ISenzService.Stub.asInterface(service);
-
-            isResponseReceived = false;
-            senzCountDownTimer.start();
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -95,6 +92,11 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         // init count down timer
         senzCountDownTimer = new SenzCountDownTimer(16000, 5000);
+        isResponseReceived = false;
+
+        // service
+        senzService = null;
+        isServiceBound = false;
 
         // register broadcast receiver
         registerReceiver(senzMessageReceiver, new IntentFilter("com.wasn.bankz.DATA_SENZ"));

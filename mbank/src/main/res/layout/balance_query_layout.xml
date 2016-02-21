@@ -3,78 +3,76 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:background="#306d97"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
+        android:background="#306d97"
         android:orientation="horizontal">
 
-    <RelativeLayout
-        android:layout_width="53dp"
-        android:layout_height="fill_parent"
-        android:background="@drawable/button_selector"
-        android:layout_alignParentLeft="true"
-        android:clickable="true"
-        android:id="@+id/balance_query_layout_back">
-        <ImageView
-            android:layout_height="32dp"
-            android:layout_width="32dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/back">
-        </ImageView>
-
-        <TextView
-            android:layout_width="1dp"
-            android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            android:background="#306d97">
-        </TextView>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_height="fill_parent"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_toRightOf="@+id/balance_query_layout_back">
-
-        <TextView
-            android:id="@+id/balance_query_layout_header_text"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:text="Balance Query">
-        </TextView>
-
-    </RelativeLayout>
         <RelativeLayout
+            android:id="@+id/balance_query_layout_back"
             android:layout_width="53dp"
             android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
             android:background="@drawable/button_selector"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:id="@+id/balance_query_layout_get_balance">
+            android:clickable="true">
+
             <ImageView
-                android:layout_height="32dp"
                 android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/done">
-            </ImageView>
+                android:background="@drawable/back"></ImageView>
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:background="#306d97"></TextView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/balance_query_layout_back">
+
+            <TextView
+                android:id="@+id/balance_query_layout_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Balance Query"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold"></TextView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/balance_query_layout_done"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_selector"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/done"></ImageView>
 
             <TextView
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
 
-                android:background="#306d97">
-            </TextView>
+                android:background="#306d97"></TextView>
         </RelativeLayout>
-</RelativeLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -85,12 +83,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/balance_query_account_no"
@@ -100,57 +98,22 @@
                     android:layout_marginTop="25dp"
                     android:text="Account No"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp" >
-                </TextView>
+                    android:textSize="20dp"></TextView>
+
                 <EditText
                     android:id="@+id/balance_query_layout_account_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:background="@drawable/text_filed_shape"
                     android:inputType="number"
                     android:padding="10dp"
-                    android:textCursorDrawable="@null"
                     android:textColor="#4a4a4a"
-                    android:background="@drawable/text_filed_shape"
-                    android:textSize="18dp" >
-                </EditText>
+                    android:textCursorDrawable="@null"
+                    android:textSize="18dp"></EditText>
+            </LinearLayout>
         </LinearLayout>
-        </LinearLayout>
-</ScrollView>
-    <!--<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:background="#333333" >
+    </ScrollView>
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal" >
-
-            <RelativeLayout
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="6dp"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:background="@drawable/done_button_selector"
-                android:clickable="true"
-                android:layout_weight="1"
-                android:id="@+id/balance_query_layout_get_balance">
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:textColor="#ffffff"
-                    android:textStyle="normal"
-                    android:id="@+id/capture_layout_clear_icon"
-                    android:text="Get Balance">
-                </TextView>
-            </RelativeLayout>
-        </LinearLayout>
-        </LinearLayout>-->
-    </LinearLayout>
+</LinearLayout>

@@ -1,6 +1,7 @@
 package com.wasn.ui;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -14,9 +15,13 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.score.senz.ISenzService;
 import com.score.senzc.enums.SenzTypeEnum;
@@ -25,8 +30,7 @@ import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.pojos.BalanceQuery;
 import com.wasn.utils.ActivityUtils;
-import com.wasn.utils.PreferenceUtils;
-import com.wasn.utils.RSAUtils;
+import com.wasn.utils.NetworkUtil;
 
 import java.util.HashMap;
 
@@ -34,30 +38,34 @@ import java.util.HashMap;
  * Created by root on 11/18/15.
  */
 public class BalanceQueryActivity extends Activity implements View.OnClickListener {
-    RelativeLayout back;
-    RelativeLayout done;
-    TextView LineText;
 
     private static final String TAG = BalanceQueryActivity.class.getName();
 
+    // form components
     private EditText accountEditText;
+
+    // header
+    private RelativeLayout back;
+    private RelativeLayout done;
+    private TextView headerText;
+
+    // custom font
+    private Typeface typeface;
+
     // use to track registration timeout
     private SenzCountDownTimer senzCountDownTimer;
     private boolean isResponseReceived;
 
     // service interface
-    private ISenzService senzService = null;
-    private boolean isServiceBound = false;
+    private ISenzService senzService;
+    private boolean isServiceBound;
 
     // service connection
     private ServiceConnection senzServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.d("TAG", "Connected with senz service");
+            Log.d(TAG, "Connected with senz service");
             isServiceBound = true;
             senzService = ISenzService.Stub.asInterface(service);
-
-            isResponseReceived = false;
-            senzCountDownTimer.start();
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -68,15 +76,33 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.balance_query_layout);
-        connectWithService();
-        init();
-        registerReceiver(senzMessageReceiver, new IntentFilter("DATA"));
 
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+
+        initUi();
+
+        // init count down timer
+        senzCountDownTimer = new SenzCountDownTimer(16000, 5000);
+        isResponseReceived = false;
+
+        // service
+        senzService = null;
+        isServiceBound = false;
+
+        // register broadcast receiver
+        registerReceiver(senzMessageReceiver, new IntentFilter("com.wasn.bankz.DATA_SENZ"));
+
+        // bind with senz service
+        // bind to service from here as well
+        if (!isServiceBound) {
+            Intent intent = new Intent();
+            intent.setClassName("com.wasn", "com.wasn.services.RemoteSenzService");
+            bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
+        }
     }
 
     @Override
@@ -86,56 +112,20 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         unregisterReceiver(senzMessageReceiver);
     }
 
-    private void connectWithService() {
-        Intent intent = new Intent();
-        intent.setClassName("com.wasn", "com.wasn.services.RemoteSenzService");
-        bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
+    public void initUi() {
+        // init text/edit text fields
+        accountEditText = (EditText) findViewById(R.id.balance_query_layout_account_text);
+        headerText = (TextView) findViewById(R.id.balance_query_layout_header_text);
 
-        senzCountDownTimer = new SenzCountDownTimer(16000, 5000);
-    }
-
-
-    public void init() {
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        // set custom font
+        accountEditText.setTypeface(typeface, Typeface.BOLD);
+        headerText.setTypeface(typeface, Typeface.BOLD);
 
         back = (RelativeLayout) findViewById(R.id.balance_query_layout_back);
-        done = (RelativeLayout) findViewById(R.id.balance_query_layout_get_balance);
+        done = (RelativeLayout) findViewById(R.id.balance_query_layout_done);
 
         back.setOnClickListener(BalanceQueryActivity.this);
         done.setOnClickListener(BalanceQueryActivity.this);
-        accountEditText = (EditText) findViewById(R.id.balance_query_layout_account_text);
-        accountEditText.setTypeface(face);
-
-        // set custom font for text
-        LineText = (TextView) findViewById(R.id.balance_query_account_no);
-        LineText.setTypeface(face);
-    }
-
-    private void doQueryOverNetwork(String accno) {
-        try {
-
-            // first create create senz
-            HashMap<String, String> senzAttributes = new HashMap<>();
-            senzAttributes.put("accno", (accno));
-            senzAttributes.put("clnm", "");
-            senzAttributes.put("curbal", "");
-            senzAttributes.put("nic", "");
-            senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
-            senzAttributes.put("pubkey", PreferenceUtils.getRsaKey(this, RSAUtils.PUBLIC_KEY));
-
-
-            // new senz
-            String id = "_ID";
-            String signature = "";
-            SenzTypeEnum senzType = SenzTypeEnum.GET;
-            User sender = new User("", "user1");
-            User receiver = new User("", "balancqr");
-            Senz senz = new Senz(id, signature, senzType, sender, receiver, senzAttributes);
-
-            senzService.send(senz);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -144,26 +134,53 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
             startActivity(new Intent(BalanceQueryActivity.this, MobileBankActivity.class));
             BalanceQueryActivity.this.finish();
         } else if (view == done) {
-            //preSendToNetwork(); ToDo have to remove this
-            Intent i = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
+            // TODO remote this[temporary solution]
+            Intent intent = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
             BalanceQuery balance = new BalanceQuery(accountEditText.getText().toString(), "Name", "0000000v", "15,000");
-            i.putExtra("balance", balance);
-            startActivity(i);
+            intent.putExtra("balance", balance);
+            startActivity(intent);
+            BalanceQueryActivity.this.finish();
+
+            // TODO use this
+            //onClickGet();
         }
     }
 
-    public void preSendToNetwork() {//input validations are done here
-        String accno = accountEditText.getText().toString();
-        doQueryOverNetwork(accno);
+    private void onClickGet() {
+        ActivityUtils.hideSoftKeyboard(this);
+
+        // TODO validate input fields
+
+        if (NetworkUtil.isAvailableNetwork(this)) {
+            ActivityUtils.showProgressDialog(BalanceQueryActivity.this, "Please wait...");
+            senzCountDownTimer.start();
+        } else {
+            Toast.makeText(this, "No network connection available", Toast.LENGTH_LONG).show();
+        }
     }
 
-    @Override
-    public void onBackPressed() {
-        // back to main activity
-        startActivity(new Intent(BalanceQueryActivity.this, MobileBankActivity.class));
-        BalanceQueryActivity.this.finish();
+    private void doGet() {
+        try {
+            HashMap<String, String> senzAttributes = new HashMap<>();
+            senzAttributes.put("acc", "3444");
+            senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
+
+            // new senz
+            String id = "_ID";
+            String signature = "_SIGNATURE";
+            SenzTypeEnum senzType = SenzTypeEnum.PUT;
+            User receiver = new User("", "sdblbal");
+            Senz senz = new Senz(id, signature, senzType, null, receiver, senzAttributes);
+
+            senzService.send(senz);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * Keep track with share response timeout
+     */
     private class SenzCountDownTimer extends CountDownTimer {
 
         public SenzCountDownTimer(long millisInFuture, long countDownInterval) {
@@ -174,7 +191,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         public void onTick(long millisUntilFinished) {
             // if response not received yet, resend share
             if (!isResponseReceived) {
-                //doRegistration();
+                doGet();
                 Log.d(TAG, "Response not received yet");
             }
         }
@@ -186,8 +203,8 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
 
             // display message dialog that we couldn't reach the user
             if (!isResponseReceived) {
-                String message = "<font color=#000000>Seems we couldn't reach the senz service at this moment</font>";
-                // displayInformationMessageDialog("#Registration Fail", message);
+                String message = "Seems we couldn't complete the balance query at this moment";
+                displayMessageDialog("#PUT Fail", message);
             }
         }
     }
@@ -196,56 +213,77 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "Got message from Senz service");
-            //System.out.println("awa bn awa");
             handleMessage(intent);
         }
     };
 
+    /**
+     * Handle broadcast message receives
+     * Need to handle registration success failure here
+     *
+     * @param intent intent
+     */
     private void handleMessage(Intent intent) {
         String action = intent.getAction();
 
-        if (action.equals("DATA")) {
-
-            //startActivity(new Intent(TransactionActivity.this, TransactionDetailsActivity.class));//ToDo Fix to appropriate place
-            //TransactionActivity.this.finish();
-
+        if (action.equals("com.wasn.bankz.DATA_SENZ")) {
             Senz senz = intent.getExtras().getParcelable("SENZ");
-            /*System.out.println(senz.getSenzType());
-            System.out.println(senz.getAttributes().get("nic"));
-            System.out.println(senz.getAttributes().get("clnm"));
-            System.out.println(senz.getAttributes().get("accno"));
-            System.out.println(senz.getAttributes().get("curbal"));
-            */
 
-            Intent i = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
-            BalanceQuery balance = new BalanceQuery(senz.getAttributes().get("accno"), senz.getAttributes().get("clnm"), senz.getAttributes().get("nic"), senz.getAttributes().get("curbal"));
-            i.putExtra("balance", balance);
-            startActivity(i);
-
-           /* startActivity(new Intent(BalanceQueryActivity.this, BalanceResultActivity.class));
-            BalanceQueryActivity.this.finish();
-            */
-           /* if (senz.getAttributes().containsKey("msg")) {
-                // msg response received
+            if (senz.getAttributes().containsKey("bal") || senz.getAttributes().containsKey("nam") || senz.getAttributes().containsKey("nic")) {
+                // balance query response received
                 ActivityUtils.cancelProgressDialog();
                 isResponseReceived = true;
                 senzCountDownTimer.cancel();
 
-                String msg = senz.getAttributes().get("msg");
-                if (msg != null && msg.equalsIgnoreCase("UserCreated")) {
-                    Toast.makeText(this, "Successfully registered", Toast.LENGTH_LONG).show();
-
-                    // save user
-                    // navigate home
-                    PreferenceUtils.saveUser(getApplicationContext(), registeringUser);
-                    //navigateToHome();
-                } else {
-                    String informationMessage = "<font color=#4a4a4a>Seems username </font> <font color=#eada00>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font> <font color=#4a4a4a> already obtained by some other user, try SenZ with different username</font>";
-                    //displayInformationMessageDialog("Registration fail", informationMessage);
-                }
-            }*/
+                // TODO display balance query result
+            }
         }
     }
 
+    /**
+     * Display message dialog
+     *
+     * @param messageHeader message header
+     * @param message       message to be display
+     */
+    public void displayMessageDialog(String messageHeader, String message) {
+        final Dialog dialog = new Dialog(this);
 
+        //set layout for dialog
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.information_message_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+
+        // set dialog texts
+        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
+        TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
+        messageHeaderTextView.setText(messageHeader);
+        messageTextView.setText(message);
+
+        // set custom font
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        messageHeaderTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
+        messageTextView.setTypeface(face);
+
+        //set ok button
+        Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
+        okButton.setTypeface(face);
+        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // back to main activity
+        startActivity(new Intent(BalanceQueryActivity.this, MobileBankActivity.class));
+        BalanceQueryActivity.this.finish();
+    }
 }

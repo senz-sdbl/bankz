@@ -90,10 +90,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         initUi();
 
-        // init count down timer
-        senzCountDownTimer = new SenzCountDownTimer(16000, 5000);
-        isResponseReceived = false;
-
         // service
         senzService = null;
         isServiceBound = false;
@@ -164,26 +160,33 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         if (NetworkUtil.isAvailableNetwork(this)) {
             ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
+
+            // start new timer
+            isResponseReceived = false;
+            senzCountDownTimer = new SenzCountDownTimer(16000, 5000, getPutSenz());
             senzCountDownTimer.start();
         } else {
             Toast.makeText(this, "No network connection available", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void doPut() {
+    private Senz getPutSenz() {
+        HashMap<String, String> senzAttributes = new HashMap<>();
+        senzAttributes.put("acc", "3444");
+        senzAttributes.put("amnt", "3000");
+        senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
+
+        // new senz
+        String id = "_ID";
+        String signature = "_SIGNATURE";
+        SenzTypeEnum senzType = SenzTypeEnum.PUT;
+        User receiver = new User("", "sdbltrans");
+
+        return new Senz(id, signature, senzType, null, receiver, senzAttributes);
+    }
+
+    private void doPut(Senz senz) {
         try {
-            HashMap<String, String> senzAttributes = new HashMap<>();
-            senzAttributes.put("acc", "3444");
-            senzAttributes.put("amnt", "3000");
-            senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
-
-            // new senz
-            String id = "_ID";
-            String signature = "_SIGNATURE";
-            SenzTypeEnum senzType = SenzTypeEnum.PUT;
-            User receiver = new User("", "sdbltrans");
-            Senz senz = new Senz(id, signature, senzType, null, receiver, senzAttributes);
-
             senzService.send(senz);
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -195,15 +198,20 @@ public class TransactionActivity extends Activity implements View.OnClickListene
      */
     private class SenzCountDownTimer extends CountDownTimer {
 
-        public SenzCountDownTimer(long millisInFuture, long countDownInterval) {
+        // timer deals with only one senz
+        private Senz senz;
+
+        public SenzCountDownTimer(long millisInFuture, long countDownInterval, final Senz senz) {
             super(millisInFuture, countDownInterval);
+
+            this.senz = senz;
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
             // if response not received yet, resend share
             if (!isResponseReceived) {
-                doPut();
+                doPut(senz);
                 Log.d(TAG, "Response not received yet");
             }
         }

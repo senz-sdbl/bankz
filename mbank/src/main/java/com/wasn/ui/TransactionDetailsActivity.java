@@ -3,7 +3,6 @@ package com.wasn.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
-import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
@@ -32,8 +30,6 @@ import java.util.ArrayList;
  * @author erangaeb@gmail.com (eranga bandara)
  */
 public class TransactionDetailsActivity extends Activity implements View.OnClickListener {
-
-    MobileBankApplication application;
 
     // use to populate list
     ListView transactionDetailsListView;
@@ -66,8 +62,6 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
      * Initialize activity components
      */
     public void init() {
-        application = (MobileBankApplication) TransactionDetailsActivity.this.getApplication();
-
         back = (RelativeLayout) findViewById(R.id.transaction_details_layout_back);
         help = (RelativeLayout) findViewById(R.id.transaction_details_layout_help);
         print = (RelativeLayout) findViewById(R.id.transaction_details_layout_print);
@@ -236,7 +230,6 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             Toast.makeText(TransactionDetailsActivity.this, "Transaction saved", Toast.LENGTH_LONG).show();
 
             // need to go back to transaction activity
-            startActivity(new Intent(TransactionDetailsActivity.this, BalanceQueryActivity.class));
             TransactionDetailsActivity.this.finish();
         } else if (status.equals("0")) {
             Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
@@ -259,14 +252,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
      */
     public void onClick(View view) {
         if (view == back) {
-//            if (previousActivity.equals(MobileBankActivity.class.getName())) {
-//                // comes from mobile bank activity
-//                startActivity(new Intent(TransactionDetailsActivity.this, TransactionActivity.class));
-//            }
-//
-//            TransactionDetailsActivity.this.finish();
-        } else if (view == help) {
-
+            TransactionDetailsActivity.this.finish();
         } else if (view == print) {
             displayInformationMessageDialog("Do you wnt to print the receipt? make sure bluetooth is ON");
         }

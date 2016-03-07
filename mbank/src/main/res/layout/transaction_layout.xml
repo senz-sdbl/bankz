@@ -110,6 +110,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
                     android:inputType="number"
+                    android:maxLength="12"
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
@@ -139,6 +140,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
                     android:inputType="number"
+                    android:maxLength="6"
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
@@ -146,10 +148,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

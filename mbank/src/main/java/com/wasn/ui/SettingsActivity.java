@@ -3,7 +3,6 @@ package com.wasn.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -322,7 +321,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         if (view == back) {
             // back to main activity
-            startActivity(new Intent(SettingsActivity.this, BankzActivity.class));
             SettingsActivity.this.finish();
         } else if (view == save) {
             save();
@@ -331,13 +329,4 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onBackPressed() {
-        // back to main activity
-        startActivity(new Intent(SettingsActivity.this, BankzActivity.class));
-        SettingsActivity.this.finish();
-    }
 }

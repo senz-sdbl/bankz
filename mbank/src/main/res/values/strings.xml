@@ -5,7 +5,7 @@
     <string name="app_name">Bankz</string>
 
     <string name="no_client">No downloaded clients</string>
-    <string name="no_transactions">No Transactions</string>
+    <string name="no_transactions">[Empty]</string>
 
     <string name="ns_menu_open">open</string>
     <string name="ns_menu_close">close</string>

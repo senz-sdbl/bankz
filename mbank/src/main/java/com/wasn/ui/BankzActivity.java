@@ -93,16 +93,16 @@ public class BankzActivity extends Activity implements View.OnClickListener {
     public void onClick(View view) {
         if (view == balanceQueryLayout) {
             // display transaction activity
-            startActivity(new Intent(BankzActivity.this, BalanceQueryActivity.class));
-            BankzActivity.this.finish();
+            startActivity(new Intent(BankzActivity.this, TransactionActivity.class));
+            //BankzActivity.this.finish();
         } else if (view == summaryLayout) {
             // display transaction list activity
             startActivity(new Intent(BankzActivity.this, TransactionListActivity.class));
-            BankzActivity.this.finish();
+            //BankzActivity.this.finish();
         } else if (view == settingsLayout) {
             // display settings activity
             startActivity(new Intent(BankzActivity.this, SettingsActivity.class));
-            BankzActivity.this.finish();
+            //BankzActivity.this.finish();
         } else if (view == logout) {
             displayInformationMessageDialog("Are you sure, you want to logout? ");
         }

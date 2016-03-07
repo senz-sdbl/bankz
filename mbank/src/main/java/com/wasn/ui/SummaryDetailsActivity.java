@@ -291,11 +291,4 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onBackPressed() {
-        SummaryDetailsActivity.this.finish();
-    }
 }

@@ -1,6 +1,5 @@
 package com.wasn.db;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -17,7 +16,7 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
     private static SenzorsDbHelper senzorsDbHelper;
 
     // If you change the database schema, you must increment the database version
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "Senz2.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String NUMBER_TYPE = " NUM";
@@ -25,28 +24,21 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_TRANSACTION =
             "CREATE TABLE IF NOT EXISTS " + SenzorsDbContract.Transaction.TABLE_NAME + " (" +
-                    SenzorsDbContract.Transaction._ID +" "+ " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_clientAccountNo +" "+ NUMBER_TYPE + " NOT NULL" + ", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_CLIENTNAME +" "+ TEXT_TYPE +  " NOT NULL" +", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance +" "+ NUMBER_TYPE +  " NOT NULL" +", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount +" "+ NUMBER_TYPE +  " NOT NULL" +", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime +" "+ NUMBER_TYPE +  " NOT NULL" +", " +
-                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionType +" "+ TEXT_TYPE + " NOT NULL" +","+
-                    SenzorsDbContract.Transaction.COLUMN_NAME_clientNIC +" "+ TEXT_TYPE + " NOT NULL" +
-                   // "UNIQUE" + "(" + SenzorsDbContract.Senz.COLUMN_NAME_NAME + "," + SenzorsDbContract.Senz.COLUMN_NAME_USER + ")" +
+                    SenzorsDbContract.Transaction._ID + " " + " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_clientAccountNo + " " + NUMBER_TYPE + " NOT NULL" + ", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_CLIENTNAME + " " + TEXT_TYPE + ", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_previousBalance + " " + NUMBER_TYPE + ", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionAmount + " " + NUMBER_TYPE + " NOT NULL" + ", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionTime + " " + NUMBER_TYPE + " NOT NULL" + ", " +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_transactionType + " " + TEXT_TYPE + "," +
+                    SenzorsDbContract.Transaction.COLUMN_NAME_clientNIC + " " + TEXT_TYPE +
                     ")";
-    private static final String SQL_CREATE_METADATA =
-            "CREATE TABLE IF NOT EXISTS " + SenzorsDbContract.MetaData.TABLE_NAME + " (" +
-                    SenzorsDbContract.MetaData.COLUMN_NAME_DATA + TEXT_TYPE+" PRIMARY KEY " + ", " +
-                    SenzorsDbContract.MetaData.COLUMN_NAME_VALUE + TEXT_TYPE + " NOT NULL" +
-                    // "UNIQUE" + "(" + SenzorsDbContract.Senz.COLUMN_NAME_NAME + "," + SenzorsDbContract.Senz.COLUMN_NAME_USER + ")" +
-                    ")";
-
 
     public SenzorsDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        Log.d(TAG,"DB done");
+        Log.d(TAG, "DB done");
     }
+
     synchronized static SenzorsDbHelper getInstance(Context context) {
         if (senzorsDbHelper == null) {
             senzorsDbHelper = new SenzorsDbHelper(context.getApplicationContext());
@@ -54,14 +46,12 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
         return (senzorsDbHelper);
     }
 
-
-
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.d(TAG,SQL_CREATE_TRANSACTION);
+        Log.d(TAG, SQL_CREATE_TRANSACTION);
         try {
             sqLiteDatabase.execSQL(SQL_CREATE_TRANSACTION);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -72,10 +62,12 @@ public class SenzorsDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_TRANSACTION);
         onCreate(sqLiteDatabase);
     }
+
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         onUpgrade(db, oldVersion, newVersion);
     }
+
     @Override
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);

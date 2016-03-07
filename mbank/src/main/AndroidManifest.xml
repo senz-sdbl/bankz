@@ -27,16 +27,15 @@
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
 
         <activity
-            android:name="ui.TransactionDetailsActivity"
+            android:name=".ui.TransactionActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
 
         <activity
-            android:name=".ui.TransactionActivity"
+            android:name=".ui.TransactionDetailsActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation"
             android:launchMode="singleTask"
@@ -59,8 +58,7 @@
             android:configChanges="orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
 
         <activity
             android:name=".ui.TransactionListActivity"

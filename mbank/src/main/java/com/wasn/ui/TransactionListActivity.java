@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,21 +30,21 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
 
     // activity components
     RelativeLayout back;
-    RelativeLayout help;
-    LinearLayout bottomPannel;
     RelativeLayout done;
     TextView headerText;
-    TextView doneText;
 
     // use to populate list
     ListView transactionListView;
     TransactionListAdapter adapter;
     ViewStub emptyView;
+    TextView emptyText;
 
     ArrayList<Transaction> allTransactionList;
 
     // display when syncing
     public ProgressDialog progressDialog;
+
+    Typeface typeface;
 
     /**
      * {@inheritDoc}
@@ -66,20 +65,17 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
 
         // initialize
         back = (RelativeLayout) findViewById(R.id.transaction_list_layout_back);
-        help = (RelativeLayout) findViewById(R.id.transaction_list_layout_help);
-        //bottomPannel = (LinearLayout) findViewById(R.id.transaction_list_layout_bottom_pannel);
         done = (RelativeLayout) findViewById(R.id.transaction_list_layout_done);
         headerText = (TextView) findViewById(R.id.transaction_list_layout_header_text);
         //doneText = (TextView) findViewById(R.id.transaction_list_layout_done_text);
 
         // set custom font to header text
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        headerText.setTypeface(face);
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        headerText.setTypeface(typeface);
         headerText.setTypeface(null, Typeface.BOLD);
 
         // set click listeners
         back.setOnClickListener(TransactionListActivity.this);
-        help.setOnClickListener(TransactionListActivity.this);
         done.setOnClickListener(TransactionListActivity.this);
 
         // populate list view
@@ -124,10 +120,14 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
             adapter = new TransactionListAdapter(TransactionListActivity.this, allTransactionList);
             transactionListView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
+
+            // hide ok button
+            done.setVisibility(View.VISIBLE);
             //enableBottomPannel();
         } else {
+            done.setVisibility(View.GONE);
             //disableBottomPannel();
-            displayEmptyView();
+            //displayEmptyView();
         }
     }
 
@@ -139,6 +139,8 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         transactionListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         transactionListView.setEmptyView(emptyView);
+        emptyText = (TextView) emptyView.findViewById(R.id.empty_text);
+        emptyText.setTypeface(typeface, Typeface.BOLD);
     }
 
     /**
@@ -170,7 +172,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
     public void onClick(View view) {
         if (view == back) {
             // back to main activity
-            startActivity(new Intent(TransactionListActivity.this, BankzActivity.class));
+            //startActivity(new Intent(TransactionListActivity.this, BankzActivity.class));
             TransactionListActivity.this.finish();
         } else if (view == done) {
             // display summary activity
@@ -178,13 +180,4 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onBackPressed() {
-        // back to main activity
-        startActivity(new Intent(TransactionListActivity.this, BankzActivity.class));
-        TransactionListActivity.this.finish();
-    }
 }

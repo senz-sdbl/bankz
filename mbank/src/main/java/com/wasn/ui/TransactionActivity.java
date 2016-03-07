@@ -28,8 +28,10 @@ import com.score.senzc.enums.SenzTypeEnum;
 import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
+import com.wasn.db.SenzorsDbSource;
 import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.pojos.BalanceQuery;
+import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
 
@@ -63,6 +65,9 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     // service interface
     private ISenzService senzService;
     private boolean isServiceBound;
+
+    // current transaction
+    private Transaction transaction;
 
     // service connection
     private ServiceConnection senzServiceConnection = new ServiceConnection() {
@@ -136,8 +141,10 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         // balance query receives from previous activity
         Intent intent = getIntent();
-        BalanceQuery balance = intent.getExtras().getParcelable("balance");
-        accountEditText.setText(balance.getClientAccount(), TextView.BufferType.NORMAL);
+        if (intent.getExtras() != null) {
+            BalanceQuery balance = intent.getExtras().getParcelable("balance");
+            accountEditText.setText(balance.getClientAccount(), TextView.BufferType.NORMAL);
+        }
     }
 
     /**
@@ -147,7 +154,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     public void onClick(View view) {
         if (view == back) {
             // back to main activity
-            startActivity(new Intent(TransactionActivity.this, BankzActivity.class));
             TransactionActivity.this.finish();
         } else if (view == done) {
             onClickPut();
@@ -162,18 +168,24 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             int amount = Integer.parseInt(amountEditText.getText().toString().trim());
             ActivityUtils.isValidTransactionFields(account, amount);
 
+            // initialize transaction
+            transaction = new Transaction(1, "", "", account, "", amount, "2.35", "");
+            new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
+            navigateTransactionDetails(transaction);
             if (NetworkUtil.isAvailableNetwork(this)) {
-                ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
+                //ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
 
                 // start new timer
-                isResponseReceived = false;
-                senzCountDownTimer = new SenzCountDownTimer(16000, 5000, getPutSenz());
-                senzCountDownTimer.start();
+                //isResponseReceived = false;
+                //senzCountDownTimer = new SenzCountDownTimer(16000, 5000, getPutSenz());
+                //senzCountDownTimer.start();
             } else {
-                Toast.makeText(this, "No network connection available", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "[NO NETWORK]", Toast.LENGTH_LONG).show();
             }
         } catch (InvalidInputFieldsException | NumberFormatException e) {
             e.printStackTrace();
+
+            Toast.makeText(this, "[INVALID INPUT]", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -266,9 +278,12 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                 if (msg != null && msg.equalsIgnoreCase("PUTDONE")) {
                     Toast.makeText(this, "Transaction successful", Toast.LENGTH_LONG).show();
 
-                    // TODO save transaction in db
-                    // TODO navigate
+                    // save transaction in db
+                    if (transaction != null)
+                        new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
 
+                    // navigate
+                    navigateTransactionDetails(transaction);
                 } else {
                     String informationMessage = "Failed to complete the transaction";
                     displayMessageDialog("PUT fail", informationMessage);
@@ -317,13 +332,14 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         dialog.show();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onBackPressed() {
-        // back to main activity
-        startActivity(new Intent(TransactionActivity.this, BankzActivity.class));
+    private void navigateTransactionDetails(Transaction transaction) {
+        // navigate to transaction details
+        Intent intent = new Intent(TransactionActivity.this, TransactionDetailsActivity.class);
+        intent.putExtra("transaction", transaction);
+        intent.putExtra("ACTIVITY_NAME", TransactionActivity.class.getName());
+        startActivity(intent);
+
         TransactionActivity.this.finish();
     }
+
 }

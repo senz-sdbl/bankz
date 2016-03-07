@@ -28,6 +28,7 @@ import com.score.senzc.enums.SenzTypeEnum;
 import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
+import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.pojos.BalanceQuery;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
@@ -156,24 +157,30 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     private void onClickPut() {
         ActivityUtils.hideSoftKeyboard(this);
 
-        // TODO validate input fields
+        try {
+            String account = accountEditText.getText().toString().trim();
+            int amount = Integer.parseInt(amountEditText.getText().toString().trim());
+            ActivityUtils.isValidTransactionFields(account, amount);
 
-        if (NetworkUtil.isAvailableNetwork(this)) {
-            ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
+            if (NetworkUtil.isAvailableNetwork(this)) {
+                ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
 
-            // start new timer
-            isResponseReceived = false;
-            senzCountDownTimer = new SenzCountDownTimer(16000, 5000, getPutSenz());
-            senzCountDownTimer.start();
-        } else {
-            Toast.makeText(this, "No network connection available", Toast.LENGTH_LONG).show();
+                // start new timer
+                isResponseReceived = false;
+                senzCountDownTimer = new SenzCountDownTimer(16000, 5000, getPutSenz());
+                senzCountDownTimer.start();
+            } else {
+                Toast.makeText(this, "No network connection available", Toast.LENGTH_LONG).show();
+            }
+        } catch (InvalidInputFieldsException | NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 
     private Senz getPutSenz() {
         HashMap<String, String> senzAttributes = new HashMap<>();
-        senzAttributes.put("acc", "3444");
-        senzAttributes.put("amnt", "3000");
+        senzAttributes.put("acc", accountEditText.getText().toString().trim());
+        senzAttributes.put("amnt", amountEditText.getText().toString().trim());
         senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
 
         // new senz

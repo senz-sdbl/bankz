@@ -3,13 +3,7 @@ package com.wasn.utils;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.view.Gravity;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.score.senzc.pojos.User;
 import com.wasn.exceptions.InvalidInputFieldsException;
@@ -82,6 +76,14 @@ public class ActivityUtils {
         return true;
     }
 
+    public static boolean isValidTransactionFields(String account, int amount) throws InvalidInputFieldsException {
+        if (account == null || account.isEmpty() || amount == 0) {
+            throw new InvalidInputFieldsException();
+        }
+
+        return true;
+    }
+
     /**
      * validate input fields of login form
      *
@@ -90,29 +92,6 @@ public class ActivityUtils {
      */
     public static boolean isValidLoginFields(User user) {
         return !(user.getUsername().isEmpty());
-    }
-
-    /**
-     * Create custom text view for tab view
-     * Set custom typeface to the text view as well
-     *
-     * @param context application context
-     * @param title   tab title
-     * @return text view
-     */
-    public static TextView getCustomTextView(Context context, String title) {
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        Typeface typefaceThin = Typeface.createFromAsset(context.getAssets(), "fonts/vegur_2.otf");
-
-        TextView textView = new TextView(context);
-        textView.setText(title);
-        textView.setTypeface(typefaceThin);
-        textView.setTextColor(Color.parseColor("#4a4a4a"));
-        textView.setGravity(Gravity.CENTER);
-        textView.setTextSize(18);
-        textView.setLayoutParams(layoutParams);
-
-        return textView;
     }
 
 }

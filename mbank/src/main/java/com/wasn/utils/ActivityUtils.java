@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 
 import com.score.senzc.pojos.User;
+import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
 
 /**
@@ -76,9 +77,13 @@ public class ActivityUtils {
         return true;
     }
 
-    public static boolean isValidTransactionFields(String account, int amount) throws InvalidInputFieldsException {
+    public static boolean isValidTransactionFields(String account, int amount) throws InvalidInputFieldsException, InvalidAccountException {
         if (account == null || account.isEmpty() || amount == 0) {
             throw new InvalidInputFieldsException();
+        }
+
+        if (account.length()!=12) {
+            throw new InvalidAccountException();
         }
 
         return true;

@@ -15,8 +15,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
+import com.wasn.enums.PrintType;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
+import com.wasn.listeners.PrintListener;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Transaction;
 import com.wasn.services.printservices.TransactionPrintService;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
  *
  * @author erangaeb@gmail.com (eranga bandara)
  */
-public class TransactionDetailsActivity extends Activity implements View.OnClickListener {
+public class TransactionDetailsActivity extends Activity implements View.OnClickListener, PrintListener {
 
     // use to populate list
     ListView transactionDetailsListView;
@@ -82,12 +84,12 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         if (transaction != null) {
             // fill attribute list from with transaction details
             attributesList = new ArrayList<Attribute>();
-            attributesList.add(new Attribute("Client Name", transaction.getClientName()));
-            attributesList.add(new Attribute("Client NIC", transaction.getClientNic()));
+            //attributesList.add(new Attribute("Client Name", transaction.getClientName()));
+            //attributesList.add(new Attribute("Client NIC", transaction.getClientNic()));
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
-            attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
-            attributesList.add(new Attribute("Transaction Amount", Integer.toString(transaction.getTransactionAmount())));
-            attributesList.add(new Attribute("Transaction Time", transaction.getTransactionTime()));
+            //attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
+            attributesList.add(new Attribute("Amount", Integer.toString(transaction.getTransactionAmount())));
+            attributesList.add(new Attribute("Time", transaction.getTransactionTime()));
 
             // populate list
             transactionDetailsListView = (ListView) findViewById(R.id.transaction_details_list);
@@ -144,7 +146,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
                         progressDialog = ProgressDialog.show(TransactionDetailsActivity.this, "", "Printing receipt, Please wait ...");
-                        new TransactionPrintService(TransactionDetailsActivity.this, transaction).execute("PRINT");
+                        new TransactionPrintService(TransactionDetailsActivity.this, TransactionDetailsActivity.this, transaction, PrintType.PRINT).execute();
                     }
                 } catch (BluetoothNotEnableException e) {
                     Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();

@@ -29,11 +29,13 @@ import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.db.SenzorsDbSource;
+import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.pojos.BalanceQuery;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
+import com.wasn.utils.TransactionUtils;
 
 import java.util.HashMap;
 
@@ -169,23 +171,23 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             ActivityUtils.isValidTransactionFields(account, amount);
 
             // initialize transaction
-            transaction = new Transaction(1, "", "", account, "", amount, "2.35", "");
-            new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
-            navigateTransactionDetails(transaction);
-            if (NetworkUtil.isAvailableNetwork(this)) {
-                //ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
+            transaction = new Transaction(1, "", "", account, "", amount, TransactionUtils.getCurrentTime(), "");
 
-                // start new timer
-                //isResponseReceived = false;
-                //senzCountDownTimer = new SenzCountDownTimer(16000, 5000, getPutSenz());
-                //senzCountDownTimer.start();
+            //new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
+            //navigateTransactionDetails(transaction);
+            if (NetworkUtil.isAvailableNetwork(this)) {
+                displayInformationMessageDialog("Are you sure you want to do the transaction #Account " + transaction.getClientAccountNo() + " #Amount " + transaction.getTransactionAmount());
             } else {
-                Toast.makeText(this, "[NO NETWORK]", Toast.LENGTH_LONG).show();
+                displayMessageDialog("#ERROR", "No network connection");
             }
         } catch (InvalidInputFieldsException | NumberFormatException e) {
             e.printStackTrace();
 
-            Toast.makeText(this, "[INVALID INPUT]", Toast.LENGTH_LONG).show();
+            displayMessageDialog("#ERROR", "Invalid account no/amount");
+        } catch (InvalidAccountException e) {
+            e.printStackTrace();
+
+            displayMessageDialog("#ERROR", "Account no should be 12 character length");
         }
     }
 
@@ -331,6 +333,63 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         dialog.show();
     }
+
+    /**
+     * Display message dialog when user going to logout
+     *
+     * @param message
+     */
+    public void displayInformationMessageDialog(String message) {
+        final Dialog dialog = new Dialog(this);
+
+        //set layout for dialog
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.share_confirm_message_dialog);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.setCancelable(true);
+
+        // set dialog texts
+        TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
+        TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
+        messageTextView.setText(message);
+
+        // set custom font
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        messageHeaderTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
+        messageTextView.setTypeface(face);
+
+        //set ok button
+        Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
+        okButton.setTypeface(face);
+        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // do transaction
+                dialog.cancel();
+
+                ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
+
+                // start new timer
+                isResponseReceived = false;
+                senzCountDownTimer = new SenzCountDownTimer(16000, 5000, getPutSenz());
+                senzCountDownTimer.start();
+            }
+        });
+
+        // cancel button
+        Button cancelButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_cancel_button);
+        cancelButton.setTypeface(face);
+        cancelButton.setTypeface(null, Typeface.BOLD);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
+    }
+
 
     private void navigateTransactionDetails(Transaction transaction) {
         // navigate to transaction details

@@ -1,15 +1,16 @@
 package com.wasn.services.printservices;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
-import com.wasn.application.MobileBankApplication;
+import com.wasn.enums.PrintType;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
+import com.wasn.listeners.PrintListener;
 import com.wasn.pojos.Settings;
 import com.wasn.pojos.Transaction;
-import com.wasn.ui.TransactionDetailsActivity;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
 
@@ -22,21 +23,19 @@ import java.io.IOException;
  */
 public class TransactionPrintService extends AsyncTask<String, String, String> {
 
-    TransactionDetailsActivity activity;
-    MobileBankApplication application;
-
+    Context context;
+    PrintListener printListener;
     Transaction transaction;
+    PrintType printType;
 
     /**
      * Initialize class members
-     *
-     * @param activity
      */
-    public TransactionPrintService(TransactionDetailsActivity activity, Transaction transaction) {
-        this.activity = activity;
-        application = (MobileBankApplication) activity.getApplication();
-
+    public TransactionPrintService(Context context, PrintListener printListener, Transaction transaction, PrintType printType) {
+        this.context = context;
+        this.printListener = printListener;
         this.transaction = transaction;
+        this.printType = printType;
     }
 
     /**
@@ -44,15 +43,14 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
      */
     @Override
     protected String doInBackground(String... strings) {
-        // print type determine PRINT,RE_PRINT
-        String printType = strings[0];
+        // print type determine PRINT,REPRINT
         String printState = "0";
 
         // send data to printer according to print state
-        if (printType.equals("PRINT")) {
+        if (printType == PrintType.PRINT) {
             printState = print();
-        } else if (printType.equals("RE_PRINT")) {
-            printState = print();
+        } else if (printType == PrintType.REPRINT) {
+            printState = rePrint();
         }
 
         return printState;
@@ -65,7 +63,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
      */
     public String print() {
         // printing attributes
-        String printerAddress = PreferenceUtils.getPrinterAddress(activity);
+        String printerAddress = PreferenceUtils.getPrinterAddress(context);
         String telephoneNo = "Telephone";
         String branchName = "Branch";
         Settings settings = new Settings(printerAddress, telephoneNo, branchName);
@@ -104,7 +102,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
      */
     public String rePrint() {
         // printing attributes
-        String printerAddress = PreferenceUtils.getPrinterAddress(application);
+        String printerAddress = PreferenceUtils.getPrinterAddress(context);
         String telephoneNo = "0775432015";
         String branchName = "Kirulapona";
         Settings settings = new Settings(printerAddress, telephoneNo, branchName);
@@ -143,6 +141,6 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
     protected void onPostExecute(String status) {
         super.onPostExecute(status);
 
-        activity.onPostPrint(status);
+        printListener.onPostPrint(status);
     }
 }

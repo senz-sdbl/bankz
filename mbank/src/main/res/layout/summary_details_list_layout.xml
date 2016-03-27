@@ -1,83 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:background="#ffffff"
-              android:orientation="vertical" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
 
     <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:background="#306d97"
-            android:clickable="true" >
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#306d97"
+        android:clickable="true">
 
         <RelativeLayout
-                android:layout_width="53dp"
-                android:layout_height="fill_parent"
-                android:background="@drawable/button_selector"
-                android:layout_alignParentLeft="true"
-                android:clickable="true"
-                android:id="@+id/summary_details_layout_back">
+            android:id="@+id/summary_details_layout_back"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/button_selector"
+            android:clickable="true">
+
             <ImageView
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
-                    android:layout_centerInParent="true"
-                    android:id="@+id/capture_layout_about_icon"
-                    android:background="@drawable/back">
-            </ImageView>
+                android:id="@+id/capture_layout_about_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/back"></ImageView>
 
             <TextView
-                    android:id="@+id/tab_splitter"
-                    android:layout_width="1dp"
+                android:id="@+id/tab_splitter"
+                android:layout_width="1dp"
 
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentRight="true"
-                    android:background="#306d97">
-            </TextView>
-        </RelativeLayout>
-
-        <RelativeLayout
                 android:layout_height="fill_parent"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/summary_details_layout_back">
-
-            <TextView
-                    android:id="@+id/summary_details_list_layout_header_text"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:text="Summary">
-            </TextView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-                android:layout_width="53dp"
-                android:visibility="gone"
-                android:layout_height="fill_parent"
-                android:background="@drawable/button_selector"
                 android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/summary_details_layout_help">
-            <ImageView
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
-                    android:layout_centerInParent="true"
-                    android:id="@+id/capture_layout_send_icon"
-                    android:background="@drawable/help">
-            </ImageView>
+                android:background="#306d97"></TextView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/summary_details_layout_back">
 
             <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentLeft="true"
-                    android:background="#306d97">
-            </TextView>
+                android:id="@+id/summary_details_list_layout_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Summary"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold"></TextView>
+
         </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/summary_details_layout_help"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_selector"
+            android:clickable="true"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/capture_layout_send_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/help"></ImageView>
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:background="#306d97"></TextView>
+        </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/summary_details_layout_print"
             android:layout_width="53dp"
@@ -90,7 +88,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/done"></ImageView>
+                android:background="@drawable/printer"></ImageView>
 
             <TextView
                 android:layout_width="1dp"
@@ -103,9 +101,9 @@
     </RelativeLayout>
 
     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
 
         <!--<ListView
                 android:id="@+id/transaction_details_list"
@@ -117,18 +115,17 @@
         </ListView>-->
 
         <ListView
-                android:paddingLeft="10dp"
-                android:paddingRight="0dp"
-                android:background="#e5e5e5"
-                android:id="@+id/summary_details_list"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:cacheColorHint="@android:color/transparent"
-                android:divider="@drawable/list_seperator"
-                android:scrollbarStyle="outsideInset"
-                android:listSelector="@drawable/list_selctor"
-                android:dividerHeight="0dp">
-        </ListView>
+            android:id="@+id/summary_details_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#e5e5e5"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@drawable/list_seperator"
+            android:dividerHeight="0dp"
+            android:listSelector="@drawable/list_selctor"
+            android:paddingLeft="10dp"
+            android:paddingRight="0dp"
+            android:scrollbarStyle="outsideInset"></ListView>
 
     </LinearLayout>
 

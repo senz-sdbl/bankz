@@ -293,7 +293,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         if (status.equals("1")) {
             // valid print address
-            displayMessageDialog("Receipt printed", "Valid printer address, Now you can save settings");
+            displayMessageDialog("Done", "Printer details successfully saved");
             isTestedPrintAddress = true;
 
             // save printer address

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.wasn.R;
 import com.wasn.exceptions.NoUserException;
-import com.wasn.services.RemoteSenzService;
+import com.wasn.remote.SenzService;
 import com.wasn.utils.PreferenceUtils;
 
 /**
@@ -18,7 +18,7 @@ import com.wasn.utils.PreferenceUtils;
  * @author eranga herath(erangaeb@gmail.com)
  */
 public class SplashActivity extends Activity {
-    private final int SPLASH_DISPLAY_LENGTH = 2000;
+    private final int SPLASH_DISPLAY_LENGTH = 3000;
     private static final String TAG = SplashActivity.class.getName();
 
     /**
@@ -28,84 +28,69 @@ public class SplashActivity extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.splash_layout);
-
-        initUi();
-        //initSenzService();
+        startService();
         initNavigation();
+        setupSplashText();
     }
 
-    /**
-     * Initialize UI components
-     */
-    private void initUi() {
+    private void setupSplashText() {
         Typeface typefaceThin = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        TextView appName = (TextView) findViewById(R.id.splash_text);
-        appName.setTypeface(typefaceThin, Typeface.BOLD);
+        ((TextView) findViewById(R.id.splash_text)).setTypeface(typefaceThin, Typeface.BOLD);
     }
 
-    /**
-     * Initialize senz service
-     */
-    private void initSenzService() {
-        // start service from here
-        Intent serviceIntent = new Intent(SplashActivity.this, RemoteSenzService.class);
+    private void startService() {
+        Intent serviceIntent = new Intent(this, SenzService.class);
         startService(serviceIntent);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected void onResume() {
-        super.onResume();
     }
 
     /**
      * Determine where to go from here
      */
     private void initNavigation() {
-        // decide where to go
-        // 1. goto registration
-        // 2. goto home
+        // determine where to go
+        // start service
         try {
             PreferenceUtils.getUser(this);
-            initSenzService();
+
+            // have user, so move to home
             navigateToHome();
         } catch (NoUserException e) {
             e.printStackTrace();
-
-            // no user means navigate to login
-            navigateToRegistration();
+            navigateToSplash();
         }
-    }
-
-    /**
-     * Navigate to Register activity
-     */
-    private void navigateToRegistration() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, RegistrationActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                SplashActivity.this.startActivity(intent);
-                SplashActivity.this.finish();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
     }
 
     /**
      * Switch to home activity
      * This method will be call after successful login
      */
-    private void navigateToHome() {
+    private void navigateToSplash() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, BankzActivity.class);
-                SplashActivity.this.startActivity(intent);
-                SplashActivity.this.finish();
+                navigateRegistration();
             }
         }, SPLASH_DISPLAY_LENGTH);
+    }
+
+    private void navigateRegistration() {
+        // no user, so move to registration
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        overridePendingTransition(R.anim.right_in, R.anim.right_out);
+        finish();
+    }
+
+    /**
+     * Switch to home activity
+     * This method will be call after successful login
+     */
+    public void navigateToHome() {
+        Intent intent = new Intent(this, BankzActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        SplashActivity.this.finish();
 
     }
 }

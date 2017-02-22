@@ -6,11 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -28,7 +26,9 @@ import com.score.senzc.enums.SenzTypeEnum;
 import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
+import com.wasn.application.IntentProvider;
 import com.wasn.db.SenzorsDbSource;
+import com.wasn.enums.IntentType;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.pojos.BalanceQuery;
@@ -48,6 +48,9 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
     private static final String TAG = TransactionActivity.class.getName();
 
+    // custom font
+    private Typeface typeface;
+
     // form components
     private EditText accountEditText;
     private EditText amountEditText;
@@ -57,33 +60,44 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     private RelativeLayout done;
     private TextView headerText;
 
-    // custom font
-    private Typeface typeface;
-
-    // use to track registration timeout
-    private SenzCountDownTimer senzCountDownTimer;
-    private boolean isResponseReceived;
+    // current transaction
+    private Transaction transaction;
 
     // service interface
     private ISenzService senzService;
     private boolean isServiceBound;
 
-    // current transaction
-    private Transaction transaction;
-
     // service connection
-    private ServiceConnection senzServiceConnection = new ServiceConnection() {
+    protected ServiceConnection senzServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.d("TAG", "Connected with senz service");
-            isServiceBound = true;
+            Log.d(TAG, "Connected with senz service");
             senzService = ISenzService.Stub.asInterface(service);
+            isServiceBound = true;
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            Log.d("TAG", "Disconnected from senz service");
-
+            Log.d(TAG, "Disconnected from senz service");
             senzService = null;
             isServiceBound = false;
+        }
+    };
+
+    // senz received
+    private BroadcastReceiver senzReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.hasExtra("SENZ")) {
+                Senz senz = intent.getExtras().getParcelable("SENZ");
+                switch (senz.getSenzType()) {
+                    case DATA:
+                        handleSenz(senz);
+                        break;
+                    case SHARE:
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     };
 
@@ -97,28 +111,42 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
 
         initUi();
+    }
 
-        // service
-        senzService = null;
-        isServiceBound = false;
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        // register broadcast receiver
-        registerReceiver(senzMessageReceiver, new IntentFilter("com.wasn.bankz.DATA_SENZ"));
+        Log.d(TAG, "Bind to senz service");
+        bindToService();
+    }
 
-        // bind with senz service
-        // bind to service from here as well
-        if (!isServiceBound) {
-            Intent intent = new Intent();
-            intent.setClassName("com.wasn", "com.wasn.services.RemoteSenzService");
-            bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // unbind from service
+        if (isServiceBound) {
+            Log.d(TAG, "Unbind to senz service");
+            unbindService(senzServiceConnection);
+
+            isServiceBound = false;
         }
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(senzServiceConnection);
-        unregisterReceiver(senzMessageReceiver);
+    protected void onResume() {
+        super.onResume();
+
+        // bind to senz service
+        registerReceiver(senzReceiver, IntentProvider.getIntentFilter(IntentType.SENZ));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        unregisterReceiver(senzReceiver);
     }
 
     /**
@@ -149,6 +177,12 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         }
     }
 
+    protected void bindToService() {
+        Intent intent = new Intent("com.wasn.remote.SenzService");
+        intent.setPackage(this.getPackageName());
+        bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -173,8 +207,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             // initialize transaction
             transaction = new Transaction(1, "", "", account, "", amount, TransactionUtils.getCurrentTime(), "");
 
-            //new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
-            //navigateTransactionDetails(transaction);
             if (NetworkUtil.isAvailableNetwork(this)) {
                 displayInformationMessageDialog("Are you sure you want to do the transaction #Account " + transaction.getClientAccountNo() + " #Amount " + transaction.getTransactionAmount());
             } else {
@@ -191,7 +223,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         }
     }
 
-    private Senz getPutSenz() {
+    private void doPut() {
+        // create put senz
         HashMap<String, String> senzAttributes = new HashMap<>();
         senzAttributes.put("acc", accountEditText.getText().toString().trim());
         senzAttributes.put("amnt", amountEditText.getText().toString().trim());
@@ -201,95 +234,51 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         String id = "_ID";
         String signature = "_SIGNATURE";
         SenzTypeEnum senzType = SenzTypeEnum.PUT;
-        User receiver = new User("", "sdbltrans");
+        User receiver = new User("", "payzbank");
 
-        return new Senz(id, signature, senzType, null, receiver, senzAttributes);
+        send(new Senz(id, signature, senzType, null, receiver, senzAttributes));
     }
 
-    private void doPut(Senz senz) {
-        try {
-            senzService.send(senz);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Keep track with share response timeout
-     */
-    private class SenzCountDownTimer extends CountDownTimer {
-
-        // timer deals with only one senz
-        private Senz senz;
-
-        public SenzCountDownTimer(long millisInFuture, long countDownInterval, final Senz senz) {
-            super(millisInFuture, countDownInterval);
-
-            this.senz = senz;
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            // if response not received yet, resend share
-            if (!isResponseReceived) {
-                doPut(senz);
-                Log.d(TAG, "Response not received yet");
+    public void send(Senz senz) {
+        if (NetworkUtil.isAvailableNetwork(this)) {
+            try {
+                if (isServiceBound) {
+                    senzService.send(senz);
+                } else {
+                    Toast.makeText(this, "Failed to connect", Toast.LENGTH_LONG).show();
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
             }
-        }
-
-        @Override
-        public void onFinish() {
-            ActivityUtils.hideSoftKeyboard(TransactionActivity.this);
-            ActivityUtils.cancelProgressDialog();
-
-            // display message dialog that we couldn't reach the user
-            if (!isResponseReceived) {
-                String message = "Seems we couldn't complete the transaction at this moment";
-                displayMessageDialog("#PUT Fail", message);
-            }
+        } else {
+            Toast.makeText(this, "No internet", Toast.LENGTH_LONG).show();
         }
     }
-
-    private BroadcastReceiver senzMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "Got message from Senz service");
-            handleMessage(intent);
-        }
-    };
 
     /**
      * Handle broadcast message receives
      * Need to handle registration success failure here
      *
-     * @param intent intent
+     * @param senz senz
      */
-    private void handleMessage(Intent intent) {
-        String action = intent.getAction();
+    private void handleSenz(Senz senz) {
+        if (senz.getAttributes().containsKey("msg")) {
+            // msg response received
+            ActivityUtils.cancelProgressDialog();
 
-        if (action.equals("com.wasn.bankz.DATA_SENZ")) {
-            Senz senz = intent.getExtras().getParcelable("SENZ");
+            String msg = senz.getAttributes().get("msg");
+            if (msg != null && msg.equalsIgnoreCase("PUTDONE")) {
+                Toast.makeText(this, "Transaction successful", Toast.LENGTH_LONG).show();
 
-            if (senz.getAttributes().containsKey("msg")) {
-                // msg response received
-                ActivityUtils.cancelProgressDialog();
-                isResponseReceived = true;
-                senzCountDownTimer.cancel();
+                // save transaction in db
+                if (transaction != null)
+                    new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
 
-                String msg = senz.getAttributes().get("msg");
-                if (msg != null && msg.equalsIgnoreCase("PUTDONE")) {
-                    Toast.makeText(this, "Transaction successful", Toast.LENGTH_LONG).show();
-
-                    // save transaction in db
-                    if (transaction != null)
-                        new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
-
-                    // navigate
-                    navigateTransactionDetails(transaction);
-                } else {
-                    String informationMessage = "Failed to complete the transaction";
-                    displayMessageDialog("PUT fail", informationMessage);
-                }
+                // navigate
+                navigateTransactionDetails(transaction);
+            } else {
+                String informationMessage = "Failed to complete the transaction";
+                displayMessageDialog("PUT fail", informationMessage);
             }
         }
     }
@@ -367,13 +356,10 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             public void onClick(View v) {
                 // do transaction
                 dialog.cancel();
-
                 ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
 
-                // start new timer
-                isResponseReceived = false;
-                senzCountDownTimer = new SenzCountDownTimer(16000, 5000, getPutSenz());
-                senzCountDownTimer.start();
+                // send data
+                doPut();
             }
         });
 

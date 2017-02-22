@@ -51,7 +51,8 @@ public class RemoteSenzService extends Service implements ShareSenzListener {
     //private static final String SENZ_HOST = "udp.mysensors.info";192.168.43.42
     //private static final String SENZ_HOST = "192.168.43.42";
     //private static final String SENZ_HOST = "10.4.1.29";
-    private static final String SENZ_HOST = "10.2.2.38";
+    private static final String SENZ_HOST = "192.168.1.125";
+    //private static final String SENZ_HOST = "192.168.1.122";
     private static final int SENZ_PORT = 9090;
 
     // we are listing for UDP socket
@@ -126,7 +127,7 @@ public class RemoteSenzService extends Service implements ShareSenzListener {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(TAG, "Start service");
         initUdpSocket();
-        initPingSender();
+        //initPingSender();
         initUdpListener();
 
         // If we get killed, after returning from here, restart

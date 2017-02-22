@@ -35,32 +35,33 @@ public class SenzParser {
             } else if (token.startsWith("^")) {
                 // ^mysensors, ^0775432015
                 senz.setSender(new User("", token.substring(1)));
+            } else if (token.startsWith("$")) {
+                // $key 5.23
+                senz.getAttributes().put(token, tokens[i + 1]);
+                i++;
             } else if (token.startsWith("#")) {
                 // we remove # from token and store as a key
                 String key = token.substring(1);
-                if (token.equals("#time") || token.equals("#pubkey")) {
-                    // #time 2453234, #pubkey ac23edf432fdg
+                String nextToken = tokens[i + 1];
+
+                if (nextToken.startsWith("#") || nextToken.startsWith("$") || nextToken.startsWith("@")) {
+                    // #lat #lon
+                    // #lat @user
+                    // #lat $key 3.23
+                    senz.getAttributes().put(key, "");
+                } else {
+                    // #lat 3.24 #lon 3.23
                     senz.getAttributes().put(key, tokens[i + 1]);
                     i++;
-                } else {
-                    if (senz.getSenzType() == SenzTypeEnum.DATA) {
-                        // #lat 3.2343 #lon 4.3434
-                        senz.getAttributes().put(key, tokens[i + 1]);
-                        i++;
-                    } else {
-                        // #lat #lon
-                        senz.getAttributes().put(key, "");
-                    }
                 }
             }
         }
 
-//        System.out.println(senz.getSender());
-//        System.out.println(senz.getReceiver());
+//        System.out.println(senz.getSender().getUsername());
+//        System.out.println(senz.getReceiver().getUsername());
 //        System.out.println(senz.getSenzType());
 //        System.out.println(senz.getSignature());
 //        System.out.println(senz.getAttributes().entrySet());
-//        System.out.println("------------");
 
         return senz;
     }
@@ -71,12 +72,14 @@ public class SenzParser {
 
         // add attributes to payload
         for (String key : senz.getAttributes().keySet()) {
-            if (key.equalsIgnoreCase(senz.getAttributes().get(key))) {
+            if (key.equalsIgnoreCase(senz.getAttributes().get(key)) || senz.getAttributes().get(key).isEmpty()) {
                 // GET or SHARE query
                 // param and value equal since no value to store (SHARE #lat #lon)
-                payload = payload.concat(" ").concat("#").concat(senz.getAttributes().get(key));
+                payload = payload.concat(" ").concat("#").concat(key).concat(" ").concat(senz.getAttributes().get(key));
+            } else if (key.startsWith("$")) {
+                // Encrypted DATA query
+                payload = payload.concat(" ").concat(key).concat(" ").concat(senz.getAttributes().get(key));
             } else {
-                // DATA query
                 payload = payload.concat(" ").concat("#").concat(key).concat(" ").concat(senz.getAttributes().get(key));
             }
         }
@@ -91,64 +94,37 @@ public class SenzParser {
     public static String getSenzMessage(String payload, String signature) {
         String senzMessage = payload + " " + signature;
 
-        System.out.println((senzMessage.replaceAll("\n", "").replaceAll("\r", "")).getBytes().length);
+        //System.out.println((senzMessage.replaceAll("\n", "").replaceAll("\r", "")).getBytes().length);
 
         return senzMessage.replaceAll("\n", "").replaceAll("\r", "");
     }
 
     public static void main(String args[]) {
-        String senzMessage1 = "DATA" + " " +
-                "#pubkey" + " " + "keyyyyy" + " " +
-                "#time" + " " + "timestamp" + " " +
-                "@senz" + " " +
-                "^0775432015" + " " +
-                "signatureeee";
-
-        String senzMessage2 = "SHARE" + " " +
-                "#lat" + " " +
-                "#lon" + " " +
-                "#time" + " " + "timestamp" + " " +
-                "@senz" + " " +
-                "^0775432015" + " " +
-                "signatureeee";
-
-        //parse(senzMessage1);
-        //parse(senzMessage2);
-
-//        Senz senz = new Senz();
-//        senz.setSender("03452");
-//        senz.setReceiver("mysen");
-//        senz.setSenzType(SenzTypeEnum.SHARE);
+//        String senzMessage3 = "STREAM " +
+//                "#msg UserCreated " +
+//                "#pubkey sd23453451234sfsdfd==  " +
+//                "#time 1441806897.71 " +
+//                "#msg1 #msg2 rtt " +
+//                "@senzswitch " +
+//                "^era " +
+//                "v50I88VzgvBvubCjGitTMO9";
 //
-//        HashMap<String, String> senzAttributes = new HashMap<>();
-//        senzAttributes.put("pubkey", "public_key");
-//        senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
-//        senz.setAttributes(senzAttributes);
-
-        String senzMessage3 = "DATA " +
-                "#msg UserCreated " +
-                "#pubkey sd23453451234sfsdfd==  " +
-                "#time 1441806897.71 " +
-                "^mysensors " +
-                "v50I88VzgvBvubCjGitTMO9";
-
-        parse(senzMessage3);
-
-        Senz senz = new Senz();
-        senz.setSender(new User("", "222"));
-        senz.setReceiver(new User("", "111"));
-        senz.setSenzType(SenzTypeEnum.SHARE);
-
-        HashMap<String, String> senzAttributes = new HashMap<>();
-        senzAttributes.put("lat", "lat");
-        senzAttributes.put("lat", "lon");
-        senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
-        senz.setAttributes(senzAttributes);
-
-        String senzPaylod = getSenzPayload(senz);
-        String signature = "digsig";
-        String senzMessage = getSenzMessage(senzPaylod, signature);
-        System.out.println(senzPaylod);
-        System.out.println(senzMessage);
+//        //parse(senzMessage3);
+//
+//        LimitedList<String> list = new LimitedList<>(3);
+//        list.add("era");
+//        System.out.println(list);
+//
+//        list.add("nan");
+//        System.out.println(list);
+//
+//        list.add("edsd");
+//        System.out.println(list);
+//
+//        list.add("kesdf");
+//        System.out.println(list);
+//
+//        list.add("ioio");
+//        System.out.println(list);
     }
 }

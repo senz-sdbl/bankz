@@ -6,11 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.Html;
@@ -29,8 +27,9 @@ import com.score.senzc.enums.SenzTypeEnum;
 import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
+import com.wasn.application.IntentProvider;
+import com.wasn.enums.IntentType;
 import com.wasn.exceptions.InvalidInputFieldsException;
-import com.wasn.services.RemoteSenzService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
 import com.wasn.utils.PreferenceUtils;
@@ -57,55 +56,80 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
     private RelativeLayout signUpButton;
     private Typeface typeface;
 
-    // use to track registration timeout
-    private SenzCountDownTimer senzCountDownTimer;
-    private boolean isResponseReceived;
-
     // service interface
-    private ISenzService senzService = null;
-    private boolean isServiceBound = false;
+    protected ISenzService senzService = null;
+    protected boolean isServiceBound = false;
 
     // service connection
-    private ServiceConnection senzServiceConnection = new ServiceConnection() {
+    protected ServiceConnection senzServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
-            Log.d("TAG", "Connected with senz service");
-            isServiceBound = true;
+            Log.d(TAG, "Connected with senz service");
             senzService = ISenzService.Stub.asInterface(service);
-
-            isResponseReceived = false;
-            senzCountDownTimer.start();
+            isServiceBound = true;
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            Log.d("TAG", "Disconnected from senz service");
-
+            Log.d(TAG, "Disconnected from senz service");
             senzService = null;
             isServiceBound = false;
         }
     };
 
-    /**
-     * {@inheritDoc}
-     */
-    public void onCreate(Bundle savedInstanceState) {
+    private BroadcastReceiver senzReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "Got message from Senz service");
+            if (intent.hasExtra("SENZ")) {
+                Senz senz = intent.getExtras().getParcelable("SENZ");
+                handleSenz(senz);
+            }
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_layout);
         typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
 
-        senzCountDownTimer = new SenzCountDownTimer(16000, 5000);
-
+        //
         initUi();
-        registerReceiver(senzMessageReceiver, new IntentFilter("com.wasn.bankz.DATA_SENZ"));
+
+        // generate RSA keys
+        doPreRegistration();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(senzServiceConnection);
-        unregisterReceiver(senzMessageReceiver);
+    protected void onStart() {
+        super.onStart();
+
+        Log.d(TAG, "Bind to senz service");
+        bindToService();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // unbind from service
+        if (isServiceBound) {
+            Log.d(TAG, "Unbind to senz service");
+            unbindService(senzServiceConnection);
+
+            isServiceBound = false;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(senzReceiver, IntentProvider.getIntentFilter(IntentType.SENZ));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (senzReceiver != null) unregisterReceiver(senzReceiver);
     }
 
     /**
@@ -121,6 +145,12 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         editTextUsername.setTypeface(typeface, Typeface.NORMAL);
     }
 
+    protected void bindToService() {
+        Intent intent = new Intent("com.score.rahasak.remote.SenzService");
+        intent.setPackage(this.getPackageName());
+        bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -129,7 +159,6 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         if (v == signUpButton) {
             if (NetworkUtil.isAvailableNetwork(this)) {
                 onClickRegister();
-                //navigateToHome();
             } else {
                 Toast.makeText(this, "No network connection available", Toast.LENGTH_LONG).show();
             }
@@ -165,25 +194,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
      */
     private void doPreRegistration() {
         try {
-            if (!isServiceBound) {
-                // init keys
-                RSAUtils.initKeys(this);
-
-                // start service from here
-                Intent serviceIntent = new Intent(RegistrationActivity.this, RemoteSenzService.class);
-                startService(serviceIntent);
-
-                Log.d(TAG, "service started from reg");
-
-                // bind to service from here as well
-                Intent intent = new Intent();
-                intent.setClassName("com.wasn", "com.wasn.services.RemoteSenzService");
-                bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
-            } else {
-                // start to send senz to server form here
-                isResponseReceived = false;
-                senzCountDownTimer.start();
-            }
+            RSAUtils.initKeys(this);
         } catch (NoSuchProviderException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
@@ -194,98 +205,21 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
      * Send register senz to senz service via service binder
      */
     private void doRegistration() {
-        try {
-            // first create create senz
-            HashMap<String, String> senzAttributes = new HashMap<>();
-            senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
-            senzAttributes.put("pubkey", PreferenceUtils.getRsaKey(this, RSAUtils.PUBLIC_KEY));
+        // first create create senz
+        HashMap<String, String> senzAttributes = new HashMap<>();
+        senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
+        senzAttributes.put("pubkey", PreferenceUtils.getRsaKey(this, RSAUtils.PUBLIC_KEY));
 
-            // new senz
-            String id = "_ID";
-            String signature = "";
-            SenzTypeEnum senzType = SenzTypeEnum.SHARE;
-            User sender = new User("", registeringUser.getUsername());
-            User receiver = new User("", "mysensors");
-            Senz senz = new Senz(id, signature, senzType, sender, receiver, senzAttributes);
+        // new senz
+        String id = "_ID";
+        String signature = "";
+        SenzTypeEnum senzType = SenzTypeEnum.SHARE;
+        User sender = new User("", registeringUser.getUsername());
+        User receiver = new User("", "senzswitch");
+        Senz senz = new Senz(id, signature, senzType, sender, receiver, senzAttributes);
 
-            senzService.send(senz);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Keep track with share response timeout
-     */
-    private class SenzCountDownTimer extends CountDownTimer {
-
-        public SenzCountDownTimer(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            // if response not received yet, resend share
-            if (!isResponseReceived) {
-                doRegistration();
-                Log.d(TAG, "Response not received yet");
-            }
-        }
-
-        @Override
-        public void onFinish() {
-            ActivityUtils.hideSoftKeyboard(RegistrationActivity.this);
-            ActivityUtils.cancelProgressDialog();
-
-            // display message dialog that we couldn't reach the user
-            if (!isResponseReceived) {
-                //String message = "<font color=#000000>Seems we couldn't reach the senz service at this moment</font>";
-                //displayInformationMessageDialog("#Registration Fail", message);
-                navigateToHome();
-            }
-        }
-    }
-
-    private BroadcastReceiver senzMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "Got message from Senz service");
-            handleMessage(intent);
-        }
-    };
-
-    /**
-     * Handle broadcast message receives
-     * Need to handle registration success failure here
-     *
-     * @param intent intent
-     */
-    private void handleMessage(Intent intent) {
-        String action = intent.getAction();
-
-        if (action.equals("com.wasn.bankz.DATA_SENZ")) {
-            Senz senz = intent.getExtras().getParcelable("SENZ");
-
-            if (senz.getAttributes().containsKey("msg")) {
-                // msg response received
-                ActivityUtils.cancelProgressDialog();
-                isResponseReceived = true;
-                senzCountDownTimer.cancel();
-
-                String msg = senz.getAttributes().get("msg");
-                if (msg != null && msg.equalsIgnoreCase("REGISTRATION_DONE")) {
-                    Toast.makeText(this, "Successfully registered", Toast.LENGTH_LONG).show();
-
-                    // save user
-                    // navigate home
-                    PreferenceUtils.saveUser(getApplicationContext(), registeringUser);
-                    navigateToHome();
-                } else {
-                    String informationMessage = "<font color=#4a4a4a>Seems username </font> <font color=#eada00>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font> <font color=#4a4a4a> already obtained by some other user, try SenZ with different username</font>";
-                    displayInformationMessageDialog("Registration fail", informationMessage);
-                }
-            }
-        }
+        // Sending senz to service
+        send(senz);
     }
 
     /**
@@ -296,6 +230,47 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         Intent intent = new Intent(RegistrationActivity.this, BankzActivity.class);
         RegistrationActivity.this.startActivity(intent);
         RegistrationActivity.this.finish();
+    }
+
+    public void send(Senz senz) {
+        if (NetworkUtil.isAvailableNetwork(this)) {
+            try {
+                if (isServiceBound) {
+                    senzService.send(senz);
+                } else {
+                    Toast.makeText(this, "Failed to connect", Toast.LENGTH_LONG).show();
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(this, "No internet", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * Handle broadcast message receives
+     * Need to handle registration success failure here
+     *
+     * @param senz intent
+     */
+    private void handleSenz(Senz senz) {
+        if (senz.getAttributes().containsKey("status")) {
+            // msg response received
+            ActivityUtils.cancelProgressDialog();
+            String msg = senz.getAttributes().get("status");
+            if (msg != null && (msg.equalsIgnoreCase("REG_DONE") || msg.equalsIgnoreCase("REG_ALR"))) {
+                Toast.makeText(this, "Registration done", Toast.LENGTH_LONG).show();
+
+                // save user
+                // navigate home
+                PreferenceUtils.saveUser(this, registeringUser);
+                navigateToHome();
+            } else if (msg != null && msg.equalsIgnoreCase("REG_FAIL")) {
+                String informationMessage = "<font size=10>Seems username </font> <font color=#F88F8C>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font> <font> already obtained by some other user, try a different username</font>";
+                displayInformationMessageDialog("Registration fail", informationMessage);
+            }
+        }
     }
 
     /**
@@ -331,7 +306,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
             public void onClick(View v) {
                 dialog.cancel();
                 ActivityUtils.showProgressDialog(RegistrationActivity.this, "Please wait...");
-                doPreRegistration();
+                doRegistration();
             }
         });
 
@@ -383,15 +358,6 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         });
 
         dialog.show();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.overridePendingTransition(R.anim.stay_in, R.anim.bottom_out);
     }
 
 }

@@ -88,7 +88,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/printer"></ImageView>
+                android:background="@drawable/printer_i"></ImageView>
 
             <TextView
                 android:layout_width="1dp"

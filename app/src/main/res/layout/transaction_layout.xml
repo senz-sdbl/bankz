@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="New Transaction"
+                android:text="Transaction"
                 android:textColor="#ffffff"
                 android:textSize="18dp"
                 android:textStyle="bold" />
@@ -56,7 +56,8 @@
             android:layout_height="fill_parent"
             android:layout_toLeftOf="@+id/transaction_layout_done"
             android:background="@drawable/button_selector"
-            android:clickable="true">
+            android:clickable="true"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="32dp"
@@ -68,8 +69,7 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
-
-                android:background="#306d97"></TextView>
+                android:background="#306d97" />
         </RelativeLayout>
 
 

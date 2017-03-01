@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Transaction Details"
+                android:text="Summary"
                 android:textColor="#ffffff"
                 android:textSize="18dp"
                 android:textStyle="bold"></TextView>
@@ -87,7 +87,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/printer"></ImageView>
+                android:background="@drawable/printer_i"></ImageView>
 
             <TextView
                 android:layout_width="1dp"

@@ -28,15 +28,14 @@ import com.score.senzc.enums.SenzTypeEnum;
 import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
+import com.wasn.application.IntentProvider;
+import com.wasn.enums.IntentType;
 import com.wasn.pojos.BalanceQuery;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
 
 import java.util.HashMap;
 
-/**
- * Created by root on 11/18/15.
- */
 public class BalanceQueryActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = BalanceQueryActivity.class.getName();
@@ -52,27 +51,41 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     // custom font
     private Typeface typeface;
 
-    // use to track registration timeout
-    private SenzCountDownTimer senzCountDownTimer;
-    private boolean isResponseReceived;
-
     // service interface
     private ISenzService senzService;
     private boolean isServiceBound;
 
     // service connection
-    private ServiceConnection senzServiceConnection = new ServiceConnection() {
+    protected ServiceConnection senzServiceConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             Log.d(TAG, "Connected with senz service");
-            isServiceBound = true;
             senzService = ISenzService.Stub.asInterface(service);
+            isServiceBound = true;
         }
 
         public void onServiceDisconnected(ComponentName className) {
-            Log.d("TAG", "Disconnected from senz service");
-
+            Log.d(TAG, "Disconnected from senz service");
             senzService = null;
             isServiceBound = false;
+        }
+    };
+
+    // senz received
+    private BroadcastReceiver senzReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.hasExtra("SENZ")) {
+                Senz senz = intent.getExtras().getParcelable("SENZ");
+                switch (senz.getSenzType()) {
+                    case DATA:
+                        handleSenz(senz);
+                        break;
+                    case SHARE:
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     };
 
@@ -81,38 +94,48 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.balance_query_layout);
 
-        typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-
         initUi();
+    }
 
-        // init count down timer
-        senzCountDownTimer = new SenzCountDownTimer(16000, 5000);
-        isResponseReceived = false;
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        // service
-        senzService = null;
-        isServiceBound = false;
+        Log.d(TAG, "Bind to senz service");
+        bindToService();
+    }
 
-        // register broadcast receiver
-        registerReceiver(senzMessageReceiver, new IntentFilter("com.wasn.bankz.DATA_SENZ"));
+    @Override
+    protected void onStop() {
+        super.onStop();
 
-        // bind with senz service
-        // bind to service from here as well
-        if (!isServiceBound) {
-            Intent intent = new Intent();
-            intent.setClassName("com.wasn", "com.wasn.services.RemoteSenzService");
-            bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
+        // unbind from service
+        if (isServiceBound) {
+            Log.d(TAG, "Unbind to senz service");
+            unbindService(senzServiceConnection);
+
+            isServiceBound = false;
         }
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(senzServiceConnection);
-        unregisterReceiver(senzMessageReceiver);
+    protected void onResume() {
+        super.onResume();
+
+        // bind to senz service
+        registerReceiver(senzReceiver, IntentProvider.getIntentFilter(IntentType.SENZ));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        unregisterReceiver(senzReceiver);
     }
 
     public void initUi() {
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+
         // init text/edit text fields
         accountEditText = (EditText) findViewById(R.id.balance_query_layout_account_text);
         headerText = (TextView) findViewById(R.id.balance_query_layout_header_text);
@@ -126,6 +149,12 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
 
         back.setOnClickListener(BalanceQueryActivity.this);
         done.setOnClickListener(BalanceQueryActivity.this);
+    }
+
+    protected void bindToService() {
+        Intent intent = new Intent("com.wasn.remote.SenzService");
+        intent.setPackage(this.getPackageName());
+        bindService(intent, senzServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -147,19 +176,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     }
 
     private void onClickGet() {
-        ActivityUtils.hideSoftKeyboard(this);
-
-        // TODO validate input fields
-
-        if (NetworkUtil.isAvailableNetwork(this)) {
-            ActivityUtils.showProgressDialog(BalanceQueryActivity.this, "Please wait...");
-            senzCountDownTimer.start();
-        } else {
-            Toast.makeText(this, "No network connection available", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void doGet() {
+        // send get
         try {
             HashMap<String, String> senzAttributes = new HashMap<>();
             senzAttributes.put("acc", "3444");
@@ -179,66 +196,28 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     }
 
     /**
-     * Keep track with share response timeout
-     */
-    private class SenzCountDownTimer extends CountDownTimer {
-
-        public SenzCountDownTimer(long millisInFuture, long countDownInterval) {
-            super(millisInFuture, countDownInterval);
-        }
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            // if response not received yet, resend share
-            if (!isResponseReceived) {
-                doGet();
-                Log.d(TAG, "Response not received yet");
-            }
-        }
-
-        @Override
-        public void onFinish() {
-            ActivityUtils.hideSoftKeyboard(BalanceQueryActivity.this);
-            ActivityUtils.cancelProgressDialog();
-
-            // display message dialog that we couldn't reach the user
-            if (!isResponseReceived) {
-                String message = "Seems we couldn't complete the balance query at this moment";
-                displayMessageDialog("#PUT Fail", message);
-            }
-        }
-    }
-
-    private BroadcastReceiver senzMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.d(TAG, "Got message from Senz service");
-            handleMessage(intent);
-        }
-    };
-
-    /**
      * Handle broadcast message receives
      * Need to handle registration success failure here
      *
-     * @param intent intent
+     * @param senz senz
      */
-    private void handleMessage(Intent intent) {
-        String action = intent.getAction();
+    private void handleSenz(Senz senz) {
+        if (senz.getAttributes().containsKey("msg")) {
+            // msg response received
+            ActivityUtils.cancelProgressDialog();
 
-        if (action.equals("com.wasn.bankz.DATA_SENZ")) {
-            Senz senz = intent.getExtras().getParcelable("SENZ");
+            String msg = senz.getAttributes().get("msg");
+            if (msg != null && msg.equalsIgnoreCase("GETDONE")) {
+                Toast.makeText(this, "Balance query successful", Toast.LENGTH_LONG).show();
 
-            if (senz.getAttributes().containsKey("bal") || senz.getAttributes().containsKey("nam") || senz.getAttributes().containsKey("nic")) {
-                // balance query response received
-                ActivityUtils.cancelProgressDialog();
-                isResponseReceived = true;
-                senzCountDownTimer.cancel();
-
-                // TODO display balance query result
+                // TODO navigate
+            } else {
+                String informationMessage = "Failed to complete the transaction";
+                displayMessageDialog("PUT fail", informationMessage);
             }
         }
     }
+
 
     /**
      * Display message dialog

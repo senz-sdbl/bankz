@@ -70,12 +70,19 @@
             android:layout_margin="10dp"
             android:clickable="true"
             android:layout_weight="1">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_height="40dp"
+                android:src="@drawable/cash"
+                android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="40dp"
                 android:id="@+id/transaction_icon"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
+                android:visibility="invisible"
                 android:text="$"
                 android:textColor="#fff"
                 android:textSize="30sp"
@@ -102,11 +109,18 @@
             android:layout_margin="10dp"
             android:clickable="true"
             android:layout_weight="1">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_height="40dp"
+                android:src="@drawable/history"
+                android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="40dp"
                 android:id="@+id/summary_icon"
                 android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
+                android:visibility="invisible"
                 android:gravity="center"
                 android:text="%"
                 android:textColor="#fff"
@@ -121,7 +135,7 @@
                 android:layout_centerInParent="true"
                 android:id="@+id/summary_text"
                 android:layout_toRightOf="@+id/summary_icon"
-                android:text="Summary"
+                android:text="History"
                 android:textColor="#306d97"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
@@ -164,13 +178,20 @@
             android:layout_height="fill_parent"
             android:layout_margin="10dp"
             android:layout_weight="1">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_height="40dp"
+                android:src="@drawable/minus"
+                android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="40dp"
                 android:id="@+id/settings_icon"
                 android:layout_height="40dp"
+                android:visibility="invisible"
                 android:layout_marginLeft="20dp"
                 android:gravity="center"
-                android:text="!"
+                android:text="/"
                 android:textColor="#fff"
                 android:textSize="30sp"
                 android:layout_alignParentLeft="true"
@@ -192,7 +213,7 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_height="60dp" >
 
         <RelativeLayout

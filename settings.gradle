@@ -1,1 +1,1 @@
-include ':mbank', ':senzc'
+include ':app', ':senzc'

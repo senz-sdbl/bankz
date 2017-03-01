@@ -24,13 +24,13 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/back"></ImageView>
+                android:background="@drawable/back" />
 
             <TextView
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
-                android:background="#306d97"></TextView>
+                android:background="#306d97" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -47,7 +47,7 @@
                 android:text="Balance Query"
                 android:textColor="#ffffff"
                 android:textSize="18dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -63,14 +63,14 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/done"></ImageView>
+                android:background="@drawable/done" />
 
             <TextView
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
 
-                android:background="#306d97"></TextView>
+                android:background="#306d97" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -98,7 +98,7 @@
                     android:layout_marginTop="25dp"
                     android:text="Account No"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp"></TextView>
+                    android:textSize="20dp" />
 
                 <EditText
                     android:id="@+id/balance_query_layout_account_text"
@@ -111,7 +111,7 @@
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
-                    android:textSize="18dp"></EditText>
+                    android:textSize="18dp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

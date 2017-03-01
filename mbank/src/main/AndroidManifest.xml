@@ -1,24 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wasn"
-    android:versionCode="1"
-    android:versionName="1.0">
+    package="com.wasn">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MAPS_RECEIVE" />
+
+    <!-- To boot complete broadcast receiver -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <!-- My Location -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <!-- NFC permission -->
-    <uses-permission android:name="android.permission.NFC" />
+    <!-- access to camera -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- access to mic -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- access to modify audio manager -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- keep screen active when camera is open -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- access to vibrate phone -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- access to retrive contacts on phone -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- access to send sms -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
+    <!-- access to rec sms -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <!-- access to read sms -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature
-        android:name="android.hardware.nfc"
-        android:required="true" />
+        android:name="android.hardware.camera.front"
+        android:required="false" />
 
     <application
         android:name=".application.MobileBankApplication"

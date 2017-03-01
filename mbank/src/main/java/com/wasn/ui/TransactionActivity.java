@@ -56,9 +56,10 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     private EditText amountEditText;
 
     // header
+    private TextView headerText;
     private RelativeLayout back;
     private RelativeLayout done;
-    private TextView headerText;
+    private RelativeLayout search;
 
     // current transaction
     private Transaction transaction;
@@ -165,9 +166,11 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         back = (RelativeLayout) findViewById(R.id.transaction_layout_back);
         done = (RelativeLayout) findViewById(R.id.transaction_layout_done);
+        search = (RelativeLayout) findViewById(R.id.transaction_layout_search);
 
         back.setOnClickListener(TransactionActivity.this);
         done.setOnClickListener(TransactionActivity.this);
+        search.setOnClickListener(TransactionActivity.this);
 
         // balance query receives from previous activity
         Intent intent = getIntent();
@@ -193,6 +196,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             TransactionActivity.this.finish();
         } else if (view == done) {
             onClickPut();
+        } else if (view == search) {
+            navigateBalanceQuery();
         }
     }
 
@@ -233,8 +238,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         // new senz
         String id = "_ID";
         String signature = "_SIGNATURE";
-        SenzTypeEnum senzType = SenzTypeEnum.PUT;
-        User receiver = new User("", "payzbank");
+        SenzTypeEnum senzType = SenzTypeEnum.SHARE;
+        User receiver = new User("", "sdbltrans");
 
         send(new Senz(id, signature, senzType, null, receiver, senzAttributes));
     }
@@ -376,12 +381,19 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         dialog.show();
     }
 
-
     private void navigateTransactionDetails(Transaction transaction) {
         // navigate to transaction details
         Intent intent = new Intent(TransactionActivity.this, TransactionDetailsActivity.class);
         intent.putExtra("transaction", transaction);
         intent.putExtra("ACTIVITY_NAME", TransactionActivity.class.getName());
+        startActivity(intent);
+
+        TransactionActivity.this.finish();
+    }
+
+    private void navigateBalanceQuery() {
+        // navigate to transaction details
+        Intent intent = new Intent(TransactionActivity.this, BalanceQueryActivity.class);
         startActivity(intent);
 
         TransactionActivity.this.finish();

@@ -15,13 +15,13 @@ public class IntentProvider {
     private static final String TAG = IntentProvider.class.getName();
 
     // intent actions
-    public static final String ACTION_SENZ = "com.score.rahasak.SENZ";
-    public static final String ACTION_TIMEOUT = "com.score.rahasak.TIMEOUT";
-    public static final String ACTION_SMS_REQUEST_ACCEPT = "com.score.rahasak.SMS_REQUEST_ACCEPT";
-    public static final String ACTION_SMS_REQUEST_REJECT = "com.score.rahasak.SMS_REQUEST_REJECT";
-    public static final String ACTION_SMS_REQUEST_CONFIRM = "com.score.rahasak.SMS_REQUEST_CONFIRM";
-    public static final String ACTION_RESTART = "com.score.rahasak.RESTART";
-    public static final String ACTION_CONNECTED = "com.score.rahasak.CONNECTED";
+    public static final String ACTION_SENZ = "com.score.bankz.SENZ";
+    public static final String ACTION_TIMEOUT = "com.score.bankz.TIMEOUT";
+    public static final String ACTION_SMS_REQUEST_ACCEPT = "com.score.bankz.SMS_REQUEST_ACCEPT";
+    public static final String ACTION_SMS_REQUEST_REJECT = "com.score.bankz.SMS_REQUEST_REJECT";
+    public static final String ACTION_SMS_REQUEST_CONFIRM = "com.score.bankz.SMS_REQUEST_CONFIRM";
+    public static final String ACTION_RESTART = "com.score.bankz.RESTART";
+    public static final String ACTION_CONNECTED = "com.score.bankz.CONNECTED";
     private static final String ACTION_PHONE_STATE = "android.intent.action.PHONE_STATE";
 
     /**

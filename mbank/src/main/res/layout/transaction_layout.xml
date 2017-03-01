@@ -24,13 +24,13 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/back"></ImageView>
+                android:background="@drawable/back" />
 
             <TextView
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
-                android:background="#306d97"></TextView>
+                android:background="#306d97" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -47,8 +47,29 @@
                 android:text="New Transaction"
                 android:textColor="#ffffff"
                 android:textSize="18dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/transaction_layout_search"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@+id/transaction_layout_done"
+            android:background="@drawable/button_selector"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/search" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+
+                android:background="#306d97"></TextView>
         </RelativeLayout>
 
 

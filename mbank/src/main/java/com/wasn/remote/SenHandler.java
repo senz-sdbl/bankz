@@ -1,8 +1,10 @@
 package com.wasn.remote;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.score.senzc.pojos.Senz;
+import com.wasn.application.IntentProvider;
 import com.wasn.utils.SenzParser;
 
 class SenHandler {
@@ -37,11 +39,17 @@ class SenHandler {
     }
 
     private void handleShare(Senz senz, SenzService senzService) {
+        // broadcast
+
     }
 
     private void handleGet(Senz senz, SenzService senzService) {
     }
 
     private void handleData(Senz senz, SenzService senzService) {
+        // broadcast
+        Intent intent = new Intent(IntentProvider.ACTION_SENZ);
+        intent.putExtra("SENZ", senz);
+        senzService.getApplicationContext().sendBroadcast(intent);
     }
 }

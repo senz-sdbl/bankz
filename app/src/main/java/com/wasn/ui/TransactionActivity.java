@@ -238,7 +238,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         // new senz
         String id = "_ID";
         String signature = "_SIGNATURE";
-        SenzTypeEnum senzType = SenzTypeEnum.SHARE;
+        SenzTypeEnum senzType = SenzTypeEnum.PUT;
         User receiver = new User("", "sdbltrans");
 
         send(new Senz(id, signature, senzType, null, receiver, senzAttributes));
@@ -267,21 +267,28 @@ public class TransactionActivity extends Activity implements View.OnClickListene
      * @param senz senz
      */
     private void handleSenz(Senz senz) {
-        if (senz.getAttributes().containsKey("msg")) {
-            // msg response received
-            ActivityUtils.cancelProgressDialog();
-
-            String msg = senz.getAttributes().get("msg");
-            if (msg != null && msg.equalsIgnoreCase("PUTDONE")) {
+        if (senz.getAttributes().containsKey("status")) {
+            String msg = senz.getAttributes().get("status");
+            if (msg != null && msg.equalsIgnoreCase("PENDING")) {
+                // pending trans
+                // TODO create transaction with PENDING state
+                new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
+            } else if (msg != null && msg.equalsIgnoreCase("DONE")) {
+                // DONE response received
+                ActivityUtils.cancelProgressDialog();
                 Toast.makeText(this, "Transaction successful", Toast.LENGTH_LONG).show();
 
                 // save transaction in db
-                if (transaction != null)
-                    new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
+                if (transaction != null) {
+                    // TODO update transaction
+                    //new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
+                }
 
                 // navigate
                 navigateTransactionDetails(transaction);
             } else {
+                ActivityUtils.cancelProgressDialog();
+                
                 String informationMessage = "Failed to complete the transaction";
                 displayMessageDialog("PUT fail", informationMessage);
             }

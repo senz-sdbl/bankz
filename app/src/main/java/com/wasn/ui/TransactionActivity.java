@@ -35,6 +35,7 @@ import com.wasn.pojos.BalanceQuery;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
+import com.wasn.utils.SenzUtils;
 import com.wasn.utils.TransactionUtils;
 
 import java.util.HashMap;
@@ -233,7 +234,10 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         HashMap<String, String> senzAttributes = new HashMap<>();
         senzAttributes.put("acc", accountEditText.getText().toString().trim());
         senzAttributes.put("amnt", amountEditText.getText().toString().trim());
-        senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
+
+        Long timestamp = System.currentTimeMillis() / 1000;
+        senzAttributes.put("time", timestamp.toString());
+        senzAttributes.put("uid", SenzUtils.getUid(this, timestamp.toString()));
 
         // new senz
         String id = "_ID";
@@ -288,7 +292,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                 navigateTransactionDetails(transaction);
             } else {
                 ActivityUtils.cancelProgressDialog();
-                
+
                 String informationMessage = "Failed to complete the transaction";
                 displayMessageDialog("PUT fail", informationMessage);
             }

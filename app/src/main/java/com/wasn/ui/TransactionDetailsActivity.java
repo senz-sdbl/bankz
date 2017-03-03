@@ -58,53 +58,51 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         setContentView(R.layout.transaction_details_list_layout);
 
         init();
+        initList();
     }
 
     /**
      * Initialize activity components
      */
     public void init() {
+        transactionDetailsListView = (ListView) findViewById(R.id.transaction_details_list);
         back = (RelativeLayout) findViewById(R.id.transaction_details_layout_back);
         help = (RelativeLayout) findViewById(R.id.transaction_details_layout_help);
         print = (RelativeLayout) findViewById(R.id.transaction_details_layout_print);
 
         // set custom font for header text
-        headerText = (TextView) findViewById(R.id.transaction_details_list_layout_header_text);
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        headerText = (TextView) findViewById(R.id.transaction_details_list_layout_header_text);
         headerText.setTypeface(face);
         headerText.setTypeface(null, Typeface.BOLD);
 
         back.setOnClickListener(TransactionDetailsActivity.this);
         help.setOnClickListener(TransactionDetailsActivity.this);
         print.setOnClickListener(TransactionDetailsActivity.this);
+    }
 
+    private void initList() {
         this.transaction = getIntent().getParcelableExtra("transaction");
 
         // populate list only have transaction
         if (transaction != null) {
-            // fill attribute list from with transaction details
-            attributesList = new ArrayList<Attribute>();
+            attributesList = new ArrayList<>();
             //attributesList.add(new Attribute("Client Name", transaction.getClientName()));
             //attributesList.add(new Attribute("Client NIC", transaction.getClientNic()));
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
-            //attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
+            attributesList.add(new Attribute("Mobile", transaction.getClientMobile()));
             attributesList.add(new Attribute("Amount", Integer.toString(transaction.getTransactionAmount())));
             attributesList.add(new Attribute("Time", transaction.getTransactionTime()));
-
-            // populate list
-            transactionDetailsListView = (ListView) findViewById(R.id.transaction_details_list);
+            //attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
 
             // add header and footer
             View headerView = View.inflate(this, R.layout.header, null);
             View footerView = View.inflate(this, R.layout.footer, null);
-
             transactionDetailsListView.addHeaderView(headerView);
             transactionDetailsListView.addFooterView(footerView);
 
             adapter = new AttributeListAdapter(TransactionDetailsActivity.this, attributesList);
             transactionDetailsListView.setAdapter(adapter);
-        } else {
-            // To-Do display empty view
         }
     }
 

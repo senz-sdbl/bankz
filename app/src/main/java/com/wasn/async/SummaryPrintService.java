@@ -1,32 +1,39 @@
-package com.wasn.services.printservices;
+package com.wasn.async;
 
 import android.os.AsyncTask;
-import com.wasn.ui.SettingsActivity;
+
+import com.wasn.ui.SummaryDetailsActivity;
 import com.wasn.application.MobileBankApplication;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
+import com.wasn.pojos.Settings;
+import com.wasn.pojos.Summary;
+import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
 
 import java.io.IOException;
 
 /**
- * Background task that handles test printing
+ * Background task that handles summary printing
  *
  * @author eranga.herath@pagero.com (eranga herath)
  */
-public class TestPrintService extends AsyncTask<String, String, String> {
+public class SummaryPrintService extends AsyncTask<String, String, String> {
 
-    SettingsActivity activity;
+    SummaryDetailsActivity activity;
     MobileBankApplication application;
+    Summary summary;
 
     /**
      * Initialize cass members
+     *
      * @param activity
      */
-    public TestPrintService(SettingsActivity activity) {
+    public SummaryPrintService(SummaryDetailsActivity activity, Summary summary) {
         this.activity = activity;
+        this.summary = summary;
         application = (MobileBankApplication) activity.getApplication();
     }
 
@@ -35,18 +42,27 @@ public class TestPrintService extends AsyncTask<String, String, String> {
      */
     @Override
     protected String doInBackground(String... strings) {
-        return print(strings[0]);
+        // send data to printer
+        return print();
     }
 
     /**
-     * print test receipt
-     * @param printerAddress
-     * @return
+     * print summary receipt
+     *
+     * @return print status
      */
-    public String print(String printerAddress) {
-        // send data to printer
+    private String print() {
+        // printing attributes
+        String printerAddress = PreferenceUtils.getPrinterAddress(application);
+        String telephoneNo = "0775432015";
+        String branchName = "Kirulapana";
+        Settings settings = new Settings(printerAddress, telephoneNo, branchName);
+
+        // send ate to printer
         try {
-            PrintUtils.printTestPrint(printerAddress);
+            PrintUtils.printSummary(summary, settings);
+
+            // TODO print summary means day end(delete all transaction)
 
             return "1";
         } catch (IOException e) {
@@ -66,6 +82,7 @@ public class TestPrintService extends AsyncTask<String, String, String> {
             return "0";
         } catch (IllegalArgumentException e) {
             // invalid bluetooth address
+            e.printStackTrace();
             return "-5";
         }
     }

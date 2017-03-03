@@ -20,7 +20,7 @@ import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.EmptyPrinterAddressException;
 import com.wasn.exceptions.NoUserException;
 import com.wasn.exceptions.UnTestedPrinterAddressException;
-import com.wasn.services.printservices.TestPrintService;
+import com.wasn.async.TestPrintService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;

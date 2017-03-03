@@ -21,7 +21,7 @@ import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.listeners.PrintListener;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Transaction;
-import com.wasn.services.printservices.TransactionPrintService;
+import com.wasn.async.TransactionPrintService;
 import com.wasn.utils.PrintUtils;
 
 import java.util.ArrayList;

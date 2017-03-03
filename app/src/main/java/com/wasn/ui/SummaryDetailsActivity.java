@@ -20,7 +20,7 @@ import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Summary;
-import com.wasn.services.printservices.SummaryPrintService;
+import com.wasn.async.SummaryPrintService;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.TransactionUtils;
 

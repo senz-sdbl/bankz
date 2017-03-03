@@ -55,6 +55,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     // form components
     private EditText accountEditText;
     private EditText amountEditText;
+    private EditText mobileEditText;
 
     // header
     private TextView headerText;
@@ -158,11 +159,13 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         // init text/edit text fields
         accountEditText = (EditText) findViewById(R.id.transaction_layout_account_text);
         amountEditText = (EditText) findViewById(R.id.transaction_layout_amount_text);
+        mobileEditText = (EditText) findViewById(R.id.transaction_layout_mobile_text);
         headerText = (TextView) findViewById(R.id.transaction_layout_header_text);
 
         // set custom font
         accountEditText.setTypeface(typeface, Typeface.BOLD);
         amountEditText.setTypeface(typeface, Typeface.BOLD);
+        mobileEditText.setTypeface(typeface, Typeface.BOLD);
         headerText.setTypeface(typeface, Typeface.BOLD);
 
         back = (RelativeLayout) findViewById(R.id.transaction_layout_back);
@@ -234,6 +237,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         HashMap<String, String> senzAttributes = new HashMap<>();
         senzAttributes.put("acc", accountEditText.getText().toString().trim());
         senzAttributes.put("amnt", amountEditText.getText().toString().trim());
+        if (!mobileEditText.getText().toString().trim().isEmpty())
+            senzAttributes.put("mob", mobileEditText.getText().toString().trim());
 
         Long timestamp = System.currentTimeMillis() / 1000;
         senzAttributes.put("time", timestamp.toString());

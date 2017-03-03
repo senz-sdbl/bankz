@@ -171,6 +171,36 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/transaction_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Mobile"
+                    android:textColor="#4a4a4a"
+                    android:textSize="20dp"></TextView>
+
+                <EditText
+                    android:id="@+id/transaction_layout_mobile_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/text_filed_shape"
+                    android:inputType="phone"
+                    android:maxLength="6"
+                    android:padding="10dp"
+                    android:textColor="#4a4a4a"
+                    android:textCursorDrawable="@null"
+                    android:textSize="18dp"></EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone">
 

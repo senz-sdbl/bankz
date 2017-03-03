@@ -43,7 +43,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     RelativeLayout testPrint;
     TextView headerText;
     TextView labelText;
-    EditText agentNameEditTex;
+    EditText agentNameEditText;
     EditText printerAddressEditText;
     EditText telephoneNoEditText;
 
@@ -84,9 +84,10 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         // set text to username
         // stored in database
-        agentNameEditTex = (EditText) findViewById(R.id.settings_layout_username_text);
+        agentNameEditText = (EditText) findViewById(R.id.settings_layout_username_text);
+        agentNameEditText.setTypeface(face);
         try {
-            agentNameEditTex.setText(PreferenceUtils.getUser(this).getUsername());
+            agentNameEditText.setText(PreferenceUtils.getUser(this).getUsername());
         } catch (NoUserException e) {
             e.printStackTrace();
         }

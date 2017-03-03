@@ -18,8 +18,8 @@ import com.wasn.R;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.EmptyPrinterAddressException;
+import com.wasn.exceptions.NoUserException;
 import com.wasn.exceptions.UnTestedPrinterAddressException;
-import com.wasn.pojos.Settings;
 import com.wasn.services.printservices.TestPrintService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
@@ -40,13 +40,12 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     // activity components
     RelativeLayout back;
     RelativeLayout save;
-    //RelativeLayout save;
     RelativeLayout testPrint;
     TextView headerText;
     TextView labelText;
+    EditText agentNameEditTex;
     EditText printerAddressEditText;
     EditText telephoneNoEditText;
-    EditText branchNameEditText;
 
     // display when printing
     public ProgressDialog progressDialog;
@@ -83,25 +82,22 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         labelText = (TextView) findViewById(R.id.settings_printer_bluetooth_address);
         labelText.setTypeface(face);
 
+        // set text to username
+        // stored in database
+        agentNameEditTex = (EditText) findViewById(R.id.settings_layout_username_text);
+        try {
+            agentNameEditTex.setText(PreferenceUtils.getUser(this).getUsername());
+        } catch (NoUserException e) {
+            e.printStackTrace();
+        }
+
         // set text to printer address
         // printer address stored in database
         printerAddressEditText = (EditText) findViewById(R.id.settings_layout_printer_address_text);
         printerAddressEditText.setText(PreferenceUtils.getPrinterAddress(this));
         printerAddressEditText.setTypeface(face);
 
-        // set text to telephone no
-        // stored in database
-        //telephoneNoEditText = (EditText) findViewById(R.id.settings_layout_telephone_no_text);
-        //telephoneNoEditText.setText(application.getMobileBankData().getTelephoneNo());
-
-        // set text to branch name
-        // stored in database
-        //branchNameEditText = (EditText) findViewById(R.id.settings_layout_branch_name_text);
-        //branchNameEditText.setText(application.getMobileBankData().getBranchName());
-
         back.setOnClickListener(SettingsActivity.this);
-        //save.setOnClickListener(SettingsActivity.this);
-        //save.setOnClickListener(SettingsActivity.this);
         testPrint.setOnClickListener(SettingsActivity.this);
     }
 
@@ -111,10 +107,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     public void save() {
         // get form fields
         String printerAddress = printerAddressEditText.getText().toString();
-        String telephoneNo = telephoneNoEditText.getText().toString();
-        String branchName = branchNameEditText.getText().toString();
-        Settings settings = new Settings(printerAddress, telephoneNo, branchName);
-
         try {
             // validate settings fields
             SettingsUtils.validatePrinterAddress(printerAddress, PreferenceUtils.getPrinterAddress(this), isTestedPrintAddress);

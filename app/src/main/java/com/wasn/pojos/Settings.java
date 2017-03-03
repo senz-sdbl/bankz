@@ -4,14 +4,30 @@ package com.wasn.pojos;
  * POJO class to hold settings attributes
  */
 public class Settings {
+    String agent;
+    String telephone;
     String printerAddress;
-    String branchTelephoeNo;
-    String branchName;
 
-    public Settings(String printerAddress, String branchTelephoeNo, String branchName) {
+    public Settings(String agent, String telephone, String printerAddress) {
+        this.agent = agent;
+        this.telephone = telephone;
         this.printerAddress = printerAddress;
-        this.branchTelephoeNo = branchTelephoeNo;
-        this.branchName = branchName;
+    }
+
+    public String getAgent() {
+        return agent;
+    }
+
+    public void setAgent(String agent) {
+        this.agent = agent;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String getPrinterAddress() {
@@ -21,21 +37,5 @@ public class Settings {
     public void setPrinterAddress(String printerAddress) {
         this.printerAddress = printerAddress;
     }
-
-    public String getBranchTelephoeNo() {
-        return branchTelephoeNo;
-    }
-
-    public void setBranchTelephoeNo(String branchTelephoeNo) {
-        this.branchTelephoeNo = branchTelephoeNo;
-    }
-
-    public String getBranchName() {
-        return branchName;
-    }
-
-    public void setBranchName(String branchName) {
-        this.branchName = branchName;
-    }
-
 }
+

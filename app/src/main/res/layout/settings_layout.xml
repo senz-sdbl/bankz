@@ -98,12 +98,12 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/settings_printer_username"
+                    android:id="@+id/settings_agent_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
-                    android:text="Username"
+                    android:text="Agent"
                     android:textColor="#4a4a4a"
                     android:textSize="20dp" >
                 </TextView>

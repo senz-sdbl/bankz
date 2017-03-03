@@ -7,14 +7,15 @@ import android.os.Parcelable;
  * To hold attributes of transaction
  *
  * @author erangaeb@gmail.com (eranga bandara)
- * TODO implements Parcelable
+ *         TODO implements Parcelable
  */
-public class Transaction implements Parcelable{
+public class Transaction implements Parcelable {
 
     int id;
     String clientName;
     String clientNic;
     String clientAccountNo;
+    String clientMobile;
     String previousBalance;
     int transactionAmount;
     String transactionTime;
@@ -22,18 +23,20 @@ public class Transaction implements Parcelable{
 
     public Transaction(int id,
                        String clientName,
-                       String clientNic,
                        String clientAccountNo,
-                       String previousBalance,
+                       String clientNic,
+                       String clientMobile,
                        int transactionAmount,
+                       String previousBalance,
                        String transactionTime,
                        String transactionType) {
         this.id = id;
         this.clientName = clientName;
-        this.clientNic = clientNic;
         this.clientAccountNo = clientAccountNo;
-        this.previousBalance = previousBalance;
+        this.clientNic = clientNic;
+        this.clientMobile = clientMobile;
         this.transactionAmount = transactionAmount;
+        this.previousBalance = previousBalance;
         this.transactionTime = transactionTime;
         this.transactionType = transactionType;
     }
@@ -41,10 +44,11 @@ public class Transaction implements Parcelable{
     protected Transaction(Parcel in) {
         id = in.readInt();
         clientName = in.readString();
-        clientNic = in.readString();
         clientAccountNo = in.readString();
-        previousBalance = in.readString();
+        clientNic = in.readString();
+        clientMobile = in.readString();
         transactionAmount = in.readInt();
+        previousBalance = in.readString();
         transactionTime = in.readString();
         transactionType = in.readString();
     }
@@ -125,6 +129,14 @@ public class Transaction implements Parcelable{
         this.transactionType = transactionType;
     }
 
+    public String getClientMobile() {
+        return clientMobile;
+    }
+
+    public void setClientMobile(String clientMobile) {
+        this.clientMobile = clientMobile;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -134,10 +146,11 @@ public class Transaction implements Parcelable{
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeString(clientName);
-        parcel.writeString(clientNic);
         parcel.writeString(clientAccountNo);
-        parcel.writeString(previousBalance);
+        parcel.writeString(clientNic);
+        parcel.writeString(clientMobile);
         parcel.writeInt(transactionAmount);
+        parcel.writeString(previousBalance);
         parcel.writeString(transactionTime);
         parcel.writeString(transactionType);
     }

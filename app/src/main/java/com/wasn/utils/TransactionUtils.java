@@ -1,14 +1,15 @@
 package com.wasn.utils;
 
+import android.content.Context;
+
+import com.wasn.db.BankzDbSource;
 import com.wasn.exceptions.EmptyFieldsException;
-import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidBalanceAmountException;
+import com.wasn.exceptions.NoUserException;
 import com.wasn.pojos.Summary;
-import com.wasn.pojos.Transaction;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -36,29 +37,6 @@ public class TransactionUtils {
         } catch (NumberFormatException e) {
             throw e;
         }
-    }
-
-    /**
-     * Crete new transaction
-     *
-     * @param branchId      user's branch id
-     * @param transactionId current receipt no equals to transaction id
-     * @param amount        transaction amount
-     * @return transaction
-     * @throws InvalidAccountException
-     */
-    public static Transaction createTransaction(String branchId, int transactionId, String amount) throws InvalidAccountException, InvalidBalanceAmountException {
-        Transaction transaction = new Transaction(
-                3,
-                "Name",
-                "NIC",
-                "Acc no",
-                amount,
-                3400,
-                getCurrentTime(),
-                "DEPOSIT");
-
-        return transaction;
     }
 
     /**
@@ -120,42 +98,21 @@ public class TransactionUtils {
     /**
      * Get summary as a list of attributes
      *
-     * @param transactionList
+     * @param context
      */
-    public static Summary getSummary(ArrayList<Transaction> transactionList) {
-        int transactionCount = transactionList.size();
-
-        // get formatted total transaction amount
-        String totalTransactionAmount = "0.00";
-        DecimalFormat decimalFormat = new DecimalFormat("0.00");
-
+    public static Summary getSummary(Context context) {
+        // user
         try {
-            totalTransactionAmount = decimalFormat.format(getTotalTransactionAmount(transactionList));
-        } catch (NumberFormatException e) {
-            System.out.println(e);
+            Summary summary = new BankzDbSource(context).getTransactionSummary();
+            summary.setBranchId(PreferenceUtils.getUser(context).getUsername());
+            summary.setTime(getCurrentTime());
+
+            return summary;
+        } catch (NoUserException e) {
+            e.printStackTrace();
         }
 
-        String currentTime = getCurrentTime();
-
-        // new summary
-        return new Summary("Branch", Integer.toString(transactionCount), totalTransactionAmount, currentTime);
+        return null;
     }
-
-    /**
-     * Get to total transaction amount
-     *
-     * @param transactionList
-     * @return deposit count
-     */
-    public static double getTotalTransactionAmount(ArrayList<Transaction> transactionList) throws NumberFormatException {
-        double total = 0;
-
-        for (int i = 0; i < transactionList.size(); i++) {
-            total = total + transactionList.get(i).getTransactionAmount();
-        }
-
-        return total;
-    }
-
 
 }

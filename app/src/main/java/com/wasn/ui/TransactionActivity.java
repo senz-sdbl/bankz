@@ -27,7 +27,7 @@ import com.score.senzc.pojos.Senz;
 import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
-import com.wasn.db.SenzorsDbSource;
+import com.wasn.db.BankzDbSource;
 import com.wasn.enums.IntentType;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
@@ -210,11 +210,12 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         try {
             String account = accountEditText.getText().toString().trim();
+            String mobile = mobileEditText.getText().toString().trim();
             int amount = Integer.parseInt(amountEditText.getText().toString().trim());
             ActivityUtils.isValidTransactionFields(account, amount);
 
             // initialize transaction
-            transaction = new Transaction(1, "", "", account, "", amount, TransactionUtils.getCurrentTime(), "");
+            transaction = new Transaction(1, "", account, "", mobile, amount, "", TransactionUtils.getCurrentTime(), "");
 
             if (NetworkUtil.isAvailableNetwork(this)) {
                 displayInformationMessageDialog("Are you sure you want to do the transaction #Account " + transaction.getClientAccountNo() + " #Amount " + transaction.getTransactionAmount());
@@ -281,7 +282,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             if (msg != null && msg.equalsIgnoreCase("PENDING")) {
                 // pending trans
                 // TODO create transaction with PENDING state
-                new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
+                new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
             } else if (msg != null && msg.equalsIgnoreCase("DONE")) {
                 // DONE response received
                 ActivityUtils.cancelProgressDialog();

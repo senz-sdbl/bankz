@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.wasn.R;
 import com.wasn.application.MobileBankApplication;
-import com.wasn.db.SenzorsDbSource;
+import com.wasn.db.BankzDbSource;
 import com.wasn.pojos.Transaction;
 
 import java.util.ArrayList;
@@ -111,7 +111,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      * Display all transaction list
      */
     public void displayAllTransactionList() {
-        SenzorsDbSource dbSource = new SenzorsDbSource(TransactionListActivity.this);
+        BankzDbSource dbSource = new BankzDbSource(TransactionListActivity.this);
         allTransactionList = dbSource.getAllTransactions();
 
         System.out.println("All transaction done");

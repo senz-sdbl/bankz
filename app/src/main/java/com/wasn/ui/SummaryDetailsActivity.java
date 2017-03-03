@@ -16,14 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
-import com.wasn.application.MobileBankApplication;
-import com.wasn.db.SenzorsDbSource;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Summary;
 import com.wasn.services.printservices.SummaryPrintService;
 import com.wasn.utils.PrintUtils;
+import com.wasn.utils.TransactionUtils;
 
 import java.util.ArrayList;
 
@@ -33,8 +32,6 @@ import java.util.ArrayList;
  * @author erangaeb@gmail.com (eranga bandara)
  */
 public class SummaryDetailsActivity extends Activity implements View.OnClickListener {
-
-    MobileBankApplication application;
 
     // use to populate list
     ListView summaryDetailsListView;
@@ -61,23 +58,22 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.summary_details_list_layout);
 
-        init();
+        initUi();
+        intSummaryList();
     }
 
     /**
      * Initialize activity components
      */
-    public void init() {
-        application = (MobileBankApplication) SummaryDetailsActivity.this.getApplication();
+    public void initUi() {
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
 
-        //bottomPannel = (LinearLayout) findViewById(R.id.summary_details_layout_bottom_pannel);
         back = (RelativeLayout) findViewById(R.id.summary_details_layout_back);
         help = (RelativeLayout) findViewById(R.id.summary_details_layout_help);
         print = (RelativeLayout) findViewById(R.id.summary_details_layout_print);
 
         // set custom font for header text
         headerText = (TextView) findViewById(R.id.summary_details_list_layout_header_text);
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText.setTypeface(face);
         headerText.setTypeface(null, Typeface.BOLD);
 
@@ -85,43 +81,28 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         help.setOnClickListener(SummaryDetailsActivity.this);
         print.setOnClickListener(SummaryDetailsActivity.this);
 
-        // populate list
-//        Summary summary = TransactionUtils.getSummary();
-//        attributesList = new ArrayList<Attribute>();
-//        attributesList.add(new Attribute("Time", summary.getTime()));
-//        attributesList.add(new Attribute("Branch ID", summary.getBranchId()));
-//        attributesList.add(new Attribute("Transaction Count", summary.getTransactionCount()));
-//        attributesList.add(new Attribute("Total Amount", summary.getTotalTransactionAmount()));
-//        attributesList.add(new Attribute("Last Receipt ID", summary.getLastReceiptId()));
-//        summaryDetailsListView = (ListView) findViewById(R.id.summary_details_list);
-//
-//        // need to disable print if un synced transaction available
-//        if (TransactionUtils.getUnSyncedTransactionList(application.getTransactionList()).size() > 0) {
-//            disableBottomPannel();
-//        } else {
-//            enableBottomPannel();
-//        }
-
-
-        summary = new SenzorsDbSource(getApplicationContext()).getSummeryAmmount();
-
-        attributesList = new ArrayList<Attribute>();
-        attributesList.add(new Attribute("Date", summary.getTime()));
-        attributesList.add(new Attribute("Branch ID", summary.getBranchId()));
-        attributesList.add(new Attribute("Transaction Count", summary.getTransactionCount()));
-        attributesList.add(new Attribute("Total Amount", summary.getTotalTransactionAmount()));
-
         summaryDetailsListView = (ListView) findViewById(R.id.summary_details_list);
+    }
 
-        // add header and footer
-        View headerView = View.inflate(this, R.layout.header, null);
-        View footerView = View.inflate(this, R.layout.footer, null);
+    private void intSummaryList() {
+        summary = TransactionUtils.getSummary(this);
 
-        summaryDetailsListView.addHeaderView(headerView);
-        summaryDetailsListView.addFooterView(footerView);
+        if (summary != null) {
+            attributesList = new ArrayList<>();
+            attributesList.add(new Attribute("Date", summary.getTime()));
+            attributesList.add(new Attribute("Agent", summary.getBranchId()));
+            attributesList.add(new Attribute("Transaction Count", summary.getTransactionCount()));
+            attributesList.add(new Attribute("Total Amount", summary.getTotalTransactionAmount()));
 
-        adapter = new AttributeListAdapter(SummaryDetailsActivity.this, attributesList);
-        summaryDetailsListView.setAdapter(adapter);
+            // add header and footer
+            View headerView = View.inflate(this, R.layout.header, null);
+            View footerView = View.inflate(this, R.layout.footer, null);
+            summaryDetailsListView.addHeaderView(headerView);
+            summaryDetailsListView.addFooterView(footerView);
+
+            adapter = new AttributeListAdapter(SummaryDetailsActivity.this, attributesList);
+            summaryDetailsListView.setAdapter(adapter);
+        }
     }
 
     /**

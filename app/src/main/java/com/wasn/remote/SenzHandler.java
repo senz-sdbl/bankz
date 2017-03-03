@@ -7,14 +7,14 @@ import com.score.senzc.pojos.Senz;
 import com.wasn.application.IntentProvider;
 import com.wasn.utils.SenzParser;
 
-class SenHandler {
-    private static final String TAG = SenHandler.class.getName();
+class SenzHandler {
+    private static final String TAG = SenzHandler.class.getName();
 
-    private static SenHandler instance;
+    private static SenzHandler instance;
 
-    static SenHandler getInstance() {
+    static SenzHandler getInstance() {
         if (instance == null) {
-            instance = new SenHandler();
+            instance = new SenzHandler();
         }
 
         return instance;

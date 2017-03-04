@@ -57,7 +57,7 @@
             android:layout_toLeftOf="@+id/transaction_layout_done"
             android:background="@drawable/button_selector"
             android:clickable="true"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="32dp"

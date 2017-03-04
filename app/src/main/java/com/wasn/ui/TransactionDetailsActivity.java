@@ -15,13 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
+import com.wasn.async.TransactionPrintService;
 import com.wasn.enums.PrintType;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.listeners.PrintListener;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Transaction;
-import com.wasn.async.TransactionPrintService;
 import com.wasn.utils.PrintUtils;
 
 import java.util.ArrayList;
@@ -39,6 +39,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
     AttributeListAdapter adapter;
 
     // form components
+    Typeface typeface;
     RelativeLayout back;
     RelativeLayout help;
     RelativeLayout print;
@@ -65,16 +66,15 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
      * Initialize activity components
      */
     public void init() {
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
         transactionDetailsListView = (ListView) findViewById(R.id.transaction_details_list);
         back = (RelativeLayout) findViewById(R.id.transaction_details_layout_back);
         help = (RelativeLayout) findViewById(R.id.transaction_details_layout_help);
         print = (RelativeLayout) findViewById(R.id.transaction_details_layout_print);
 
         // set custom font for header text
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
         headerText = (TextView) findViewById(R.id.transaction_details_list_layout_header_text);
-        headerText.setTypeface(face);
-        headerText.setTypeface(null, Typeface.BOLD);
+        headerText.setTypeface(typeface, Typeface.BOLD);
 
         back.setOnClickListener(TransactionDetailsActivity.this);
         help.setOnClickListener(TransactionDetailsActivity.this);
@@ -126,15 +126,12 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(face);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // printing event need to handle according to previous activity
@@ -156,8 +153,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
         // cancel button
         Button cancelButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_cancel_button);
-        cancelButton.setTypeface(face);
-        cancelButton.setTypeface(null, Typeface.BOLD);
+        cancelButton.setTypeface(typeface, Typeface.BOLD);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();

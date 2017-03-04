@@ -219,7 +219,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             transaction = new Transaction(1, "", account, "", mobile, amount, "", TransactionUtils.getCurrentTime(), "");
 
             if (NetworkUtil.isAvailableNetwork(this)) {
-                String informationMessage = "<font size=10>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + transaction.getTransactionAmount() + "</b>" + "</font> ";
+                String informationMessage = "<font size=10 color=#636363>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + transaction.getTransactionAmount() + "</b>" + "</font> ";
                 displayInformationMessageDialog(informationMessage);
             } else {
                 displayMessageDialog("ERROR", "No network connection");

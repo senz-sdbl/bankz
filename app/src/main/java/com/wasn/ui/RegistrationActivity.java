@@ -180,7 +180,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
 
         try {
             ActivityUtils.isValidRegistrationFields(registeringUser);
-            String confirmationMessage = "<font color=#000000>Are you sure you want to register on SenZ with </font> <font color=#ffc027>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font>";
+            String confirmationMessage = "<font color=#636363>Are you sure you want to register with account </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font>";
             displayConfirmationMessageDialog(confirmationMessage);
         } catch (InvalidInputFieldsException e) {
             Toast.makeText(this, "Invalid username", Toast.LENGTH_LONG).show();
@@ -269,7 +269,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                 PreferenceUtils.saveUser(this, registeringUser);
                 navigateToHome();
             } else if (msg != null && msg.equalsIgnoreCase("REG_FAIL")) {
-                String informationMessage = "<font size=10>Seems username </font> <font color=#F88F8C>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font> <font> already obtained by some other user, try a different username</font>";
+                String informationMessage = "<font size=10 color=#636363>Seems username </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font> <font color=#636363> already obtained by some other user, try a different username</font>";
                 displayInformationMessageDialog("Registration fail", informationMessage);
             }
         }
@@ -297,7 +297,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         messageTextView.setText(Html.fromHtml(message));
 
         // set custom font
-        messageHeaderTextView.setTypeface(typeface);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
         messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
@@ -313,7 +313,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
 
         // cancel button
         Button cancelButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_cancel_button);
-        cancelButton.setTypeface(typeface);
+        cancelButton.setTypeface(typeface, Typeface.BOLD);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
@@ -350,8 +350,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(typeface);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();

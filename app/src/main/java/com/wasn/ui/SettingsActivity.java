@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
+import com.wasn.async.TestPrintService;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.EmptyPrinterAddressException;
 import com.wasn.exceptions.NoUserException;
 import com.wasn.exceptions.UnTestedPrinterAddressException;
-import com.wasn.async.TestPrintService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
@@ -155,7 +157,12 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
                 if (PrintUtils.isEnableBluetooth()) {
                     // start background thread to print test print
                     progressDialog = ProgressDialog.show(SettingsActivity.this, "", "Printing test print, Please wait ...");
-                    new TestPrintService(SettingsActivity.this).execute(printerAddress);
+                    TestPrintService testPrintService = new TestPrintService(SettingsActivity.this);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                        testPrintService.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, printerAddress);
+                    } else {
+                        testPrintService.execute(printerAddress);
+                    }
                 }
             } catch (BluetoothNotEnableException e1) {
                 displayToast("Bluetooth not enabled");

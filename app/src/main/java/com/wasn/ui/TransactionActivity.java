@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -218,7 +219,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             transaction = new Transaction(1, "", account, "", mobile, amount, "", TransactionUtils.getCurrentTime(), "");
 
             if (NetworkUtil.isAvailableNetwork(this)) {
-                displayInformationMessageDialog("Are you sure you want to do the transaction #Account " + transaction.getClientAccountNo() + " #Amount " + transaction.getTransactionAmount());
+                String informationMessage = "<font size=10>Are you sure you want to do the deposit for #account</font> <font color=#306d97>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with #amount</font> <font color=#306d97>" + "<b>" + transaction.getTransactionAmount() + "</b>" + "</font> ";
+                displayInformationMessageDialog(informationMessage);
             } else {
                 displayMessageDialog("#ERROR", "No network connection");
             }
@@ -362,7 +364,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         // set dialog texts
         TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
         TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
-        messageTextView.setText(message);
+        messageTextView.setText(Html.fromHtml(message));
 
         // set custom font
         Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");

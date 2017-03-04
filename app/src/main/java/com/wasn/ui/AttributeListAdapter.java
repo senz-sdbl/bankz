@@ -35,7 +35,7 @@ public class AttributeListAdapter extends BaseAdapter {
         this.context = context;
         this.attributeList = attributeList;
 
-        typeface = Typeface.createFromAsset(context.getAssets(), "fonts/vegur_2.otf");
+        typeface = Typeface.createFromAsset(context.getAssets(), "fonts/GeosansLight.ttf");
     }
 
     /**

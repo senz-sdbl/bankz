@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +18,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
+import com.wasn.async.SummaryPrintService;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Summary;
-import com.wasn.async.SummaryPrintService;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.TransactionUtils;
 
@@ -156,7 +158,12 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
                         progressDialog = ProgressDialog.show(SummaryDetailsActivity.this, "", "Printing summary, Please wait ...");
-                        new SummaryPrintService(SummaryDetailsActivity.this, summary).execute("SUMMARY");
+                        SummaryPrintService service = new SummaryPrintService(SummaryDetailsActivity.this, summary);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            service.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "SUMMARY");
+                        } else {
+                            service.execute("SUMMARY");
+                        }
                     }
                 } catch (BluetoothNotEnableException e) {
                     Toast.makeText(SummaryDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();

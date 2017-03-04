@@ -40,7 +40,7 @@
                 android:layout_marginLeft="5dp"
                 android:textSize="20dp"
                 android:text="Eranga herath"
-                android:textColor="#306d97">
+                android:textColor="#00a1e4">
             </TextView>
 
             <TextView

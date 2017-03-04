@@ -35,7 +35,7 @@ public class TransactionListAdapter extends BaseAdapter {
         this.context = context;
         this.transactionList = transactionList;
 
-        typeface = Typeface.createFromAsset(context.getAssets(), "fonts/vegur_2.otf");
+        typeface = Typeface.createFromAsset(context.getAssets(), "fonts/GeosansLight.ttf");
     }
 
     /**

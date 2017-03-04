@@ -22,6 +22,7 @@ import com.wasn.R;
 public class BankzActivity extends Activity implements View.OnClickListener {
 
     // activity components
+    Typeface typeface;
     RelativeLayout balanceQueryLayout;
     RelativeLayout summaryLayout;
     RelativeLayout settingsLayout;
@@ -50,7 +51,7 @@ public class BankzActivity extends Activity implements View.OnClickListener {
      * Initialize activity components
      */
     public void init() {
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
 
         balanceQueryLayout = (RelativeLayout) findViewById(R.id.transaction_layout);
         summaryLayout = (RelativeLayout) findViewById(R.id.summary_layout);
@@ -128,15 +129,12 @@ public class BankzActivity extends Activity implements View.OnClickListener {
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(face);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // back to login activity
@@ -148,8 +146,7 @@ public class BankzActivity extends Activity implements View.OnClickListener {
 
         // cancel button
         Button cancelButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_cancel_button);
-        cancelButton.setTypeface(face);
-        cancelButton.setTypeface(null, Typeface.BOLD);
+        cancelButton.setTypeface(typeface, Typeface.BOLD);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();

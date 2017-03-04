@@ -16,7 +16,7 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="45dp"
-            android:background="#306d97">
+            android:background="#00a1e4">
 
             <TextView
                 android:id="@+id/information_message_dialog_layout_message_header_text"
@@ -57,12 +57,11 @@
                 android:id="@+id/information_message_dialog_layout_message_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="17dp"
-
+                android:textSize="20dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:textColor="#000000">
+                android:textColor="#636363">
             </TextView>
 
         </RelativeLayout>
@@ -72,18 +71,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="2dp">
+            android:layout_marginBottom="0dp">
 
             <Button
                 android:layout_width="0dp"
                 android:textColor="#FFFFFF"
                 android:layout_height="35dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
                 android:id="@+id/information_message_dialog_layout_ok_button"
                 android:background="@drawable/button_selector"
-                android:text="Ok">
+                android:text="OK">
             </Button>
 
         </LinearLayout>

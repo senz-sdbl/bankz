@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="#306d97"
+        android:background="#00a1e4"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -30,7 +30,7 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
-                android:background="#306d97" />
+                android:background="#00a1e4" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -69,7 +69,7 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
-                android:background="#306d97" />
+                android:background="#00a1e4" />
         </RelativeLayout>
 
 
@@ -92,7 +92,7 @@
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
 
-                android:background="#306d97"></TextView>
+                android:background="#00a1e4"></TextView>
         </RelativeLayout>
 
     </RelativeLayout>

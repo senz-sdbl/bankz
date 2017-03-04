@@ -16,10 +16,10 @@
             <stroke android:width="0dip" android:color="#5e5c5c"/>
 
             <corners
-                android:bottomRightRadius="5dp"
-                android:bottomLeftRadius="5dp"
-                android:topLeftRadius="5dp"
-                android:topRightRadius="5dp" />
+                android:bottomRightRadius="0dp"
+                android:bottomLeftRadius="0dp"
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp" />
 
         </shape>
 
@@ -34,17 +34,17 @@
             android:shape="rectangle">
 
             <gradient
-                android:startColor="#306d97"
-                android:endColor="#306d97"
+                android:startColor="#00a1e4"
+                android:endColor="#00a1e4"
                 android:angle="270"/>
 
             <stroke android:width="0dip" android:color="#5e5c5c"/>
 
             <corners
-                android:bottomRightRadius="5dp"
-                android:bottomLeftRadius="5dp"
-                android:topLeftRadius="5dp"
-                android:topRightRadius="5dp" />
+                android:bottomRightRadius="0dp"
+                android:bottomLeftRadius="0dp"
+                android:topLeftRadius="0dp"
+                android:topRightRadius="0dp" />
 
         </shape>
 

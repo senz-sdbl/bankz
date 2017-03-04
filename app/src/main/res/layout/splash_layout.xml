@@ -6,10 +6,18 @@
         android:layout_width="fill_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="#306d97">
+        android:background="#00a1e4">
+
+    <ImageView
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="75dp"
+        android:src="@drawable/sdb_logo_blue"
+        android:layout_height="75dp" />
 
     <TextView
             android:layout_marginTop="12dp"
+        android:visibility="gone"
             android:id="@+id/splash_text"
             android:layout_width="75dp"
             android:layout_height="75dp"

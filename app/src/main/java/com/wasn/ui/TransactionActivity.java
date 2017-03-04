@@ -112,7 +112,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.transaction_layout);
-        typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
 
         initUi();
     }
@@ -219,19 +219,19 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             transaction = new Transaction(1, "", account, "", mobile, amount, "", TransactionUtils.getCurrentTime(), "");
 
             if (NetworkUtil.isAvailableNetwork(this)) {
-                String informationMessage = "<font size=10>Are you sure you want to do the deposit for #account</font> <font color=#306d97>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with #amount</font> <font color=#306d97>" + "<b>" + transaction.getTransactionAmount() + "</b>" + "</font> ";
+                String informationMessage = "<font size=10>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + transaction.getTransactionAmount() + "</b>" + "</font> ";
                 displayInformationMessageDialog(informationMessage);
             } else {
-                displayMessageDialog("#ERROR", "No network connection");
+                displayMessageDialog("ERROR", "No network connection");
             }
         } catch (InvalidInputFieldsException | NumberFormatException e) {
             e.printStackTrace();
 
-            displayMessageDialog("#ERROR", "Invalid account no/amount");
+            displayMessageDialog("ERROR", "Invalid account no/amount");
         } catch (InvalidAccountException e) {
             e.printStackTrace();
 
-            displayMessageDialog("#ERROR", "Account no should be 12 character length");
+            displayMessageDialog("ERROR", "Account no should be 12 character length");
         }
     }
 
@@ -329,15 +329,12 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(face);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
@@ -367,15 +364,12 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         messageTextView.setText(Html.fromHtml(message));
 
         // set custom font
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(face);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // do transaction
@@ -389,8 +383,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         // cancel button
         Button cancelButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_cancel_button);
-        cancelButton.setTypeface(face);
-        cancelButton.setTypeface(null, Typeface.BOLD);
+        cancelButton.setTypeface(typeface, Typeface.BOLD);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();

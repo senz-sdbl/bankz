@@ -40,11 +40,13 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     boolean isTestedPrintAddress;
 
     // activity components
+    Typeface typeface;
     RelativeLayout back;
     RelativeLayout save;
     RelativeLayout testPrint;
     TextView headerText;
-    TextView labelText;
+    TextView agentLabelText;
+    TextView printerLabelText;
     EditText agentNameEditText;
     EditText printerAddressEditText;
     EditText telephoneNoEditText;
@@ -67,7 +69,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
      * Initialize activity components and valuesdi
      */
     public void init() {
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
 
         isTestedPrintAddress = false;
 
@@ -78,16 +80,18 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
         // set custom font to header text
         headerText = (TextView) findViewById(R.id.settings_layout_header_text);
-        headerText.setTypeface(face);
-        headerText.setTypeface(null, Typeface.BOLD);
+        headerText.setTypeface(typeface, Typeface.BOLD);
 
-        labelText = (TextView) findViewById(R.id.settings_printer_bluetooth_address);
-        labelText.setTypeface(face);
+        agentLabelText = (TextView) findViewById(R.id.settings_agent_username);
+        agentLabelText.setTypeface(typeface);
+
+        printerLabelText = (TextView) findViewById(R.id.settings_printer_bluetooth_address);
+        printerLabelText.setTypeface(typeface);
 
         // set text to username
         // stored in database
         agentNameEditText = (EditText) findViewById(R.id.settings_layout_username_text);
-        agentNameEditText.setTypeface(face);
+        agentNameEditText.setTypeface(typeface, Typeface.BOLD);
         try {
             agentNameEditText.setText(PreferenceUtils.getUser(this).getUsername());
         } catch (NoUserException e) {
@@ -98,7 +102,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         // printer address stored in database
         printerAddressEditText = (EditText) findViewById(R.id.settings_layout_printer_address_text);
         printerAddressEditText.setText(PreferenceUtils.getPrinterAddress(this));
-        printerAddressEditText.setTypeface(face);
+        printerAddressEditText.setTypeface(typeface, Typeface.BOLD);
 
         back.setOnClickListener(SettingsActivity.this);
         testPrint.setOnClickListener(SettingsActivity.this);
@@ -200,14 +204,12 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(face);
+        okButton.setTypeface(typeface);
         okButton.setTypeface(null, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -221,7 +223,6 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     // password popup....
     protected void showPasswordInputDialog() {
         final Dialog dialog = new Dialog(this);
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -233,8 +234,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         final EditText passwordText = (EditText) dialog.findViewById(R.id.settings_password);
 
         final Button btnOk = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        btnOk.setTypeface(face);
-        btnOk.setTypeface(null, Typeface.BOLD);
+        btnOk.setTypeface(typeface, Typeface.BOLD);
 
         btnOk.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -250,17 +250,15 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         });
 
         final Button btnCancel = (Button) dialog.findViewById(R.id.information_message_dialog_layout_cancel_button);
-        btnCancel.setTypeface(face);
-        btnCancel.setTypeface(null, Typeface.BOLD);
+        btnCancel.setTypeface(typeface, Typeface.BOLD);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
             }
         });
 
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        passwordText.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        passwordText.setTypeface(typeface, Typeface.BOLD);
 
         dialog.show();
     }

@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:background="#306d97"
+        android:background="#00a1e4"
         android:layout_marginBottom="12dp">
 
         <!--<ImageView-->
@@ -17,6 +17,11 @@
             <!--android:src="@drawable/sdbl_logo"-->
             <!--android:id="@+id/mbank_icon"-->
             <!--android:layout_centerHorizontal="true"/>-->
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/sdb_logo_blue"
+            android:layout_centerInParent="true"/>
 
         <TextView
             android:layout_width="60dp"
@@ -74,7 +79,7 @@
                 android:layout_width="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_height="40dp"
-                android:src="@drawable/cash"
+                android:src="@drawable/sdb_cash"
                 android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="40dp"
@@ -97,7 +102,7 @@
                 android:id="@+id/tranaction_text"
                 android:layout_toRightOf="@+id/transaction_icon"
                 android:text="Transaction"
-                android:textColor="#306d97"
+                android:textColor="#00a1e4"
                 android:layout_height="wrap_content" />
          </RelativeLayout>
 
@@ -113,7 +118,7 @@
                 android:layout_width="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_height="40dp"
-                android:src="@drawable/history"
+                android:src="@drawable/sdb_history"
                 android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="40dp"
@@ -136,7 +141,7 @@
                 android:id="@+id/summary_text"
                 android:layout_toRightOf="@+id/summary_icon"
                 android:text="History"
-                android:textColor="#306d97"
+                android:textColor="#00a1e4"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
@@ -182,7 +187,7 @@
                 android:layout_width="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_height="40dp"
-                android:src="@drawable/minus"
+                android:src="@drawable/sdb_setting"
                 android:layout_centerVertical="true"/>
             <TextView
                 android:layout_width="40dp"
@@ -205,7 +210,7 @@
                 android:id="@+id/settings_text"
                 android:layout_toRightOf="@+id/settings_icon"
                 android:text="Settings"
-                android:textColor="#306d97"
+                android:textColor="#00a1e4"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
@@ -233,7 +238,7 @@
                 android:layout_marginRight="15dp"
                 android:textSize="16sp"
                 android:id="@+id/mobile_bank_layout_logout_text"
-                android:textColor="#306d97">
+                android:textColor="#00a1e4">
             </TextView>
             <!--<ImageView-->
                 <!--android:layout_height="25dp"-->

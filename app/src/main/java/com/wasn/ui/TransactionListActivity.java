@@ -70,9 +70,8 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         //doneText = (TextView) findViewById(R.id.transaction_list_layout_done_text);
 
         // set custom font to header text
-        typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        headerText.setTypeface(typeface);
-        headerText.setTypeface(null, Typeface.BOLD);
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
+        headerText.setTypeface(typeface, Typeface.BOLD);
 
         // set click listeners
         back.setOnClickListener(TransactionListActivity.this);

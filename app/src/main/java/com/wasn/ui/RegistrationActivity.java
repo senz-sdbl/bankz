@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,9 +51,10 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
     private User registeringUser;
 
     // UI fields
-    private EditText editTextUsername;
-    private RelativeLayout signUpButton;
     private Typeface typeface;
+    private EditText editTextUsername;
+    private TextView description;
+    private Button signUpButton;
 
     // service interface
     protected ISenzService senzService = null;
@@ -90,12 +90,8 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registration_layout);
-        typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
 
-        //
         initUi();
-
-        // generate RSA keys
         doPreRegistration();
     }
 
@@ -138,9 +134,15 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
      * set custom font for UI fields
      */
     private void initUi() {
-        editTextUsername = (EditText) findViewById(R.id.registration_phone_no);
-        signUpButton = (RelativeLayout) findViewById(R.id.registration_sign_up_button);
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
+        editTextUsername = (EditText) findViewById(R.id.registering_user_id);
+        description = (TextView) findViewById(R.id.welcome_message);
+        signUpButton = (Button) findViewById(R.id.register_btn);
         signUpButton.setOnClickListener(RegistrationActivity.this);
+
+        editTextUsername.setTypeface(typeface, Typeface.NORMAL);
+        description.setTypeface(typeface, Typeface.BOLD);
+        signUpButton.setTypeface(typeface, Typeface.BOLD);
 
         editTextUsername.setTypeface(typeface, Typeface.NORMAL);
     }
@@ -296,12 +298,11 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
 
         // set custom font
         messageHeaderTextView.setTypeface(typeface);
-        messageTextView.setTypeface(typeface);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(typeface);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();

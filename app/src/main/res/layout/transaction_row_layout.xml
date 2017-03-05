@@ -38,7 +38,7 @@
                 android:layout_height="30dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="5dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="Eranga herath"
                 android:textColor="#00a1e4">
             </TextView>

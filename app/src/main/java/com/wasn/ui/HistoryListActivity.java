@@ -26,8 +26,6 @@ import java.util.ArrayList;
  */
 public class HistoryListActivity extends Activity implements View.OnClickListener {
 
-    MobileBankApplication application;
-
     // activity components
     RelativeLayout back;
     RelativeLayout done;
@@ -61,8 +59,6 @@ public class HistoryListActivity extends Activity implements View.OnClickListene
      * Initialize layout components
      */
     public void init() {
-        application = (MobileBankApplication) HistoryListActivity.this.getApplication();
-
         // initialize
         back = (RelativeLayout) findViewById(R.id.transaction_list_layout_back);
         done = (RelativeLayout) findViewById(R.id.transaction_list_layout_done);

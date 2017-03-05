@@ -32,7 +32,7 @@ import com.wasn.db.BankzDbSource;
 import com.wasn.enums.IntentType;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
-import com.wasn.pojos.BalanceQuery;
+import com.wasn.pojos.Account;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
@@ -177,11 +177,11 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         done.setOnClickListener(TransactionActivity.this);
         search.setOnClickListener(TransactionActivity.this);
 
-        // balance query receives from previous activity
+        // account receives from previous activity
         Intent intent = getIntent();
-        if (intent.getExtras() != null) {
-            BalanceQuery balance = intent.getExtras().getParcelable("balance");
-            accountEditText.setText(balance.getClientAccount(), TextView.BufferType.NORMAL);
+        if (intent.hasExtra("ACCOUNT")) {
+            Account account = intent.getExtras().getParcelable("ACCOUNT");
+            accountEditText.setText(account.getAccNo(), TextView.BufferType.NORMAL);
         }
     }
 

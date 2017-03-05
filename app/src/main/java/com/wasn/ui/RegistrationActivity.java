@@ -259,7 +259,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
     private void handleSenz(Senz senz) {
         if (senz.getAttributes().containsKey("status")) {
             // msg response received
-            //ActivityUtils.cancelProgressDialog();
+            ActivityUtils.cancelProgressDialog();
             String msg = senz.getAttributes().get("status");
             if (msg != null && (msg.equalsIgnoreCase("REG_DONE") || msg.equalsIgnoreCase("REG_ALR"))) {
                 Toast.makeText(this, "Registration done", Toast.LENGTH_LONG).show();
@@ -306,7 +306,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
-                //ActivityUtils.showProgressDialog(RegistrationActivity.this, "Please wait...");
+                ActivityUtils.showProgressDialog(RegistrationActivity.this, "Please wait...");
                 doRegistration();
             }
         });

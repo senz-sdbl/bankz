@@ -74,6 +74,21 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
+            android:name=".ui.AccountInquiryActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
+        <activity
+            android:name=".ui.AccountListActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
             android:name=".ui.TransactionDetailsActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation"
@@ -123,15 +138,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ui.AccountInquiryActivity"
-            android:clearTaskOnLaunch="true"
-            android:configChanges="orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.BalanceResultActivity"
             android:clearTaskOnLaunch="true"

@@ -27,8 +27,10 @@ import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
 import com.wasn.enums.IntentType;
+import com.wasn.pojos.Account;
 import com.wasn.utils.ActivityUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AccountInquiryActivity extends Activity implements View.OnClickListener {
@@ -172,6 +174,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
         String nic = idEditText.getText().toString().trim();
 
         if (!nic.isEmpty()) {
+            ActivityUtils.showProgressDialog(AccountInquiryActivity.this, "Please wait...");
             doGet(nic);
         } else {
 
@@ -210,12 +213,20 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
             // msg response received
             ActivityUtils.cancelProgressDialog();
 
-            // send acc with | separated
+            // acc comes with | separated
             String msg = senz.getAttributes().get("acc");
-            String[] accs = msg.split("|");
+            String[] accs = msg.split("\\|");
+            ArrayList<Account> accounts = new ArrayList<>();
+            for (String acc : accs) {
+                accounts.add(new Account(acc, "", ""));
+            }
 
             if (accs.length > 0) {
-                // TODO display account list activity
+                Intent intent = new Intent(this, AccountListActivity.class);
+                intent.putParcelableArrayListExtra("ACCOUNTS", accounts);
+                startActivity(intent);
+
+                this.finish();
             } else {
                 displayMessageDialog("Error", "No accounts for given NIC");
             }

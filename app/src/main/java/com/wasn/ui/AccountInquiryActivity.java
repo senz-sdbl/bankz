@@ -86,7 +86,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.balance_query_layout);
+        setContentView(R.layout.account_inquery_layout);
 
         initUi();
     }

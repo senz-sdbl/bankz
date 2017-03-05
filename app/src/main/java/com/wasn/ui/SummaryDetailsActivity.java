@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,7 +40,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
     AttributeListAdapter adapter;
 
     // form components
-    LinearLayout bottomPannel;
+    Typeface typeface;
     RelativeLayout back;
     RelativeLayout help;
     RelativeLayout print;
@@ -68,7 +67,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
      * Initialize activity components
      */
     public void initUi() {
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
 
         back = (RelativeLayout) findViewById(R.id.summary_details_layout_back);
         help = (RelativeLayout) findViewById(R.id.summary_details_layout_help);
@@ -107,20 +106,6 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
     }
 
     /**
-     * disable bottom pannel
-     */
-    public void disableBottomPannel() {
-        bottomPannel.setVisibility(View.GONE);
-    }
-
-    /**
-     * display bottom pannel
-     */
-    public void enableBottomPannel() {
-        bottomPannel.setVisibility(View.VISIBLE);
-    }
-
-    /**
      * Display message dialog when user going to logout
      *
      * @param message
@@ -140,15 +125,12 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(face);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
@@ -174,8 +156,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
         // cancel button
         Button cancelButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_cancel_button);
-        cancelButton.setTypeface(face);
-        cancelButton.setTypeface(null, Typeface.BOLD);
+        cancelButton.setTypeface(typeface, Typeface.BOLD);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
@@ -207,15 +188,12 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(face);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
@@ -224,7 +202,6 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
         dialog.show();
     }
-
 
     /**
      * Close progress dialog
@@ -261,7 +238,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         } else {
             // cannot print
             // may be invalid printer address
-            displayMessageDialog("Cannot print", "Printer address might be incorrect, Please make sure correct printer address in Settings and printer switched ON");
+            displayMessageDialog("Error", "Printer address might be incorrect, Please make sure correct printer address in Settings and printer switched ON");
         }
     }
 
@@ -274,7 +251,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         } else if (view == help) {
 
         } else if (view == print) {
-            displayInformationMessageDialog("Do you want to print the summary? After printing summary all the transaction will be deleted. make sure bluetooth is ON");
+            displayInformationMessageDialog("Do you want to print the summary? After printing summary transaction history will be cleared. Make sure bluetooth is ON");
         }
     }
 

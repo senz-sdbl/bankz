@@ -75,12 +75,12 @@ public class AttributeListAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.attribute_list_row_layout, viewGroup, false);
 
             //create view holder to store reference to child views
-            holder=new ViewHolder();
+            holder = new ViewHolder();
             holder.attributeNameTextView = (TextView) view.findViewById(R.id.child_detail_list_row_attribute_name);
             holder.attributeValueTextView = (TextView) view.findViewById(R.id.child_detail_list_row_attribute_value);
 
-            holder.attributeNameTextView.setTypeface(typeface, Typeface.NORMAL);
-            holder.attributeValueTextView.setTypeface(typeface, Typeface.NORMAL);
+            holder.attributeNameTextView.setTypeface(typeface);
+            holder.attributeValueTextView.setTypeface(typeface);
 
             view.setTag(holder);
         } else {

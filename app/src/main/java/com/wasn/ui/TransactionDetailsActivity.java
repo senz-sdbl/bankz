@@ -129,7 +129,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
         // set custom font
         messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
-        messageTextView.setTypeface(typeface);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);

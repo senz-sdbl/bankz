@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.score.senz.ISenzService;
 import com.score.senzc.enums.SenzTypeEnum;
@@ -159,13 +160,6 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
             startActivity(new Intent(AccountInquiryActivity.this, BankzActivity.class));
             AccountInquiryActivity.this.finish();
         } else if (view == done) {
-            // TODO remote this[temporary solution]
-//            Intent intent = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
-//            BalanceQuery balance = new BalanceQuery(accountEditText.getText().toString(), "Name", "0000000v", "15,000");
-//            intent.putExtra("balance", balance);
-//            startActivity(intent);
-//            BalanceQueryActivity.this.finish();
-
             onClickGet();
         }
     }
@@ -177,7 +171,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
             ActivityUtils.showProgressDialog(AccountInquiryActivity.this, "Please wait...");
             doGet(nic);
         } else {
-
+            Toast.makeText(this, "Empty NIC No", Toast.LENGTH_LONG).show();
         }
     }
 

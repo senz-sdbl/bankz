@@ -24,13 +24,13 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/back"></ImageView>
+                android:background="@drawable/back" />
 
             <TextView
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
-                android:background="#00a1e4"></TextView>
+                android:background="#00a1e4" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -44,10 +44,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="History"
+                android:text="Transaction History"
                 android:textColor="#ffffff"
                 android:textSize="18dp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -65,14 +65,14 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/help"></ImageView>
+                android:background="@drawable/help" />
 
             <TextView
                 android:id="@+id/tab_splitter"
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
-                android:background="#4a4a4a"></TextView>
+                android:background="#4a4a4a" />
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/transaction_list_layout_done"
@@ -86,14 +86,14 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/done"></ImageView>
+                android:background="@drawable/done" />
 
             <TextView
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
 
-                android:background="#00a1e4"></TextView>
+                android:background="#00a1e4" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -124,66 +124,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_gravity="center"
-            android:layout="@layout/empty_transaction"></ViewStub>
-
+            android:layout="@layout/empty_transaction" />
     </LinearLayout>
-
-    <!--<LinearLayout
-        android:id="@+id/transaction_list_layout_bottom_pannel"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom"
-        android:background="#333333">
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_centerVertical="true"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:id="@+id/transaction_list_layout_done"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginBottom="6dp"
-                android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp"
-                android:layout_marginTop="6dp"
-                android:layout_weight="1"
-                android:background="@drawable/done_button_selector"
-                android:clickable="true">
-
-                <TextView
-                    android:id="@+id/transaction_list_layout_done_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="View summary"
-                    android:textColor="#ffffff"
-                    android:textSize="15sp"></TextView>
-            </RelativeLayout>
-
-            <RelativeLayout
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@drawable/done_button_selector"
-                    android:clickable="true"
-                    android:id="@+id/capture_layout_clear"
-                    android:layout_weight="1">
-                <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:id="@+id/capture_layout_clear_icon"
-                        android:text="Cancel">
-                </TextView>
-
-            </RelativeLayout>
-        </LinearLayout>
-    </LinearLayout>-->
 
 </LinearLayout>

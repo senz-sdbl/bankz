@@ -251,7 +251,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         } else if (view == help) {
 
         } else if (view == print) {
-            displayInformationMessageDialog("Do you want to print the summary? After printing summary transaction history will be cleared. Make sure bluetooth is ON");
+            displayInformationMessageDialog("Do you want to print the summary? After printing the summary, transaction history will be cleared. Make sure bluetooth is ON");
         }
     }
 

@@ -68,7 +68,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
      * Initialize activity components
      */
     public void initUi() {
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
 
         back = (RelativeLayout) findViewById(R.id.summary_details_layout_back);
         help = (RelativeLayout) findViewById(R.id.summary_details_layout_help);
@@ -76,8 +76,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
         // set custom font for header text
         headerText = (TextView) findViewById(R.id.summary_details_list_layout_header_text);
-        headerText.setTypeface(face);
-        headerText.setTypeface(null, Typeface.BOLD);
+        headerText.setTypeface(typeface, Typeface.BOLD);
 
         back.setOnClickListener(SummaryDetailsActivity.this);
         help.setOnClickListener(SummaryDetailsActivity.this);

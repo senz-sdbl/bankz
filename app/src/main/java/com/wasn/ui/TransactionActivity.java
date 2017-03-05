@@ -405,7 +405,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
     private void navigateBalanceQuery() {
         // navigate to transaction details
-        Intent intent = new Intent(TransactionActivity.this, BalanceQueryActivity.class);
+        Intent intent = new Intent(TransactionActivity.this, AccountInquiryActivity.class);
         startActivity(intent);
 
         TransactionActivity.this.finish();

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  *
  * @author erangaeb@gmail.com (eranga bandara)
  */
-public class TransactionListAdapter extends BaseAdapter {
+public class HistoryListAdapter extends BaseAdapter {
 
     private Context context;
     private ArrayList<Transaction> transactionList;
@@ -31,7 +31,7 @@ public class TransactionListAdapter extends BaseAdapter {
      * @param context
      * @param transactionList
      */
-    public TransactionListAdapter(Context context, ArrayList<Transaction> transactionList) {
+    public HistoryListAdapter(Context context, ArrayList<Transaction> transactionList) {
         this.context = context;
         this.transactionList = transactionList;
 

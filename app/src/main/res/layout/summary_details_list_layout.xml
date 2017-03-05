@@ -125,7 +125,7 @@
             android:listSelector="@drawable/list_selctor"
             android:paddingLeft="10dp"
             android:paddingRight="0dp"
-            android:scrollbarStyle="outsideInset"></ListView>
+            android:scrollbarStyle="outsideInset" />
 
     </LinearLayout>
 

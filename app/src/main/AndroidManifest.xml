@@ -96,7 +96,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
-            android:name=".ui.TransactionListActivity"
+            android:name=".ui.HistoryListActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation"
             android:launchMode="singleTask"
@@ -125,7 +125,7 @@
         </activity>
 
         <activity
-            android:name=".ui.BalanceQueryActivity"
+            android:name=".ui.AccountInquiryActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="orientation"
             android:launchMode="singleTask"

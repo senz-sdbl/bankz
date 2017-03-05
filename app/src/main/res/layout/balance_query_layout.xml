@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Balance Query"
+                android:text="Find Account"
                 android:textColor="#ffffff"
                 android:textSize="18dp"
                 android:textStyle="bold" />
@@ -91,23 +91,23 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/balance_query_account_no"
+                    android:id="@+id/balance_query_nic_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
-                    android:text="Nic No"
+                    android:text="NIC number"
                     android:textColor="#4a4a4a"
                     android:textSize="20dp" />
 
                 <EditText
-                    android:id="@+id/balance_query_layout_account_text"
+                    android:id="@+id/balance_query_layout_nic_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"

@@ -24,7 +24,7 @@ import java.util.ArrayList;
  *
  * @author erangaeb@gmail.com (eranga bandara)
  */
-public class TransactionListActivity extends Activity implements View.OnClickListener {
+public class HistoryListActivity extends Activity implements View.OnClickListener {
 
     MobileBankApplication application;
 
@@ -35,7 +35,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
 
     // use to populate list
     ListView transactionListView;
-    TransactionListAdapter adapter;
+    HistoryListAdapter adapter;
     ViewStub emptyView;
     TextView emptyText;
 
@@ -61,7 +61,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      * Initialize layout components
      */
     public void init() {
-        application = (MobileBankApplication) TransactionListActivity.this.getApplication();
+        application = (MobileBankApplication) HistoryListActivity.this.getApplication();
 
         // initialize
         back = (RelativeLayout) findViewById(R.id.transaction_list_layout_back);
@@ -74,8 +74,8 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         headerText.setTypeface(typeface, Typeface.BOLD);
 
         // set click listeners
-        back.setOnClickListener(TransactionListActivity.this);
-        done.setOnClickListener(TransactionListActivity.this);
+        back.setOnClickListener(HistoryListActivity.this);
+        done.setOnClickListener(HistoryListActivity.this);
 
         // populate list view
         transactionListView = (ListView) findViewById(R.id.transaction_list);
@@ -94,9 +94,9 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
                 Transaction transaction = (Transaction) adapter.getItem(i - 1);
 
                 // start new activity
-                Intent intent = new Intent(TransactionListActivity.this, TransactionDetailsActivity.class);
+                Intent intent = new Intent(HistoryListActivity.this, TransactionDetailsActivity.class);
                 intent.putExtra("transaction", transaction);
-                intent.putExtra("ACTIVITY_NAME", TransactionListActivity.class.getName());
+                intent.putExtra("ACTIVITY_NAME", HistoryListActivity.class.getName());
                 startActivity(intent);
 
                 return true;
@@ -110,13 +110,13 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      * Display all transaction list
      */
     public void displayAllTransactionList() {
-        BankzDbSource dbSource = new BankzDbSource(TransactionListActivity.this);
+        BankzDbSource dbSource = new BankzDbSource(HistoryListActivity.this);
         allTransactionList = dbSource.getAllTransactions();
 
         System.out.println("All transaction done");
         if (allTransactionList.size() > 0) {
             // have transaction
-            adapter = new TransactionListAdapter(TransactionListActivity.this, allTransactionList);
+            adapter = new HistoryListAdapter(HistoryListActivity.this, allTransactionList);
             transactionListView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
@@ -134,7 +134,7 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
      * Display empty view when no clients
      */
     public void displayEmptyView() {
-        adapter = new TransactionListAdapter(TransactionListActivity.this, new ArrayList<Transaction>());
+        adapter = new HistoryListAdapter(HistoryListActivity.this, new ArrayList<Transaction>());
         transactionListView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         transactionListView.setEmptyView(emptyView);
@@ -172,10 +172,10 @@ public class TransactionListActivity extends Activity implements View.OnClickLis
         if (view == back) {
             // back to main activity
             //startActivity(new Intent(TransactionListActivity.this, BankzActivity.class));
-            TransactionListActivity.this.finish();
+            HistoryListActivity.this.finish();
         } else if (view == done) {
             // display summary activity
-            startActivity(new Intent(TransactionListActivity.this, SummaryDetailsActivity.class));
+            startActivity(new Intent(HistoryListActivity.this, SummaryDetailsActivity.class));
         }
     }
 

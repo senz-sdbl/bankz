@@ -6,11 +6,9 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
@@ -21,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.score.senz.ISenzService;
 import com.score.senzc.enums.SenzTypeEnum;
@@ -30,26 +27,21 @@ import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
 import com.wasn.enums.IntentType;
-import com.wasn.pojos.BalanceQuery;
 import com.wasn.utils.ActivityUtils;
-import com.wasn.utils.NetworkUtil;
 
 import java.util.HashMap;
 
-public class BalanceQueryActivity extends Activity implements View.OnClickListener {
+public class AccountInquiryActivity extends Activity implements View.OnClickListener {
 
-    private static final String TAG = BalanceQueryActivity.class.getName();
+    private static final String TAG = AccountInquiryActivity.class.getName();
 
-    // form components
-    private EditText accountEditText;
-
-    // header
+    // ui
+    private Typeface typeface;
+    private TextView idLabel;
+    private EditText idEditText;
     private RelativeLayout back;
     private RelativeLayout done;
     private TextView headerText;
-
-    // custom font
-    private Typeface typeface;
 
     // service interface
     private ISenzService senzService;
@@ -134,21 +126,23 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     }
 
     public void initUi() {
-        typeface = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
+        typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
 
         // init text/edit text fields
-        accountEditText = (EditText) findViewById(R.id.balance_query_layout_account_text);
+        idEditText = (EditText) findViewById(R.id.balance_query_layout_nic_text);
+        idLabel = (TextView) findViewById(R.id.balance_query_nic_label);
         headerText = (TextView) findViewById(R.id.balance_query_layout_header_text);
 
         // set custom font
-        accountEditText.setTypeface(typeface, Typeface.BOLD);
+        idEditText.setTypeface(typeface, Typeface.BOLD);
+        idLabel.setTypeface(typeface, Typeface.BOLD);
         headerText.setTypeface(typeface, Typeface.BOLD);
 
         back = (RelativeLayout) findViewById(R.id.balance_query_layout_back);
         done = (RelativeLayout) findViewById(R.id.balance_query_layout_done);
 
-        back.setOnClickListener(BalanceQueryActivity.this);
-        done.setOnClickListener(BalanceQueryActivity.this);
+        back.setOnClickListener(AccountInquiryActivity.this);
+        done.setOnClickListener(AccountInquiryActivity.this);
     }
 
     protected void bindToService() {
@@ -160,8 +154,8 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     @Override
     public void onClick(View view) {
         if (view == back) {
-            startActivity(new Intent(BalanceQueryActivity.this, BankzActivity.class));
-            BalanceQueryActivity.this.finish();
+            startActivity(new Intent(AccountInquiryActivity.this, BankzActivity.class));
+            AccountInquiryActivity.this.finish();
         } else if (view == done) {
             // TODO remote this[temporary solution]
 //            Intent intent = new Intent(BalanceQueryActivity.this, BalanceResultActivity.class);
@@ -170,23 +164,33 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
 //            startActivity(intent);
 //            BalanceQueryActivity.this.finish();
 
-            // TODO use this
-            //onClickGet();
+            onClickGet();
         }
     }
 
-    private void onClickGet(String nic) {
+    private void onClickGet() {
+        String nic = idEditText.getText().toString().trim();
+
+        if (!nic.isEmpty()) {
+            doGet(nic);
+        } else {
+
+        }
+    }
+
+    private void doGet(String nic) {
         // send get
         try {
             HashMap<String, String> senzAttributes = new HashMap<>();
-            senzAttributes.put("nic", "3444");
+            senzAttributes.put("nic", nic);
+            senzAttributes.put("acc", "");
             senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
 
             // new senz
             String id = "_ID";
             String signature = "_SIGNATURE";
-            SenzTypeEnum senzType = SenzTypeEnum.PUT;
-            User receiver = new User("", "sdblbal");
+            SenzTypeEnum senzType = SenzTypeEnum.GET;
+            User receiver = new User("", "sdblinq");
             Senz senz = new Senz(id, signature, senzType, null, receiver, senzAttributes);
 
             senzService.send(senz);
@@ -202,18 +206,18 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
      * @param senz senz
      */
     private void handleSenz(Senz senz) {
-        if (senz.getAttributes().containsKey("msg")) {
+        if (senz.getAttributes().containsKey("acc")) {
             // msg response received
             ActivityUtils.cancelProgressDialog();
 
-            String msg = senz.getAttributes().get("msg");
-            if (msg != null && msg.equalsIgnoreCase("GETDONE")) {
-                Toast.makeText(this, "Balance query successful", Toast.LENGTH_LONG).show();
+            // send acc with | separated
+            String msg = senz.getAttributes().get("acc");
+            String[] accs = msg.split("|");
 
-                // TODO navigate
+            if (accs.length > 0) {
+                // TODO display account list activity
             } else {
-                String informationMessage = "Failed to complete the transaction";
-                displayMessageDialog("PUT fail", informationMessage);
+                displayMessageDialog("Error", "No accounts for given NIC");
             }
         }
     }
@@ -241,15 +245,12 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
         messageTextView.setText(message);
 
         // set custom font
-        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/vegur_2.otf");
-        messageHeaderTextView.setTypeface(face);
-        messageHeaderTextView.setTypeface(null, Typeface.BOLD);
-        messageTextView.setTypeface(face);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);
-        okButton.setTypeface(face);
-        okButton.setTypeface(null, Typeface.BOLD);
+        okButton.setTypeface(typeface, Typeface.BOLD);
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
@@ -262,7 +263,7 @@ public class BalanceQueryActivity extends Activity implements View.OnClickListen
     @Override
     public void onBackPressed() {
         // back to main activity
-        startActivity(new Intent(BalanceQueryActivity.this, BankzActivity.class));
-        BalanceQueryActivity.this.finish();
+        startActivity(new Intent(AccountInquiryActivity.this, BankzActivity.class));
+        AccountInquiryActivity.this.finish();
     }
 }

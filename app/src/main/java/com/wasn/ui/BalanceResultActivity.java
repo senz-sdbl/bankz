@@ -47,8 +47,8 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
         attributesList.add(new Attribute("NIC: ", balance.getClientNic()));
         attributesList.add(new Attribute("Balance: ", balance.getBalance()));
 
+        // list
         balanceList = (ListView) findViewById(R.id.balance_result_list);
-        // add header and footer
         View headerView = View.inflate(this, R.layout.header, null);
         View footerView = View.inflate(this, R.layout.footer, null);
 
@@ -63,7 +63,7 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
     public void onClick(View view) {
         if (view == back) {
             //go back to BalanceQueryActivity
-            startActivity(new Intent(BalanceResultActivity.this, BalanceQueryActivity.class));
+            startActivity(new Intent(BalanceResultActivity.this, AccountInquiryActivity.class));
             BalanceResultActivity.this.finish();
         }
 
@@ -79,7 +79,7 @@ public class BalanceResultActivity extends Activity implements View.OnClickListe
     @Override
     public void onBackPressed() {
         // back to ClientListActivity
-        startActivity(new Intent(BalanceResultActivity.this, BalanceQueryActivity.class));
+        startActivity(new Intent(BalanceResultActivity.this, AccountInquiryActivity.class));
         BalanceResultActivity.this.finish();
     }
 

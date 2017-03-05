@@ -40,8 +40,8 @@ public class SenzService extends Service {
 
     //private static final String SENZ_HOST = "52.77.228.195";
     //private static final String SENZ_HOST = "connect.rahasak.com";
-    //private static final String SENZ_HOST = "10.2.2.191";
-    private static final String SENZ_HOST = "10.100.20.32";
+    private static final String SENZ_HOST = "10.2.2.191";
+    //private static final String SENZ_HOST = "10.100.31.44";
     public static final int SENZ_PORT = 7070;
 
     // senz socket

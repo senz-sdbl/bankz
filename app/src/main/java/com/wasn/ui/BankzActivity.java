@@ -98,7 +98,7 @@ public class BankzActivity extends Activity implements View.OnClickListener {
             //BankzActivity.this.finish();
         } else if (view == summaryLayout) {
             // display transaction list activity
-            startActivity(new Intent(BankzActivity.this, TransactionListActivity.class));
+            startActivity(new Intent(BankzActivity.this, HistoryListActivity.class));
             //BankzActivity.this.finish();
         } else if (view == settingsLayout) {
             // display settings activity

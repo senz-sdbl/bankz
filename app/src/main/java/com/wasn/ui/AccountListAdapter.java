@@ -77,6 +77,8 @@ public class AccountListAdapter extends BaseAdapter {
             //create view holder to store reference to child views
             holder = new ViewHolder();
             holder.account = (TextView) view.findViewById(R.id.account_no);
+            holder.icon = (TextView) view.findViewById(R.id.icon_text);
+            holder.icon.setTypeface(typeface, Typeface.BOLD);
             holder.account.setTypeface(typeface, Typeface.BOLD);
 
             view.setTag(holder);
@@ -96,6 +98,7 @@ public class AccountListAdapter extends BaseAdapter {
      * Keep reference to children view to avoid unnecessary calls
      */
     static class ViewHolder {
+        TextView icon;
         TextView account;
     }
 

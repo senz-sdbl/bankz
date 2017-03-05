@@ -83,10 +83,10 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         headerText.setTypeface(typeface, Typeface.BOLD);
 
         agentLabelText = (TextView) findViewById(R.id.settings_agent_username);
-        agentLabelText.setTypeface(typeface);
+        agentLabelText.setTypeface(typeface, Typeface.BOLD);
 
         printerLabelText = (TextView) findViewById(R.id.settings_printer_bluetooth_address);
-        printerLabelText.setTypeface(typeface);
+        printerLabelText.setTypeface(typeface, Typeface.BOLD);
 
         // set text to username
         // stored in database

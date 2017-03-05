@@ -105,7 +105,7 @@
                     android:layout_marginTop="25dp"
                     android:text="Agent"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp" >
+                    android:textSize="20sp" >
                 </TextView>
 
                 <EditText
@@ -122,7 +122,7 @@
                     android:background="@drawable/text_filed_shape"
                     android:layout_marginRight="20dp"
                     android:inputType="text"
-                    android:textSize="18dp" >
+                    android:textSize="18sp" >
                 </EditText>
 
             </LinearLayout>
@@ -141,7 +141,7 @@
                     android:layout_marginTop="25dp"
                     android:text="Printer address"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp" >
+                    android:textSize="20sp" >
                 </TextView>
 
                 <EditText
@@ -155,7 +155,7 @@
                     android:background="@drawable/text_filed_shape"
                     android:layout_marginRight="20dp"
                     android:inputType="text"
-                    android:textSize="18dp" >
+                    android:textSize="18sp" >
                 </EditText>
 
             </LinearLayout>

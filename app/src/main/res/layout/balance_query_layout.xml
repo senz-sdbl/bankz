@@ -98,7 +98,7 @@
                     android:layout_marginTop="25dp"
                     android:text="NIC number"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/balance_query_layout_nic_text"
@@ -107,11 +107,11 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
-                    android:inputType="text"
+                    android:inputType="number|text"
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
-                    android:textSize="18dp" />
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

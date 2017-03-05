@@ -85,14 +85,14 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_centerInParent="true"
-                android:background="@drawable/done"></ImageView>
+                android:background="@drawable/done" />
 
             <TextView
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:layout_alignParentLeft="true"
 
-                android:background="#00a1e4"></TextView>
+                android:background="#00a1e4" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -114,14 +114,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/transaction_account_no"
+                    android:id="@+id/transaction_account_no_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:text="Account No"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp"></TextView>
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/transaction_layout_account_text"
@@ -135,7 +135,7 @@
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
-                    android:textSize="18dp"></EditText>
+                    android:textSize="18dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -144,14 +144,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/transaction_amount"
+                    android:id="@+id/transaction_amount_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:text="Amount"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp"></TextView>
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/transaction_layout_amount_text"
@@ -165,7 +165,7 @@
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
-                    android:textSize="18dp"></EditText>
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -174,14 +174,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/transaction_mobile"
+                    android:id="@+id/transaction_mobile_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:text="Mobile"
                     android:textColor="#4a4a4a"
-                    android:textSize="20dp"></TextView>
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/transaction_layout_mobile_text"
@@ -194,38 +194,7 @@
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
-                    android:textSize="18dp"></EditText>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="31dp"
-                    android:layout_marginTop="25dp"
-                    android:text="Note"
-                    android:textColor="#4a4a4a"
-                    android:textSize="17dp"></TextView>
-
-                <EditText
-                    android:id="@+id/transaction_layout_note_text"
-                    android:layout_width="fill_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:background="@drawable/text_filed_shape"
-                    android:gravity="top"
-                    android:inputType="textMultiLine"
-                    android:lines="3"
-                    android:padding="10dp"
-                    android:textColor="#4a4a4a"
-                    android:textCursorDrawable="@null"
-                    android:textSize="20dp"></EditText>
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -54,6 +54,9 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     private Typeface typeface;
 
     // form components
+    private TextView accountLabel;
+    private TextView amountLabel;
+    private TextView mobileLabel;
     private EditText accountEditText;
     private EditText amountEditText;
     private EditText mobileEditText;
@@ -158,16 +161,22 @@ public class TransactionActivity extends Activity implements View.OnClickListene
      */
     public void initUi() {
         // init text/edit text fields
+        headerText = (TextView) findViewById(R.id.transaction_layout_header_text);
+        accountLabel = (TextView) findViewById(R.id.transaction_account_no_label);
+        amountLabel = (TextView) findViewById(R.id.transaction_amount_label);
+        mobileLabel = (TextView) findViewById(R.id.transaction_mobile_label);
         accountEditText = (EditText) findViewById(R.id.transaction_layout_account_text);
         amountEditText = (EditText) findViewById(R.id.transaction_layout_amount_text);
         mobileEditText = (EditText) findViewById(R.id.transaction_layout_mobile_text);
-        headerText = (TextView) findViewById(R.id.transaction_layout_header_text);
 
         // set custom font
+        headerText.setTypeface(typeface, Typeface.BOLD);
+        accountLabel.setTypeface(typeface, Typeface.BOLD);
+        amountLabel.setTypeface(typeface, Typeface.BOLD);
+        mobileLabel.setTypeface(typeface, Typeface.BOLD);
         accountEditText.setTypeface(typeface, Typeface.BOLD);
         amountEditText.setTypeface(typeface, Typeface.BOLD);
         mobileEditText.setTypeface(typeface, Typeface.BOLD);
-        headerText.setTypeface(typeface, Typeface.BOLD);
 
         back = (RelativeLayout) findViewById(R.id.transaction_layout_back);
         done = (RelativeLayout) findViewById(R.id.transaction_layout_done);

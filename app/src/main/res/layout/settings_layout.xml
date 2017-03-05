@@ -3,79 +3,75 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#ffffff"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:background="#00a1e4"
-            android:clickable="true" >
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="#00a1e4"
+        android:clickable="true">
 
         <RelativeLayout
-                android:layout_width="53dp"
-                android:layout_height="fill_parent"
-                android:background="@drawable/button_selector"
-                android:layout_alignParentLeft="true"
-                android:clickable="true"
-                android:id="@+id/settings_layout_back">
+            android:id="@+id/settings_layout_back"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/button_selector"
+            android:clickable="true">
+
             <ImageView
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
-                    android:layout_centerInParent="true"
-                    android:id="@+id/capture_layout_about_icon"
-                    android:background="@drawable/back">
-            </ImageView>
+                android:id="@+id/capture_layout_about_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/back" />
 
             <TextView
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentRight="true"
-                    android:background="#00a1e4">
-            </TextView>
-        </RelativeLayout>
-
-        <RelativeLayout
+                android:layout_width="1dp"
                 android:layout_height="fill_parent"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/settings_layout_back">
-
-            <TextView
-                    android:id="@+id/settings_layout_header_text"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="#ffffff"
-                    android:text="Settings">
-            </TextView>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-                android:layout_width="53dp"
-                android:layout_height="fill_parent"
-                android:background="@drawable/button_selector"
                 android:layout_alignParentRight="true"
-                android:clickable="true"
-                android:id="@+id/settings_layout_test_print">
-            <ImageView
-                    android:layout_height="32dp"
-                    android:layout_width="32dp"
-                    android:layout_centerInParent="true"
-                    android:id="@+id/capture_layout_send_icon"
-                    android:background="@drawable/done">
-            </ImageView>
+                android:background="#00a1e4" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/settings_layout_back">
 
             <TextView
-                    android:id="@+id/tab_splitter"
-                    android:layout_width="1dp"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentLeft="true"
-                    android:background="#00a1e4">
-            </TextView>
+                android:id="@+id/settings_layout_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="Settings"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/settings_layout_test_print"
+            android:layout_width="53dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_selector"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/capture_layout_send_icon"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/done" />
+
+            <TextView
+                android:id="@+id/tab_splitter"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:background="#00a1e4" />
         </RelativeLayout>
 
     </RelativeLayout>
@@ -89,13 +85,13 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/settings_agent_username"
@@ -105,25 +101,23 @@
                     android:layout_marginTop="25dp"
                     android:text="Agent"
                     android:textColor="#4a4a4a"
-                    android:textSize="20sp" >
-                </TextView>
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/settings_layout_username_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
-                    android:padding="10dp"
-                    android:focusableInTouchMode="false"
-                    android:enabled="false"
-                    android:textCursorDrawable="@null"
-                    android:text="eranga"
-                    android:textColor="#4a4a4a"
-                    android:background="@drawable/text_filed_shape"
                     android:layout_marginRight="20dp"
+                    android:background="@drawable/text_filed_shape"
+                    android:enabled="false"
+                    android:focusableInTouchMode="false"
                     android:inputType="text"
-                    android:textSize="18sp" >
-                </EditText>
+                    android:padding="10dp"
+                    android:text="eranga"
+                    android:textColor="#ABABAB"
+                    android:textCursorDrawable="@null"
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -131,7 +125,69 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:orientation="vertical" >
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/settings_branch_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Branch"
+                    android:textColor="#4a4a4a"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/settings_branch_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/text_filed_shape"
+                    android:inputType="text"
+                    android:padding="10dp"
+                    android:textColor="#4a4a4a"
+                    android:textCursorDrawable="@null"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/settings_phone_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="25dp"
+                    android:text="Telephone No"
+                    android:textColor="#4a4a4a"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/settings_phone_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/text_filed_shape"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:textColor="#4a4a4a"
+                    android:textCursorDrawable="@null"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/settings_printer_bluetooth_address"
@@ -139,63 +195,59 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
-                    android:text="Printer address"
+                    android:text="Printer Address"
                     android:textColor="#4a4a4a"
-                    android:textSize="20sp" >
-                </TextView>
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/settings_layout_printer_address_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
-                    android:padding="10dp"
-                    android:textCursorDrawable="@null"
-                    android:textColor="#4a4a4a"
-                    android:background="@drawable/text_filed_shape"
                     android:layout_marginRight="20dp"
+                    android:background="@drawable/text_filed_shape"
                     android:inputType="text"
-                    android:textSize="18sp" >
-                </EditText>
-
+                    android:padding="10dp"
+                    android:textColor="#4a4a4a"
+                    android:textCursorDrawable="@null"
+                    android:textSize="18sp" />
             </LinearLayout>
-
 
 
         </LinearLayout>
     </ScrollView>
 
     <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:visibility="gone"
-            android:layout_gravity="bottom"
-            android:background="#333333" >
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="#333333"
+        android:visibility="gone">
 
         <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal" >
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
 
             <RelativeLayout
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginRight="6dp"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="6dp"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:background="@drawable/done_button_selector"
-                    android:clickable="true"
-                    android:layout_weight="1"
-                    android:id="@+id/settings_layout_save">
+                android:id="@+id/settings_layout_save"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/done_button_selector"
+                android:clickable="true">
+
                 <TextView
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:id="@+id/capture_layout_clear_icon"
-                        android:text="Save">
-                </TextView>
+                    android:id="@+id/capture_layout_clear_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Save" />
             </RelativeLayout>
 
 

@@ -55,9 +55,9 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
     private String print() {
         // printing attributes
         String printerAddress = PreferenceUtils.getPrinterAddress(application);
-        String telephoneNo = "0775432015";
-        String branchName = "Kirulapana";
-        Settings settings = new Settings(branchName, telephoneNo, printerAddress);
+        String branchName = PreferenceUtils.getBranch(application);
+        String telephoneNo = PreferenceUtils.getPhone(application);
+        Settings settings = new Settings("", branchName, telephoneNo, printerAddress);
 
         // send ate to printer
         try {

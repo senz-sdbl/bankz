@@ -5,11 +5,13 @@ package com.wasn.pojos;
  */
 public class Settings {
     String agent;
+    String branch;
     String telephone;
     String printerAddress;
 
-    public Settings(String agent, String telephone, String printerAddress) {
+    public Settings(String agent, String branch, String telephone, String printerAddress) {
         this.agent = agent;
+        this.branch = branch;
         this.telephone = telephone;
         this.printerAddress = printerAddress;
     }
@@ -20,6 +22,14 @@ public class Settings {
 
     public void setAgent(String agent) {
         this.agent = agent;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
 
     public String getTelephone() {

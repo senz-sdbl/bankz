@@ -1,12 +1,14 @@
 package com.wasn.async;
 
 import android.os.AsyncTask;
-import com.wasn.ui.SettingsActivity;
-import com.wasn.application.MobileBankApplication;
+
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
+import com.wasn.pojos.Settings;
+import com.wasn.ui.SettingsActivity;
+import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
 
 import java.io.IOException;
@@ -19,15 +21,16 @@ import java.io.IOException;
 public class TestPrintService extends AsyncTask<String, String, String> {
 
     SettingsActivity activity;
-    MobileBankApplication application;
+    Settings settings;
 
     /**
      * Initialize cass members
+     *
      * @param activity
      */
-    public TestPrintService(SettingsActivity activity) {
+    public TestPrintService(SettingsActivity activity, Settings settings) {
         this.activity = activity;
-        application = (MobileBankApplication) activity.getApplication();
+        this.settings = settings;
     }
 
     /**
@@ -35,18 +38,24 @@ public class TestPrintService extends AsyncTask<String, String, String> {
      */
     @Override
     protected String doInBackground(String... strings) {
-        return print(strings[0]);
+        return print(settings);
     }
 
     /**
      * print test receipt
-     * @param printerAddress
+     *
+     * @param
      * @return
      */
-    public String print(String printerAddress) {
+    public String print(Settings settings) {
         // send data to printer
         try {
-            PrintUtils.printTestPrint(printerAddress);
+            PrintUtils.printTestPrint(settings);
+
+            // save settings in SP
+            PreferenceUtils.savePrinterAddress(activity, settings.getPrinterAddress());
+            PreferenceUtils.saveBranch(activity, settings.getBranch());
+            PreferenceUtils.savePhone(activity, settings.getTelephone());
 
             return "1";
         } catch (IOException e) {

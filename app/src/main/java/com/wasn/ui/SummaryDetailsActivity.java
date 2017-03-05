@@ -22,6 +22,7 @@ import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Summary;
+import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.TransactionUtils;
 
@@ -45,9 +46,6 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
     RelativeLayout help;
     RelativeLayout print;
     TextView headerText;
-
-    // display when printing
-    public ProgressDialog progressDialog;
 
     private Summary summary;
 
@@ -138,7 +136,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
                 // print summary
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
-                        progressDialog = ProgressDialog.show(SummaryDetailsActivity.this, "", "Printing summary ...");
+                        ActivityUtils.showProgressDialog(SummaryDetailsActivity.this, "Printing...");
                         SummaryPrintService service = new SummaryPrintService(SummaryDetailsActivity.this, summary);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                             service.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "SUMMARY");
@@ -204,22 +202,13 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
     }
 
     /**
-     * Close progress dialog
-     */
-    public void closeProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
-    }
-
-    /**
      * Execute after printing task
      *
      * @param status print status
      */
     public void onPostPrint(String status) {
         // close progress dialog
-        closeProgressDialog();
+        ActivityUtils.cancelProgressDialog();
 
         if (status.equals("1")) {
             Toast.makeText(SummaryDetailsActivity.this, "Summary printed", Toast.LENGTH_LONG).show();

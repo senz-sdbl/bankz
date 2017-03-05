@@ -2,7 +2,6 @@ package com.wasn.ui;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -24,6 +23,7 @@ import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.listeners.PrintListener;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Transaction;
+import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PrintUtils;
 
 import java.util.ArrayList;
@@ -46,9 +46,6 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
     RelativeLayout help;
     RelativeLayout print;
     TextView headerText;
-
-    // display when printing
-    public ProgressDialog progressDialog;
 
     private Transaction transaction;
 
@@ -142,7 +139,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
                 // print two receipts
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
-                        progressDialog = ProgressDialog.show(TransactionDetailsActivity.this, "", "Printing receipt ...");
+                        ActivityUtils.showProgressDialog(TransactionDetailsActivity.this, "Printing...");
                         TransactionPrintService service = new TransactionPrintService(TransactionDetailsActivity.this, TransactionDetailsActivity.this, transaction, PrintType.PRINT);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                             service.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -208,22 +205,12 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
     }
 
     /**
-     * Close progress dialog
-     */
-    public void closeProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
-    }
-
-    /**
      * Execute after printing task
      *
      * @param status print status
      */
     public void onPostPrint(String status) {
-        // close progress dialog
-        closeProgressDialog();
+        ActivityUtils.cancelProgressDialog();
 
         if (status.equals("1")) {
             // clear shared objects

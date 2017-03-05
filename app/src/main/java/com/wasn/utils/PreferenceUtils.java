@@ -99,4 +99,52 @@ public class PreferenceUtils {
         return preferences.getString("PRINTER_ADDRESS", "");
     }
 
+    /**
+     * Save branch in shared preference
+     *
+     * @param context application context
+     * @param branch  branch
+     */
+    public static void saveBranch(Context context, String branch) {
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("BRANCH", branch);
+        editor.commit();
+    }
+
+    /**
+     * Get saved branch from shared preference
+     *
+     * @param context
+     * @return
+     */
+    public static String getBranch(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return preferences.getString("BRANCH", "");
+    }
+
+    /**
+     * Save phone in shared preference
+     *
+     * @param context application context
+     * @param phone   phone
+     */
+    public static void savePhone(Context context, String phone) {
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("PHONE", phone);
+        editor.commit();
+    }
+
+    /**
+     * Get saved branch from shared preference
+     *
+     * @param context
+     * @return
+     */
+    public static String getPhone(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return preferences.getString("PHONE", "");
+    }
+
 }

@@ -138,7 +138,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
 
         // set custom font
         idEditText.setTypeface(typeface, Typeface.BOLD);
-        idLabel.setTypeface(typeface, Typeface.BOLD);
+        idLabel.setTypeface(typeface);
         headerText.setTypeface(typeface, Typeface.BOLD);
 
         back = (RelativeLayout) findViewById(R.id.balance_query_layout_back);

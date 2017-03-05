@@ -5,7 +5,7 @@ package com.wasn.exceptions;
  *
  * eranga.herath@pagero.com (eranga herath)
  */
-public class EmptyTelephoneNoException extends Exception {
+public class InvalidTelephoneNoException extends Exception {
     private static final long serialVersionUID = 1L;
 
     @Override

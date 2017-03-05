@@ -100,8 +100,8 @@ public class PrintUtils {
 
         // receipt header
         String address      = ".           SANASA Development Bank\r\n";
-        String branch       = "                  colombo - 02     \r\n";
-        String telephoneNo  = "                Tel: 011 2832500   \r\n";
+        String branch       = "            Branch       : " + settings.getBranch() + "\r\n";
+        String telephoneNo  = "            Telephone No : " + settings.getTelephone()  + "\r\n";
 
         // printing receipt type
         // customer copy/ agent copy
@@ -236,8 +236,8 @@ public class PrintUtils {
 
         // receipt header
         String address      = ".           SANASA Development Bank\r\n";
-        String branch       = "                  colombo - 02     \r\n";
-        String telephoneNo  = "                Tel: 011 2832500   \r\n";
+        String branch       = "            Branch       : " + settings.getBranch() + "\r\n";
+        String telephoneNo  = "            Telephone No : " + settings.getTelephone()  + "\r\n";
 
         // printing receipt type
         // customer copy/ agent copy
@@ -351,8 +351,8 @@ public class PrintUtils {
 
         // receipt header
         String address      = ".           SANASA Development Bank\r\n";
-        String branch       = "                  colombo - 02     \r\n";
-        String telephoneNo  = "                Tel: 011 2832500   \r\n";
+        String branch       = "            Branch       : " + settings.getBranch() + "\r\n";
+        String telephoneNo  = "            Telephone No : " + settings.getTelephone()  + "\r\n";
 
         // printing receipt type
         // customer copy/ agent copy
@@ -445,20 +445,20 @@ public class PrintUtils {
 
     /**
      * Print test print
-     * @param printerAddress
+     * @param settings
      * @throws BluetoothNotEnableException
      * @throws IOException
      * @throws CannotConnectToPrinterException
      * @throws BluetoothNotAvailableException
      * @throws CannotPrintException
      */
-    public static void printTestPrint(String printerAddress) throws BluetoothNotEnableException, IOException, CannotConnectToPrinterException, BluetoothNotAvailableException, CannotPrintException, IllegalArgumentException {
-        OutputStream outputStream = connectToPrinter(printerAddress);
+    public static void printTestPrint(Settings settings) throws BluetoothNotEnableException, IOException, CannotConnectToPrinterException, BluetoothNotAvailableException, CannotPrintException, IllegalArgumentException {
+        OutputStream outputStream = connectToPrinter(settings.getPrinterAddress());
 
         // receipt header
         String address      = ".            SANASA Development Bank\r\n";
-        String branch       = "                   Test Branch     \r\n";
-        String telephoneNo  = "                    Tel: Test      \r\n";
+        String branch       = "             Branch       : " + settings.getBranch() + "\r\n";
+        String telephoneNo  = "             Telephone No : " + settings.getTelephone()  + "\r\n";
 
         // printing receipt type
         // customer copy/ agent copy

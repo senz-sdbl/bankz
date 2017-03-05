@@ -171,9 +171,9 @@ public class TransactionActivity extends Activity implements View.OnClickListene
 
         // set custom font
         headerText.setTypeface(typeface, Typeface.BOLD);
-        accountLabel.setTypeface(typeface, Typeface.BOLD);
-        amountLabel.setTypeface(typeface, Typeface.BOLD);
-        mobileLabel.setTypeface(typeface, Typeface.BOLD);
+        accountLabel.setTypeface(typeface);
+        amountLabel.setTypeface(typeface);
+        mobileLabel.setTypeface(typeface);
         accountEditText.setTypeface(typeface, Typeface.BOLD);
         amountEditText.setTypeface(typeface, Typeface.BOLD);
         mobileEditText.setTypeface(typeface, Typeface.BOLD);

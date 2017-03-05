@@ -165,7 +165,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             try {
                 if (PrintUtils.isEnableBluetooth()) {
                     // start background thread to print test print
-                    progressDialog = ProgressDialog.show(SettingsActivity.this, "", "Printing test print, Please wait ...");
+                    progressDialog = ProgressDialog.show(SettingsActivity.this, "", "Printing test print ...");
                     TestPrintService testPrintService = new TestPrintService(SettingsActivity.this);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                         testPrintService.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, printerAddress);

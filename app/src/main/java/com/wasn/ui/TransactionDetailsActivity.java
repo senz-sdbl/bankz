@@ -142,7 +142,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
                 // print two receipts
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
-                        progressDialog = ProgressDialog.show(TransactionDetailsActivity.this, "", "Printing receipt, Please wait ...");
+                        progressDialog = ProgressDialog.show(TransactionDetailsActivity.this, "", "Printing receipt ...");
                         TransactionPrintService service = new TransactionPrintService(TransactionDetailsActivity.this, TransactionDetailsActivity.this, transaction, PrintType.PRINT);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                             service.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -227,7 +227,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
         if (status.equals("1")) {
             // clear shared objects
-            Toast.makeText(TransactionDetailsActivity.this, "Transaction saved", Toast.LENGTH_LONG).show();
+            Toast.makeText(TransactionDetailsActivity.this, "Transaction completed", Toast.LENGTH_LONG).show();
 
             // need to go back to transaction activity
             TransactionDetailsActivity.this.finish();

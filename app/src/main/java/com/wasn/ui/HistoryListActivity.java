@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wasn.R;
-import com.wasn.application.MobileBankApplication;
 import com.wasn.db.BankzDbSource;
 import com.wasn.pojos.Transaction;
 
@@ -127,41 +126,6 @@ public class HistoryListActivity extends Activity implements View.OnClickListene
     }
 
     /**
-     * Display empty view when no clients
-     */
-    public void displayEmptyView() {
-        adapter = new HistoryListAdapter(HistoryListActivity.this, new ArrayList<Transaction>());
-        transactionListView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-        transactionListView.setEmptyView(emptyView);
-        emptyText = (TextView) emptyView.findViewById(R.id.empty_text);
-        emptyText.setTypeface(typeface, Typeface.BOLD);
-    }
-
-    /**
-     * disable bottom pannel
-     */
-    //public void disableBottomPannel() {
-    //    bottomPannel.setVisibility(View.GONE);
-    //}
-
-    /**
-     * display bottom pannel
-     */
-    //public void enableBottomPannel() {
-    //   bottomPannel.setVisibility(View.VISIBLE);
-    //}
-
-    /**
-     * Close progress dialog
-     */
-    public void closeProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog.dismiss();
-        }
-    }
-
-    /**
      * {@inheritDoc}
      */
     public void onClick(View view) {
@@ -171,6 +135,7 @@ public class HistoryListActivity extends Activity implements View.OnClickListene
             HistoryListActivity.this.finish();
         } else if (view == done) {
             // display summary activity
+            HistoryListActivity.this.finish();
             startActivity(new Intent(HistoryListActivity.this, SummaryDetailsActivity.class));
         }
     }

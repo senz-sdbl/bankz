@@ -138,7 +138,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
                 // print summary
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
-                        progressDialog = ProgressDialog.show(SummaryDetailsActivity.this, "", "Printing summary, Please wait ...");
+                        progressDialog = ProgressDialog.show(SummaryDetailsActivity.this, "", "Printing summary ...");
                         SummaryPrintService service = new SummaryPrintService(SummaryDetailsActivity.this, summary);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
                             service.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "SUMMARY");

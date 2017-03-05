@@ -2,14 +2,15 @@ package com.wasn.async;
 
 import android.os.AsyncTask;
 
-import com.wasn.ui.SummaryDetailsActivity;
 import com.wasn.application.MobileBankApplication;
+import com.wasn.db.BankzDbSource;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
 import com.wasn.pojos.Settings;
 import com.wasn.pojos.Summary;
+import com.wasn.ui.SummaryDetailsActivity;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
 
@@ -56,13 +57,14 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
         String printerAddress = PreferenceUtils.getPrinterAddress(application);
         String telephoneNo = "0775432015";
         String branchName = "Kirulapana";
-        Settings settings = new Settings(printerAddress, telephoneNo, branchName);
+        Settings settings = new Settings(branchName, telephoneNo, printerAddress);
 
         // send ate to printer
         try {
             PrintUtils.printSummary(summary, settings);
 
-            // TODO print summary means day end(delete all transaction)
+            // print summary means day end(delete all transaction)
+            new BankzDbSource(activity).deleteAllTransactions();
 
             return "1";
         } catch (IOException e) {

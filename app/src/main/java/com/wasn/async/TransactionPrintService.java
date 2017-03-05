@@ -64,9 +64,9 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
     public String print() {
         // printing attributes
         String printerAddress = PreferenceUtils.getPrinterAddress(context);
-        String telephoneNo = "Telephone";
         String branchName = "Branch";
-        Settings settings = new Settings(printerAddress, telephoneNo, branchName);
+        String telephoneNo = "Telephone";
+        Settings settings = new Settings(branchName, telephoneNo, printerAddress);
 
         // send data to printer
         try {
@@ -105,7 +105,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
         String printerAddress = PreferenceUtils.getPrinterAddress(context);
         String telephoneNo = "0775432015";
         String branchName = "Kirulapona";
-        Settings settings = new Settings(printerAddress, telephoneNo, branchName);
+        Settings settings = new Settings(branchName, telephoneNo, printerAddress);
 
         // send data to printer
         try {

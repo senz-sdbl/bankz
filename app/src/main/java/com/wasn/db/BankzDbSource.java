@@ -110,4 +110,9 @@ public class BankzDbSource {
         return null;
     }
 
+    public void deleteAllTransactions() {
+        SQLiteDatabase db = BankzDbHelper.getInstance(context).getWritableDatabase();
+        db.delete(BankzDbContract.Transaction.TABLE_NAME, null, null);
+    }
+
 }

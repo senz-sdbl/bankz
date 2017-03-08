@@ -82,11 +82,15 @@ public class ActivityUtils {
             throw new InvalidInputFieldsException();
         }
 
-        if (account.length()!=12) {
+        if (account.length() != 12) {
             throw new InvalidAccountException();
         }
 
         return true;
+    }
+
+    public static boolean isValidIdNo(String nic) {
+        return !(nic.isEmpty() || nic.length() < 9);
     }
 
     /**

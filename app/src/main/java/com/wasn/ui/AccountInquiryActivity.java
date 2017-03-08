@@ -167,11 +167,11 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
     private void onClickGet() {
         String nic = idEditText.getText().toString().trim();
 
-        if (!nic.isEmpty()) {
+        if (ActivityUtils.isValidIdNo(nic)) {
             ActivityUtils.showProgressDialog(AccountInquiryActivity.this, "Please wait...");
             doGet(nic);
         } else {
-            Toast.makeText(this, "Empty NIC No", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Invalid NIC No", Toast.LENGTH_LONG).show();
         }
     }
 

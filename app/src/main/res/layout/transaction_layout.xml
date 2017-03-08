@@ -191,6 +191,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
                     android:inputType="phone"
+                    android:maxLength="10"
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"

@@ -183,7 +183,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
             String confirmationMessage = "<font color=#636363>Are you sure you want to register with account </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font>";
             displayConfirmationMessageDialog(confirmationMessage);
         } catch (InvalidInputFieldsException e) {
-            Toast.makeText(this, "Invalid username", Toast.LENGTH_LONG).show();
+            displayInformationMessageDialog("Error", "Invalid Account No. Note that Account No should contains 12 digits");
             e.printStackTrace();
         }
     }

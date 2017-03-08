@@ -70,7 +70,7 @@ public class ActivityUtils {
      * @return valid or not
      */
     public static boolean isValidRegistrationFields(User user) throws InvalidInputFieldsException {
-        if (user.getUsername().isEmpty()) {
+        if (user.getUsername().isEmpty() || user.getUsername().length() != 12) {
             throw new InvalidInputFieldsException();
         }
 

@@ -212,10 +212,10 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
             String[] accs = msg.split("\\|");
             ArrayList<Account> accounts = new ArrayList<>();
             for (String acc : accs) {
-                accounts.add(new Account(acc, "", ""));
+                if (!acc.trim().isEmpty()) accounts.add(new Account(acc, "", ""));
             }
 
-            if (accs.length > 0) {
+            if (accounts.size() > 0) {
                 Intent intent = new Intent(this, AccountListActivity.class);
                 intent.putParcelableArrayListExtra("ACCOUNTS", accounts);
                 startActivity(intent);

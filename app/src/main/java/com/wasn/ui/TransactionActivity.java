@@ -293,7 +293,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             if (msg != null && msg.equalsIgnoreCase("PENDING")) {
                 // pending trans
                 // TODO create transaction with PENDING state
-                new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
+                //new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
             } else if (msg != null && msg.equalsIgnoreCase("DONE")) {
                 // DONE response received
                 ActivityUtils.cancelProgressDialog();
@@ -302,7 +302,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                 // save transaction in db
                 if (transaction != null) {
                     // TODO update transaction
-                    //new SenzorsDbSource(TransactionActivity.this).createTransaction(transaction);
+                    new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
                 }
 
                 // navigate

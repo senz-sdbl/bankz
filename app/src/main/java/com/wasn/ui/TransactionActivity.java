@@ -293,25 +293,20 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             if (msg != null && msg.equalsIgnoreCase("PENDING")) {
                 // pending trans
                 // TODO create transaction with PENDING state
-                //new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
+                // new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
             } else if (msg != null && msg.equalsIgnoreCase("DONE")) {
                 // DONE response received
                 ActivityUtils.cancelProgressDialog();
                 Toast.makeText(this, "Transaction successful", Toast.LENGTH_LONG).show();
 
                 // save transaction in db
-                if (transaction != null) {
-                    // TODO update transaction
-                    new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
-                }
+                // TODO update transaction
+                new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
 
-                // navigate
                 navigateTransactionDetails(transaction);
             } else {
                 ActivityUtils.cancelProgressDialog();
-
-                String informationMessage = "Failed to complete the transaction";
-                displayMessageDialog("PUT fail", informationMessage);
+                displayMessageDialog("Error", "Failed to complete the transaction");
             }
         }
     }

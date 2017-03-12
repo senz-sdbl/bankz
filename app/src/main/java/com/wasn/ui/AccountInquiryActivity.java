@@ -165,7 +165,8 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
     }
 
     private void onClickGet() {
-        String nic = idEditText.getText().toString().trim();
+        // append V to end of nic
+        String nic = idEditText.getText().toString().trim() + "V";
 
         if (ActivityUtils.isValidIdNo(nic)) {
             ActivityUtils.showProgressDialog(AccountInquiryActivity.this, "Please wait...");
@@ -222,7 +223,15 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
 
                 this.finish();
             } else {
-                displayMessageDialog("Error", "No accounts for given NIC");
+                displayMessageDialog("Information", "No accounts for given NIC");
+            }
+        } else if (senz.getAttributes().containsKey("status")) {
+            // status, may be error
+            ActivityUtils.cancelProgressDialog();
+
+            if (senz.getAttributes().get("status").equalsIgnoreCase("ERROR")) {
+                // something went wrong
+                displayMessageDialog("Error", "Failed to complete the request");
             }
         }
     }

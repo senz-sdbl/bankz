@@ -90,7 +90,7 @@ public class ActivityUtils {
     }
 
     public static boolean isValidIdNo(String nic) {
-        return !(nic.isEmpty() || nic.length() < 9);
+        return !(nic.isEmpty() || nic.length() != 10);
     }
 
     /**

@@ -83,8 +83,8 @@ public class HistoryListActivity extends Activity implements View.OnClickListene
         transactionListView.addFooterView(footerView);
 
         //set long press listener
-        transactionListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+        transactionListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 // get corresponding transaction and share in application
                 Transaction transaction = (Transaction) adapter.getItem(i - 1);
 
@@ -93,8 +93,6 @@ public class HistoryListActivity extends Activity implements View.OnClickListene
                 intent.putExtra("transaction", transaction);
                 intent.putExtra("ACTIVITY_NAME", HistoryListActivity.class.getName());
                 startActivity(intent);
-
-                return true;
             }
         });
 

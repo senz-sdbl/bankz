@@ -11,7 +11,7 @@ class BankzDbHelper extends SQLiteOpenHelper {
 
     private static BankzDbHelper senzorsDbHelper;
 
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "bankz.db";
     private static final String TEXT_TYPE = " TEXT";
     private static final String NUMBER_TYPE = " NUM";
@@ -19,7 +19,7 @@ class BankzDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TRANS =
             "CREATE TABLE IF NOT EXISTS " + BankzDbContract.Transaction.TABLE_NAME + " (" +
                     BankzDbContract.Transaction._ID + " " + " INTEGER PRIMARY KEY AUTOINCREMENT" + ", " +
-                    BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_ACCOUNT_NO + " " + NUMBER_TYPE + " NOT NULL" + ", " +
+                    BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_ACCOUNT_NO + " " + TEXT_TYPE + " NOT NULL" + ", " +
                     BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_NAME + " " + TEXT_TYPE + ", " +
                     BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_NIC + " " + TEXT_TYPE + ", " +
                     BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_MOBILE + " " + TEXT_TYPE + ", " +

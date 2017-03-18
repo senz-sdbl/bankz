@@ -28,12 +28,9 @@ public class BankzDbSource {
         ContentValues values = new ContentValues();
         values.put(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_NAME, transaction.getClientName());
         values.put(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_ACCOUNT_NO, transaction.getClientAccountNo());
-        values.put(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_NIC, transaction.getClientNic());
         values.put(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_MOBILE, transaction.getClientMobile());
         values.put(BankzDbContract.Transaction.COLUMN_NAME_AMOUNT, transaction.getTransactionAmount());
-        values.put(BankzDbContract.Transaction.COLUMN_NAME_BALANCE, transaction.getPreviousBalance());
         values.put(BankzDbContract.Transaction.COLUMN_NAME_TIME, transaction.getTransactionTime());
-        values.put(BankzDbContract.Transaction.COLUMN_NAME_TYPE, transaction.getTransactionType());
 
         // insert the new row, if fails throw an error
         db.insertOrThrow(BankzDbContract.Transaction.TABLE_NAME, null, values);
@@ -56,34 +53,28 @@ public class BankzDbSource {
         int id;
         String clientName;
         String clientAccountNo;
-        String clientNic;
         String clientMobile;
-        String balance;
         int transactionAmount;
         String transactionTime;
-        String transactionType;
 
         // extract attributes
         while (cursor.moveToNext()) {
             id = cursor.getInt(cursor.getColumnIndex(BankzDbContract.Transaction._ID));
             clientName = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_NAME));
             clientAccountNo = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_ACCOUNT_NO));
-            clientNic = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_NIC));
             clientMobile = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_MOBILE));
             transactionAmount = cursor.getInt(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_AMOUNT));
-            balance = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_BALANCE));
             transactionTime = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_TIME));
-            transactionType = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_TYPE));
 
             Transaction transaction = new Transaction(id,
                     clientName,
                     clientAccountNo,
-                    clientNic,
+                    "",
                     clientMobile,
                     transactionAmount,
-                    balance,
+                    "",
                     transactionTime,
-                    transactionType);
+                    "");
             transactions.add(transaction);
         }
 

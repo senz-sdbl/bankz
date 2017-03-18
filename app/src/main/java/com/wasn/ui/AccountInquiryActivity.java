@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.score.senz.ISenzService;
 import com.score.senzc.enums.SenzTypeEnum;
@@ -28,6 +27,7 @@ import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
 import com.wasn.enums.IntentType;
+import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.pojos.Account;
 import com.wasn.utils.ActivityUtils;
 
@@ -166,13 +166,17 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
 
     private void onClickGet() {
         // append V to end of nic
-        String nic = idEditText.getText().toString().trim() + "V";
+        String nic = idEditText.getText().toString().trim();
 
-        if (ActivityUtils.isValidIdNo(nic)) {
+        try {
+            String formattedNic = ActivityUtils.formatNic(nic);
+
             ActivityUtils.showProgressDialog(AccountInquiryActivity.this, "Please wait...");
-            doGet(nic);
-        } else {
-            Toast.makeText(this, "Invalid NIC No", Toast.LENGTH_LONG).show();
+            doGet(formattedNic);
+        } catch (InvalidInputFieldsException e) {
+            e.printStackTrace();
+
+            displayMessageDialog("ERROR", "NIC no should contains 9 to 12 digits");
         }
     }
 
@@ -231,7 +235,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
 
             if (senz.getAttributes().get("status").equalsIgnoreCase("ERROR")) {
                 // something went wrong
-                displayMessageDialog("Error", "Failed to complete the request");
+                displayMessageDialog("ERROR", "Failed to complete the request");
             }
         }
     }

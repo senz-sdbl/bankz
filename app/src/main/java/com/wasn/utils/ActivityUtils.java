@@ -94,4 +94,18 @@ public class ActivityUtils {
         return !(nic.isEmpty() || nic.length() != 10);
     }
 
+    public static String formatNic(String nic) throws InvalidInputFieldsException {
+        if (!nic.isEmpty()) {
+            if (nic.length() == 9) {
+                return nic + "V";
+            } else if (nic.length() == 12) {
+                return nic;
+            } else {
+                throw new InvalidInputFieldsException();
+            }
+        } else {
+            throw new InvalidInputFieldsException();
+        }
+    }
+
 }

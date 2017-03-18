@@ -1,59 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
+    android:layout_height="80dp"
     android:background="@drawable/my_sensor_background"
-    android:layout_height="80dp">
+    android:orientation="horizontal">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
+
         <RelativeLayout
+            android:id="@+id/transaction_icon"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_margin="10dp"
-            android:id="@+id/transaction_icon"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/circle_shape_gray"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/circle_shape_gray">
+
             <TextView
                 android:id="@+id/icon_text"
-                android:layout_centerInParent="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
+                android:layout_centerInParent="true"
+                android:text="#"
                 android:textColor="#ffffff"
-                android:text="#"/>
+                android:textSize="24sp" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
+            android:layout_height="fill_parent"
             android:layout_toRightOf="@+id/transaction_icon"
-            android:layout_height="fill_parent">
+            android:gravity="center_vertical">
+
             <TextView
                 android:id="@+id/account_no"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:gravity="center_vertical"
                 android:layout_marginLeft="5dp"
-                android:textSize="20sp"
-                android:text="Eranga herath"
-                android:textColor="#00a1e4">
-            </TextView>
+                android:gravity="center_vertical"
+                android:text="003488832323"
+                android:textColor="#00a1e4"
+                android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/amount"
+                android:id="@+id/transaction_amount"
                 android:layout_width="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_below="@+id/account_no"
                 android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:text="300.00"
+                android:textColor="#00a1e4"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/transaction_time"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@+id/account_no"
                 android:layout_marginLeft="5dp"
-                android:textSize="15dp"
-                android:text="0775434015"
-                android:textColor="#4a4a4a">
-            </TextView>
+                android:gravity="center_vertical"
+                android:text="2017/02/25 04:35"
+                android:textColor="#4a4a4a"
+                android:textSize="15sp" />
 
         </RelativeLayout>
 
@@ -63,8 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
-            android:background="#DADADC" >
-        </View>
+            android:background="#DADADC" />
     </RelativeLayout>
 
 </LinearLayout>

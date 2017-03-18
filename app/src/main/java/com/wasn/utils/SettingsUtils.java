@@ -31,7 +31,7 @@ public class SettingsUtils {
      * @param telephoneNo telephone no
      */
     public static void validateTelephoneNo(String telephoneNo) throws InvalidTelephoneNoException {
-        if (telephoneNo.equals("") || telephoneNo.length() < 9) {
+        if (telephoneNo.isEmpty() || telephoneNo.length() < 9 || telephoneNo.length() > 10) {
             // empty telephone
             throw new InvalidTelephoneNoException();
         }

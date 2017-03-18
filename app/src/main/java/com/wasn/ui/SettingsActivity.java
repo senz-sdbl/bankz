@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wasn.R;
 import com.wasn.async.TestPrintService;
@@ -121,14 +120,14 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
 
             showPasswordInputDialog();
         } catch (EmptyPrinterAddressException e) {
-            Toast.makeText(SettingsActivity.this, "Empty printer address", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+            displayMessageDialog("ERROR", "Invalid printer address");
         } catch (EmptyBranchNameException e) {
-            Toast.makeText(SettingsActivity.this, "Empty branch name", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+            displayMessageDialog("ERROR", "Invalid branch name");
         } catch (InvalidTelephoneNoException e) {
-            Toast.makeText(SettingsActivity.this, "Invalid telephone no", Toast.LENGTH_LONG).show();
             e.printStackTrace();
+            displayMessageDialog("ERROR", "Invalid telephone no");
         }
     }
 

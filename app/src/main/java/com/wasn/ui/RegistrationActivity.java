@@ -33,6 +33,7 @@ import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.RSAUtils;
+import com.wasn.utils.TransactionUtils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -176,14 +177,13 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
 
         // crate user
         String username = editTextUsername.getText().toString().trim();
-        registeringUser = new User("0", username);
-
         try {
-            ActivityUtils.isValidRegistrationFields(registeringUser);
+            ActivityUtils.isValidUsername(username);
+            registeringUser = new User("0", TransactionUtils.getRegUsername(username));
             String confirmationMessage = "<font color=#636363>Are you sure you want to register with account </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font>";
             displayConfirmationMessageDialog(confirmationMessage);
         } catch (InvalidInputFieldsException e) {
-            displayInformationMessageDialog("Error", "Invalid Account No. Note that Account No should contains 12 digits");
+            displayInformationMessageDialog("Error", "Invalid Account no. Account no should contains 6 - 12 digits");
             e.printStackTrace();
         }
     }

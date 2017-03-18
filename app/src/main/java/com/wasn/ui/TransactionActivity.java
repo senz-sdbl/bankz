@@ -31,7 +31,7 @@ import com.wasn.application.IntentProvider;
 import com.wasn.db.BankzDbSource;
 import com.wasn.enums.IntentType;
 import com.wasn.exceptions.InvalidAccountException;
-import com.wasn.exceptions.InvalidInputFieldsException;
+import com.wasn.exceptions.InvalidTelephoneNoException;
 import com.wasn.pojos.Account;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
@@ -221,11 +221,19 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         try {
             String account = accountEditText.getText().toString().trim();
             String mobile = mobileEditText.getText().toString().trim();
+
+            ActivityUtils.isValidTransactionFields(account, mobile);
             int amount = Integer.parseInt(amountEditText.getText().toString().trim());
-            ActivityUtils.isValidTransactionFields(account, amount);
 
             // initialize transaction
-            transaction = new Transaction(1, "", account, "", mobile, amount, "", TransactionUtils.getCurrentTime(), "");
+            transaction = new Transaction(1, "",
+                    TransactionUtils.getTransactionAccount(account),
+                    "",
+                    TransactionUtils.getTransactionMobile(mobile),
+                    amount,
+                    "",
+                    TransactionUtils.getCurrentTime(),
+                    "");
 
             if (NetworkUtil.isAvailableNetwork(this)) {
                 String informationMessage = "<font size=10 color=#636363>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + transaction.getTransactionAmount() + "</b>" + "</font> ";
@@ -233,24 +241,28 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             } else {
                 displayMessageDialog("ERROR", "No network connection");
             }
-        } catch (InvalidInputFieldsException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
             e.printStackTrace();
 
-            displayMessageDialog("ERROR", "Invalid account no/amount");
+            displayMessageDialog("ERROR", "Invalid amount");
         } catch (InvalidAccountException e) {
             e.printStackTrace();
 
-            displayMessageDialog("ERROR", "Account no should be 12 character length");
+            displayMessageDialog("ERROR", "Account no should be 6-12 character length");
+        } catch (InvalidTelephoneNoException e) {
+            e.printStackTrace();
+
+            displayMessageDialog("ERROR", "Invalid mobile no");
         }
     }
 
     private void doPut() {
         // create put senz
         HashMap<String, String> senzAttributes = new HashMap<>();
-        senzAttributes.put("acc", accountEditText.getText().toString().trim());
-        senzAttributes.put("amnt", amountEditText.getText().toString().trim());
-        if (!mobileEditText.getText().toString().trim().isEmpty())
-            senzAttributes.put("mob", mobileEditText.getText().toString().trim());
+        senzAttributes.put("acc", transaction.getClientAccountNo());
+        senzAttributes.put("amnt", Integer.toString(transaction.getTransactionAmount()));
+        if (!transaction.getClientMobile().isEmpty())
+            senzAttributes.put("mob", transaction.getClientMobile());
 
         Long timestamp = System.currentTimeMillis() / 1000;
         senzAttributes.put("time", timestamp.toString());

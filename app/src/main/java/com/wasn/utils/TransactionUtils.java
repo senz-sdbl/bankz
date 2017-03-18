@@ -77,6 +77,37 @@ public class TransactionUtils {
     }
 
     /**
+     * Format account with 12 digits
+     *
+     * @return
+     */
+    public static String getTransactionAccount(String account) {
+        return "000000000000".substring(account.length()) + account;
+    }
+
+    /**
+     * Format mobile with 10 digits
+     *
+     * @return
+     */
+    public static String getTransactionMobile(String mobile) {
+        if (!mobile.isEmpty())
+            return "0000000000".substring(mobile.length()) + mobile;
+
+        return "";
+    }
+
+    /**
+     * Format with 12 digits
+     *
+     * @param username
+     * @return
+     */
+    public static String getRegUsername(String username) {
+        return "000000000000".substring(username.length()) + username;
+    }
+
+    /**
      * Generate receipt id according to receipt no and branch id
      *
      * @param branchId  users branch id

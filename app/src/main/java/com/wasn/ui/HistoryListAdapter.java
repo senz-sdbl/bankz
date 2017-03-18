@@ -86,11 +86,13 @@ public class HistoryListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.iconText = (TextView) view.findViewById(R.id.icon_text);
             holder.account = (TextView) view.findViewById(R.id.account_no);
-            holder.amount = (TextView) view.findViewById(R.id.amount);
+            holder.amount = (TextView) view.findViewById(R.id.transaction_amount);
+            holder.time = (TextView) view.findViewById(R.id.transaction_time);
             holder.iconText.setTypeface(typeface, Typeface.BOLD);
             holder.iconText.setTextColor(context.getResources().getColor(R.color.white));
             holder.account.setTypeface(typeface, Typeface.BOLD);
-            holder.amount.setTypeface(typeface, Typeface.NORMAL);
+            holder.amount.setTypeface(typeface, Typeface.BOLD);
+            holder.time.setTypeface(typeface, Typeface.NORMAL);
 
             view.setTag(holder);
         } else {
@@ -102,6 +104,7 @@ public class HistoryListAdapter extends BaseAdapter {
         holder.iconText.setText("$");
         holder.account.setText(transaction.getClientAccountNo());
         holder.amount.setText(transaction.getTransactionAmount()+"");
+        holder.time.setText(transaction.getTransactionTime());
         view.setBackgroundResource(R.drawable.more_layout_selector_normal);
 
         return view;
@@ -114,6 +117,7 @@ public class HistoryListAdapter extends BaseAdapter {
         TextView iconText;
         TextView account;
         TextView amount;
+        TextView time;
     }
 
 }

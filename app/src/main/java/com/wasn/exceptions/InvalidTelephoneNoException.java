@@ -10,6 +10,6 @@ public class InvalidTelephoneNoException extends Exception {
 
     @Override
     public String toString() {
-        return "Empty telephone no";
+        return "Invalid telephone no";
     }
 }

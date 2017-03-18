@@ -5,9 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 
-import com.score.senzc.pojos.User;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
+import com.wasn.exceptions.InvalidTelephoneNoException;
 
 /**
  * Utility class to handle activity related common functions
@@ -66,24 +66,25 @@ public class ActivityUtils {
      * 3. non empty passwords
      * 4. two passwords should be match
      *
-     * @param user User object
+     * @param username object
      * @return valid or not
      */
-    public static boolean isValidRegistrationFields(User user) throws InvalidInputFieldsException {
-        if (user.getUsername().isEmpty() || user.getUsername().length() != 12) {
+    public static boolean isValidUsername(String username) throws InvalidInputFieldsException {
+        if (username.isEmpty() || (username.length() < 6 || username.length() > 12)) {
             throw new InvalidInputFieldsException();
         }
 
         return true;
     }
 
-    public static boolean isValidTransactionFields(String account, int amount) throws InvalidInputFieldsException, InvalidAccountException {
-        if (account == null || account.isEmpty() || amount == 0) {
-            throw new InvalidInputFieldsException();
+    public static boolean isValidTransactionFields(String account, String mobile) throws InvalidAccountException, InvalidTelephoneNoException {
+        if (account.isEmpty() || account.length() < 6 || account.length() > 12) {
+            throw new InvalidAccountException();
         }
 
-        if (account.length() != 12) {
-            throw new InvalidAccountException();
+        if (!mobile.isEmpty()) {
+            if (mobile.length() < 9 || mobile.length() > 10)
+                throw new InvalidTelephoneNoException();
         }
 
         return true;
@@ -91,16 +92,6 @@ public class ActivityUtils {
 
     public static boolean isValidIdNo(String nic) {
         return !(nic.isEmpty() || nic.length() != 10);
-    }
-
-    /**
-     * validate input fields of login form
-     *
-     * @param user login user
-     * @return valid of not
-     */
-    public static boolean isValidLoginFields(User user) {
-        return !(user.getUsername().isEmpty());
     }
 
 }

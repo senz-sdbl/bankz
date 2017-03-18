@@ -103,7 +103,7 @@ public class HistoryListAdapter extends BaseAdapter {
         // bind text with view holder content view for efficient use
         holder.iconText.setText("$");
         holder.account.setText(transaction.getClientAccountNo());
-        holder.amount.setText(transaction.getTransactionAmount()+"");
+        holder.amount.setText(transaction.getTransactionAmount()+". 00");
         holder.time.setText(transaction.getTransactionTime());
         view.setBackgroundResource(R.drawable.more_layout_selector_normal);
 

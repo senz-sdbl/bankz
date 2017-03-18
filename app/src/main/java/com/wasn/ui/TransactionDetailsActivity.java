@@ -90,7 +90,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             //attributesList.add(new Attribute("Client NIC", transaction.getClientNic()));
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
             attributesList.add(new Attribute("Mobile", transaction.getClientMobile()));
-            attributesList.add(new Attribute("Amount", Integer.toString(transaction.getTransactionAmount())));
+            attributesList.add(new Attribute("Amount", Integer.toString(transaction.getTransactionAmount())+". 00"));
             attributesList.add(new Attribute("Time", transaction.getTransactionTime()));
             //attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
 

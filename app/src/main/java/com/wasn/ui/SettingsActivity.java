@@ -22,7 +22,7 @@ import com.wasn.exceptions.EmptyBranchNameException;
 import com.wasn.exceptions.EmptyPrinterAddressException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
 import com.wasn.exceptions.NoUserException;
-import com.wasn.pojos.Settings;
+import com.wasn.pojos.Setting;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
@@ -138,7 +138,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         String branch = branchEditText.getText().toString().trim();
         String telephone = telephoneEditText.getText().toString().trim();
         String printerAddress = printerAddressEditText.getText().toString().trim();
-        Settings settings = new Settings("", branch, telephone, printerAddress);
+        Setting settings = new Setting("", branch, telephone, printerAddress);
         try {
             if (PrintUtils.isEnableBluetooth()) {
                 ActivityUtils.showProgressDialog(this, "Printing...");

@@ -7,7 +7,7 @@ import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
-import com.wasn.pojos.Settings;
+import com.wasn.pojos.Setting;
 import com.wasn.pojos.Summary;
 import com.wasn.pojos.Transaction;
 
@@ -95,7 +95,7 @@ public class PrintUtils {
      * @throws CannotConnectToPrinterException
      * @throws CannotPrintException
      */
-    public static void printReceipt(Transaction transaction, Settings settings) throws IOException, BluetoothNotEnableException, BluetoothNotAvailableException, CannotConnectToPrinterException, CannotPrintException, IllegalArgumentException {
+    public static void printReceipt(Transaction transaction, Setting settings) throws IOException, BluetoothNotEnableException, BluetoothNotAvailableException, CannotConnectToPrinterException, CannotPrintException, IllegalArgumentException {
         OutputStream outputStream = connectToPrinter(settings.getPrinterAddress());
 
         // receipt header
@@ -231,7 +231,7 @@ public class PrintUtils {
      * @throws CannotConnectToPrinterException
      * @throws CannotPrintException
      */
-    public static void rePrintReceipt(Transaction transaction, Settings settings) throws IOException, BluetoothNotEnableException, BluetoothNotAvailableException, CannotConnectToPrinterException, CannotPrintException, IllegalArgumentException {
+    public static void rePrintReceipt(Transaction transaction, Setting settings) throws IOException, BluetoothNotEnableException, BluetoothNotAvailableException, CannotConnectToPrinterException, CannotPrintException, IllegalArgumentException {
         OutputStream outputStream = connectToPrinter(settings.getPrinterAddress());
 
         // receipt header
@@ -346,7 +346,7 @@ public class PrintUtils {
      * @throws BluetoothNotAvailableException
      * @throws CannotPrintException
      */
-    public static void printSummary(Summary summary, Settings settings) throws BluetoothNotEnableException, IOException, CannotConnectToPrinterException, BluetoothNotAvailableException, CannotPrintException, IllegalArgumentException {
+    public static void printSummary(Summary summary, Setting settings) throws BluetoothNotEnableException, IOException, CannotConnectToPrinterException, BluetoothNotAvailableException, CannotPrintException, IllegalArgumentException {
         OutputStream outputStream = connectToPrinter(settings.getPrinterAddress());
 
         // receipt header
@@ -452,7 +452,7 @@ public class PrintUtils {
      * @throws BluetoothNotAvailableException
      * @throws CannotPrintException
      */
-    public static void printTestPrint(Settings settings) throws BluetoothNotEnableException, IOException, CannotConnectToPrinterException, BluetoothNotAvailableException, CannotPrintException, IllegalArgumentException {
+    public static void printTestPrint(Setting settings) throws BluetoothNotEnableException, IOException, CannotConnectToPrinterException, BluetoothNotAvailableException, CannotPrintException, IllegalArgumentException {
         OutputStream outputStream = connectToPrinter(settings.getPrinterAddress());
 
         // receipt header

@@ -3,13 +3,13 @@ package com.wasn.pojos;
 /**
  * POJO class to hold settings attributes
  */
-public class Settings {
+public class Setting {
     String agent;
     String branch;
     String telephone;
     String printerAddress;
 
-    public Settings(String agent, String branch, String telephone, String printerAddress) {
+    public Setting(String agent, String branch, String telephone, String printerAddress) {
         this.agent = agent;
         this.branch = branch;
         this.telephone = telephone;

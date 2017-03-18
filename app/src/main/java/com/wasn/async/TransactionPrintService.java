@@ -9,7 +9,7 @@ import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
 import com.wasn.listeners.PrintListener;
-import com.wasn.pojos.Settings;
+import com.wasn.pojos.Setting;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
@@ -66,7 +66,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
         String printerAddress = PreferenceUtils.getPrinterAddress(context);
         String branchName = PreferenceUtils.getBranch(context);
         String telephoneNo = PreferenceUtils.getPhone(context);
-        Settings settings = new Settings("", branchName, telephoneNo, printerAddress);
+        Setting settings = new Setting("", branchName, telephoneNo, printerAddress);
 
         // send data to printer
         try {
@@ -105,7 +105,7 @@ public class TransactionPrintService extends AsyncTask<String, String, String> {
         String printerAddress = PreferenceUtils.getPrinterAddress(context);
         String branchName = PreferenceUtils.getBranch(context);
         String telephoneNo = PreferenceUtils.getPhone(context);
-        Settings settings = new Settings("", branchName, telephoneNo, printerAddress);
+        Setting settings = new Setting("", branchName, telephoneNo, printerAddress);
 
         // send data to printer
         try {

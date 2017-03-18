@@ -8,7 +8,7 @@ import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
-import com.wasn.pojos.Settings;
+import com.wasn.pojos.Setting;
 import com.wasn.pojos.Summary;
 import com.wasn.ui.SummaryDetailsActivity;
 import com.wasn.utils.PreferenceUtils;
@@ -57,7 +57,7 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
         String printerAddress = PreferenceUtils.getPrinterAddress(application);
         String branchName = PreferenceUtils.getBranch(application);
         String telephoneNo = PreferenceUtils.getPhone(application);
-        Settings settings = new Settings("", branchName, telephoneNo, printerAddress);
+        Setting settings = new Setting("", branchName, telephoneNo, printerAddress);
 
         // send ate to printer
         try {

@@ -6,7 +6,7 @@ import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.CannotConnectToPrinterException;
 import com.wasn.exceptions.CannotPrintException;
-import com.wasn.pojos.Settings;
+import com.wasn.pojos.Setting;
 import com.wasn.ui.SettingsActivity;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
@@ -21,14 +21,14 @@ import java.io.IOException;
 public class TestPrintService extends AsyncTask<String, String, String> {
 
     SettingsActivity activity;
-    Settings settings;
+    Setting settings;
 
     /**
      * Initialize cass members
      *
      * @param activity
      */
-    public TestPrintService(SettingsActivity activity, Settings settings) {
+    public TestPrintService(SettingsActivity activity, Setting settings) {
         this.activity = activity;
         this.settings = settings;
     }
@@ -47,7 +47,7 @@ public class TestPrintService extends AsyncTask<String, String, String> {
      * @param
      * @return
      */
-    public String print(Settings settings) {
+    public String print(Setting settings) {
         // send data to printer
         try {
             PrintUtils.printTestPrint(settings);

@@ -25,6 +25,7 @@ import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Transaction;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PrintUtils;
+import com.wasn.utils.TransactionUtils;
 
 import java.util.ArrayList;
 
@@ -88,7 +89,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             attributesList = new ArrayList<>();
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
             attributesList.add(new Attribute("Mobile", transaction.getClientMobile()));
-            attributesList.add(new Attribute("Amount", Integer.toString(transaction.getTransactionAmount())+". 00"));
+            attributesList.add(new Attribute("Amount", TransactionUtils.formatAmount(transaction.getTransactionAmount())));
             attributesList.add(new Attribute("Time", transaction.getTransactionTime()));
 
             // add header and footer

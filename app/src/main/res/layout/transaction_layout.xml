@@ -53,6 +53,7 @@
         <RelativeLayout
             android:id="@+id/transaction_layout_search"
             android:layout_width="53dp"
+            android:layout_marginRight="7dp"
             android:layout_height="fill_parent"
             android:layout_toLeftOf="@+id/transaction_layout_done"
             android:background="@drawable/button_selector"

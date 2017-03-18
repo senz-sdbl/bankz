@@ -6,32 +6,40 @@ package com.wasn.pojos;
  * @author erangaeb@gmail.com (eranga bandara)
  */
 public class Summary {
-    private String branchId;
-    private String transactionCount;
-    private String totalTransactionAmount;
+    private String agent;
+    private int count;
+    private int total;
     private String time;
 
-    public Summary(String branchId, String transactionCount, String totalTransactionAmount, String time) {
-        this.branchId = branchId;
-        this.transactionCount = transactionCount;
-        this.totalTransactionAmount = totalTransactionAmount;
+    public Summary(String agent, int count, int total, String time) {
+        this.agent = agent;
+        this.count = count;
+        this.total = total;
         this.time = time;
     }
 
-    public String getBranchId() {
-        return branchId;
+    public String getAgent() {
+        return agent;
     }
 
-    public void setBranchId(String branchId) {
-        this.branchId = branchId;
+    public void setAgent(String agent) {
+        this.agent = agent;
     }
 
-    public String getTransactionCount() {
-        return transactionCount;
+    public int getCount() {
+        return count;
     }
 
-    public void setTransactionCount(String transactionCount) {
-        this.transactionCount = transactionCount;
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
     }
 
     public String getTime() {
@@ -40,13 +48,5 @@ public class Summary {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getTotalTransactionAmount() {
-        return totalTransactionAmount;
-    }
-
-    public void setTotalTransactionAmount(String totalTransactionAmount) {
-        this.totalTransactionAmount = totalTransactionAmount;
     }
 }

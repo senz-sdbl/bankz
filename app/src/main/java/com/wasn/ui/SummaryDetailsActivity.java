@@ -2,7 +2,6 @@ package com.wasn.ui;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -88,9 +87,9 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         if (summary != null) {
             attributesList = new ArrayList<>();
             attributesList.add(new Attribute("Date", summary.getTime()));
-            attributesList.add(new Attribute("Agent", summary.getBranchId()));
-            attributesList.add(new Attribute("Transaction Count", summary.getTransactionCount()));
-            attributesList.add(new Attribute("Total Amount", summary.getTotalTransactionAmount() + ". 00"));
+            attributesList.add(new Attribute("Agent", summary.getAgent()));
+            attributesList.add(new Attribute("Transaction Count", Integer.toString(summary.getCount())));
+            attributesList.add(new Attribute("Total Amount", TransactionUtils.formatAmount(summary.getTotal())));
 
             // add header and footer
             View headerView = View.inflate(this, R.layout.header, null);

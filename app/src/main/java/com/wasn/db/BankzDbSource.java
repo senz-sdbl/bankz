@@ -95,7 +95,7 @@ public class BankzDbSource {
             int count = cursor.getInt(cursor.getColumnIndex("tcount"));
             int sum = cursor.getInt(cursor.getColumnIndex("tsum"));
 
-            return new Summary("", Integer.toString(count), Integer.toString(sum), "");
+            return new Summary("", count, sum, "");
         }
 
         return null;

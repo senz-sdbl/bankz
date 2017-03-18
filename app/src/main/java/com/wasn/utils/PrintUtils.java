@@ -395,8 +395,8 @@ public class PrintUtils {
 
         // transaction details that print in receipt
         //String branch = "      Branch Id          : "+summary.getBranchId()+"\r\n";
-        String depositCount  = "      Deposit count      : "+summary.getTransactionCount()+"\r\n";
-        String depositAmount = "      Deposit amount     : "+summary.getTotalTransactionAmount()+ ".00" +"\r\n";
+        String depositCount  = "      Deposit count      : "+Integer.toString(summary.getCount())+"\r\n";
+        String depositAmount = "      Deposit amount     : "+TransactionUtils.formatAmount(summary.getTotal()) +"\r\n";
         String date          = "      Date               : "+summary.getTime()+"\r\n\r\n\r\n";
 
         String sign          = "             ....................             \r\n";

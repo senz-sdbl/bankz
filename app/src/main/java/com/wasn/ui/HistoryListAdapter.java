@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wasn.R;
 import com.wasn.pojos.Transaction;
+import com.wasn.utils.TransactionUtils;
 
 import java.util.ArrayList;
 
@@ -90,8 +91,8 @@ public class HistoryListAdapter extends BaseAdapter {
             holder.time = (TextView) view.findViewById(R.id.transaction_time);
             holder.iconText.setTypeface(typeface, Typeface.BOLD);
             holder.iconText.setTextColor(context.getResources().getColor(R.color.white));
-            holder.account.setTypeface(typeface, Typeface.BOLD);
-            holder.amount.setTypeface(typeface, Typeface.BOLD);
+            holder.account.setTypeface(typeface, Typeface.NORMAL);
+            holder.amount.setTypeface(typeface, Typeface.NORMAL);
             holder.time.setTypeface(typeface, Typeface.NORMAL);
 
             view.setTag(holder);
@@ -103,7 +104,7 @@ public class HistoryListAdapter extends BaseAdapter {
         // bind text with view holder content view for efficient use
         holder.iconText.setText("$");
         holder.account.setText(transaction.getClientAccountNo());
-        holder.amount.setText(transaction.getTransactionAmount()+". 00");
+        holder.amount.setText(TransactionUtils.formatAmount(transaction.getTransactionAmount()));
         holder.time.setText(transaction.getTransactionTime());
         view.setBackgroundResource(R.drawable.more_layout_selector_normal);
 
@@ -113,7 +114,7 @@ public class HistoryListAdapter extends BaseAdapter {
     /**
      * Keep reference to children view to avoid unnecessary calls
      */
-    static class ViewHolder {
+    private static class ViewHolder {
         TextView iconText;
         TextView account;
         TextView amount;

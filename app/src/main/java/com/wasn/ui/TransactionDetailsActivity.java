@@ -86,13 +86,10 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         // populate list only have transaction
         if (transaction != null) {
             attributesList = new ArrayList<>();
-            //attributesList.add(new Attribute("Client Name", transaction.getClientName()));
-            //attributesList.add(new Attribute("Client NIC", transaction.getClientNic()));
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
             attributesList.add(new Attribute("Mobile", transaction.getClientMobile()));
             attributesList.add(new Attribute("Amount", Integer.toString(transaction.getTransactionAmount())+". 00"));
             attributesList.add(new Attribute("Time", transaction.getTransactionTime()));
-            //attributesList.add(new Attribute("Transaction Type", transaction.getTransactionType()));
 
             // add header and footer
             View headerView = View.inflate(this, R.layout.header, null);

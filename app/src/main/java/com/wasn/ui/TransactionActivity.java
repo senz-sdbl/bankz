@@ -248,7 +248,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         } catch (InvalidAccountException e) {
             e.printStackTrace();
 
-            displayMessageDialog("ERROR", "Account no should be 6-12 character length");
+            displayMessageDialog("ERROR", "Account no should be 5 to 12 character length");
         } catch (InvalidTelephoneNoException e) {
             e.printStackTrace();
 

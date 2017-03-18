@@ -70,7 +70,7 @@ public class ActivityUtils {
      * @return valid or not
      */
     public static boolean isValidUsername(String username) throws InvalidInputFieldsException {
-        if (username.isEmpty() || (username.length() < 6 || username.length() > 12)) {
+        if (username.isEmpty() || (username.length() < 5 || username.length() > 12)) {
             throw new InvalidInputFieldsException();
         }
 
@@ -78,7 +78,7 @@ public class ActivityUtils {
     }
 
     public static boolean isValidTransactionFields(String account, String mobile) throws InvalidAccountException, InvalidTelephoneNoException {
-        if (account.isEmpty() || account.length() < 6 || account.length() > 12) {
+        if (account.isEmpty() || account.length() < 5 || account.length() > 12) {
             throw new InvalidAccountException();
         }
 

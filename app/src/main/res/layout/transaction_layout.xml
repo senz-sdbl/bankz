@@ -162,7 +162,7 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
                     android:inputType="number"
-                    android:maxLength="6"
+                    android:maxLength="7"
                     android:padding="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"

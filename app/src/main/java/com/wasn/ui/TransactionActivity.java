@@ -226,7 +226,8 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             int amount = Integer.parseInt(amountEditText.getText().toString().trim());
 
             // initialize transaction
-            transaction = new Transaction(1, "",
+            transaction = new Transaction(1,
+                    (getIntent().hasExtra("ACCOUNT") ? ((Account) getIntent().getExtras().getParcelable("ACCOUNT")).getName() : ""),
                     TransactionUtils.getTransactionAccount(account),
                     "",
                     TransactionUtils.getTransactionMobile(mobile),

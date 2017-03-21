@@ -214,10 +214,13 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
 
             // acc comes with | separated
             String msg = senz.getAttributes().get("acc");
-            String[] accs = msg.split("\\|");
+            String[] ans = msg.split(",");
             ArrayList<Account> accounts = new ArrayList<>();
-            for (String acc : accs) {
-                if (!acc.trim().isEmpty()) accounts.add(new Account(acc, "", ""));
+            for (String an : ans) {
+                if (!an.trim().isEmpty()) {
+                    String[] t = an.trim().split("\\|");
+                    accounts.add(new Account(t[0].trim().replaceAll("_", " "), t[1].trim().replaceAll("_", " "), ""));
+                }
             }
 
             if (accounts.size() > 0) {

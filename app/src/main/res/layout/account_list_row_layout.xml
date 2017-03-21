@@ -1,75 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:orientation="vertical">
+    android:layout_height="80dp"
+    android:background="@drawable/my_sensor_background"
+    android:orientation="horizontal">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="fill_parent">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <RelativeLayout
+            android:id="@+id/account_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/circle_shape_gray">
+
+            <TextView
+                android:id="@+id/icon_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="#"
+                android:textColor="#ffffff"
+                android:textSize="24sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginRight="15dp"
-                android:id="@+id/account_icon"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/circle_shape_gray"
-                android:layout_centerVertical="true">
-                <TextView
-                    android:id="@+id/icon_text"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="24sp"
-                    android:textColor="#ffffff"
-                    android:text="%"/>
-            </RelativeLayout>
+            android:layout_toRightOf="@+id/account_icon"
+            android:gravity="center_vertical">
 
             <TextView
                 android:id="@+id/account_no"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:text="452324442"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:text="003488832323"
+                android:textColor="#00a1e4"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/transaction_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:gravity="center_vertical"
+                android:text="300.00"
+                android:visibility="gone"
                 android:textColor="#00a1e4"
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/child_detail_list_row_attribute_value"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_height="30dp"
+                android:layout_below="@+id/account_no"
+                android:layout_marginLeft="5dp"
                 android:gravity="center_vertical"
-                android:text="eranga Herath"
-                android:textColor="#00a1e4"
-                android:textSize="20sp"
-                android:visibility="gone" />
-        </LinearLayout>
+                android:text="2017/02/25 04:35"
+                android:textColor="#4a4a4a"
+                android:textSize="15sp" />
 
-    </LinearLayout>
+        </RelativeLayout>
 
-    <!-- divider -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:background="#DADADC" />
+
+        <!-- divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="#DADADC" />
+    </RelativeLayout>
 
 </LinearLayout>

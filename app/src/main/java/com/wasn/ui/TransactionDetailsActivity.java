@@ -88,7 +88,8 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         if (transaction != null) {
             attributesList = new ArrayList<>();
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
-            attributesList.add(new Attribute("Name", transaction.getClientName()));
+            if (!transaction.getClientName().isEmpty())
+                attributesList.add(new Attribute("Name", transaction.getClientName()));
             attributesList.add(new Attribute("Mobile", transaction.getClientMobile()));
             attributesList.add(new Attribute("Amount", TransactionUtils.formatAmount(transaction.getTransactionAmount())));
             attributesList.add(new Attribute("Time", transaction.getTransactionTime()));

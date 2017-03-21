@@ -170,7 +170,8 @@ public class PrintUtils {
             outputStream.write(telephoneNo.getBytes());
             outputStream.write(receiptType.getBytes());
             outputStream.write(accNo.getBytes());
-            outputStream.write(name.getBytes());
+            if (!transaction.getClientName().isEmpty())
+                outputStream.write(name.getBytes());
             outputStream.write(mobNo.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
@@ -192,7 +193,8 @@ public class PrintUtils {
             outputStream.write(telephoneNo.getBytes());
             outputStream.write(receiptType.getBytes());
             outputStream.write(accNo.getBytes());
-            outputStream.write(name.getBytes());
+            if (!transaction.getClientName().isEmpty())
+                outputStream.write(name.getBytes());
             outputStream.write(mobNo.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
@@ -303,7 +305,8 @@ public class PrintUtils {
             outputStream.write(telephoneNo.getBytes());
             outputStream.write(receiptType.getBytes());
             outputStream.write(accNo.getBytes());
-            outputStream.write(name.getBytes());
+            if (!transaction.getClientName().isEmpty())
+                outputStream.write(name.getBytes());
             outputStream.write(mobNo.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());

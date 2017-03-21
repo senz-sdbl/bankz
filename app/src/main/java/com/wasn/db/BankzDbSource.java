@@ -40,12 +40,12 @@ public class BankzDbSource {
     public ArrayList<Transaction> getAllTransactions() {
         SQLiteDatabase db = BankzDbHelper.getInstance(context).getReadableDatabase();
         Cursor cursor = db.query(BankzDbContract.Transaction.TABLE_NAME, // table
-                null, // columns
                 null,
-                null, // selection
-                null, // order by
-                null, // group by
-                null); // join
+                null,
+                null,
+                null,
+                null,
+                BankzDbContract.Transaction._ID + " DESC");
 
         ArrayList<Transaction> transactions = new ArrayList<>();
 

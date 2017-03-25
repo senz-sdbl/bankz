@@ -5,11 +5,11 @@ package com.wasn.exceptions;
  *
  * @author erangaeb@gmail.com (eranga bandara)
  */
-public class InvalidBalanceAmountException extends Exception {
+public class InvalidAmountException extends Exception {
 
     @Override
     public String toString() {
-        return "invalid balance amount";
+        return "invalid amount";
     }
 
 }

@@ -4,7 +4,7 @@ import android.content.IntentFilter;
 import android.util.Log;
 
 import com.wasn.enums.IntentType;
-import com.wasn.exceptions.InvalidIntentType;
+import com.wasn.exceptions.InvalidIntentTypeException;
 
 /**
  * This class is responsible to distribute specific or general itents.
@@ -33,7 +33,7 @@ public class IntentProvider {
     public static IntentFilter getIntentFilter(IntentType type) {
         try {
             return new IntentFilter(getIntentAction(type));
-        } catch (InvalidIntentType ex) {
+        } catch (InvalidIntentTypeException ex) {
             Log.e(TAG, "No such intent, " + ex);
         }
 
@@ -47,7 +47,7 @@ public class IntentProvider {
      * @param intentType intent type
      * @return
      */
-    private static String getIntentAction(IntentType intentType) throws InvalidIntentType {
+    private static String getIntentAction(IntentType intentType) throws InvalidIntentTypeException {
         switch (intentType) {
             case SENZ:
                 return ACTION_SENZ;
@@ -64,7 +64,7 @@ public class IntentProvider {
             case PHONE_STATE:
                 return ACTION_PHONE_STATE;
             default:
-                throw new InvalidIntentType();
+                throw new InvalidIntentTypeException();
         }
     }
 

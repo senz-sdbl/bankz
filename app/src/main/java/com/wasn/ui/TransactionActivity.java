@@ -31,6 +31,7 @@ import com.wasn.application.IntentProvider;
 import com.wasn.db.BankzDbSource;
 import com.wasn.enums.IntentType;
 import com.wasn.exceptions.InvalidAccountException;
+import com.wasn.exceptions.InvalidAmountException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
 import com.wasn.pojos.Account;
 import com.wasn.pojos.Transaction;
@@ -209,7 +210,18 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             // back to main activity
             TransactionActivity.this.finish();
         } else if (view == done) {
-            onClickPut();
+            if (transaction == null) {
+                // no transaction yet
+                onClickPut();
+            } else {
+                // resend transaction
+                if (NetworkUtil.isAvailableNetwork(this)) {
+                    String message = "<font size=10 color=#636363>Are you sure you want to RESUBMIT the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + TransactionUtils.formatAmount(transaction.getTransactionAmount()) + "</b>" + "</font> ";
+                    displayTransactionPostMessage(message);
+                } else {
+                    displayMessageDialog("ERROR", "No network connection");
+                }
+            }
         } else if (view == search) {
             navigateBalanceQuery();
         }
@@ -221,9 +233,9 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         try {
             String account = accountEditText.getText().toString().trim();
             String mobile = mobileEditText.getText().toString().trim();
+            String amount = amountEditText.getText().toString().trim();
 
-            ActivityUtils.isValidTransactionFields(account, mobile);
-            int amount = Integer.parseInt(amountEditText.getText().toString().trim());
+            ActivityUtils.isValidTransactionFields(account, mobile, amount);
 
             // initialize transaction
             transaction = new Transaction(1,
@@ -231,21 +243,17 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                     TransactionUtils.getTransactionAccount(account),
                     "",
                     TransactionUtils.getTransactionMobile(mobile),
-                    amount,
+                    Integer.parseInt(amount),
                     "",
                     TransactionUtils.getCurrentTime(),
                     "");
 
             if (NetworkUtil.isAvailableNetwork(this)) {
-                String informationMessage = "<font size=10 color=#636363>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + TransactionUtils.formatAmount(transaction.getTransactionAmount()) + "</b>" + "</font> ";
-                displayInformationMessageDialog(informationMessage);
+                String message = "<font size=10 color=#636363>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + TransactionUtils.formatAmount(transaction.getTransactionAmount()) + "</b>" + "</font> ";
+                displayTransactionPostMessage(message);
             } else {
                 displayMessageDialog("ERROR", "No network connection");
             }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-
-            displayMessageDialog("ERROR", "Invalid amount");
         } catch (InvalidAccountException e) {
             e.printStackTrace();
 
@@ -254,6 +262,10 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             e.printStackTrace();
 
             displayMessageDialog("ERROR", "Invalid mobile no");
+        } catch (InvalidAmountException e) {
+            e.printStackTrace();
+
+            displayMessageDialog("ERROR", "Invalid amount");
         }
     }
 
@@ -362,11 +374,11 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     }
 
     /**
-     * Display message dialog when user going to logout
+     * Display message dialog
      *
      * @param message
      */
-    public void displayInformationMessageDialog(String message) {
+    public void displayTransactionPostMessage(String message) {
         final Dialog dialog = new Dialog(this);
 
         //set layout for dialog

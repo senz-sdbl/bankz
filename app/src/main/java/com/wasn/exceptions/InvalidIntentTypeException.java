@@ -3,7 +3,7 @@ package com.wasn.exceptions;
 /**
  * Created by Lakmal on 9/4/16.
  */
-public class InvalidIntentType extends Exception {
+public class InvalidIntentTypeException extends Exception {
     private static final long serialVersionUID = 1L;
 
     @Override

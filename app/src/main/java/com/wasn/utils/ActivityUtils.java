@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 
 import com.wasn.exceptions.InvalidAccountException;
+import com.wasn.exceptions.InvalidAmountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
 
@@ -77,7 +78,7 @@ public class ActivityUtils {
         return true;
     }
 
-    public static boolean isValidTransactionFields(String account, String mobile) throws InvalidAccountException, InvalidTelephoneNoException {
+    public static boolean isValidTransactionFields(String account, String mobile, String amount) throws InvalidAccountException, InvalidTelephoneNoException, NumberFormatException, InvalidAmountException {
         if (account.isEmpty() || account.length() < 5 || account.length() > 12) {
             throw new InvalidAccountException();
         }
@@ -85,6 +86,10 @@ public class ActivityUtils {
         if (!mobile.isEmpty()) {
             if (mobile.length() < 9 || mobile.length() > 10)
                 throw new InvalidTelephoneNoException();
+        }
+
+        if (amount.isEmpty() || Integer.parseInt(amount) == 0) {
+            throw new InvalidAmountException();
         }
 
         return true;

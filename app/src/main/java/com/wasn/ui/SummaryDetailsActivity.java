@@ -112,7 +112,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.share_confirm_message_dialog);
+        dialog.setContentView(R.layout.confirm_message_dialog);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 

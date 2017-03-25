@@ -95,10 +95,6 @@ public class ActivityUtils {
         return true;
     }
 
-    public static boolean isValidIdNo(String nic) {
-        return !(nic.isEmpty() || nic.length() != 10);
-    }
-
     public static String formatNic(String nic) throws InvalidInputFieldsException {
         if (!nic.isEmpty()) {
             if (nic.length() == 9) {

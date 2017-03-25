@@ -176,7 +176,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
         } catch (InvalidInputFieldsException e) {
             e.printStackTrace();
 
-            displayMessageDialog("ERROR", "NIC no should contains 9 to 12 digits");
+            showStatusMessage("ERROR", "NIC no should contains 9 to 12 digits");
         }
     }
 
@@ -230,7 +230,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
 
                 this.finish();
             } else {
-                displayMessageDialog("Information", "No accounts for given NIC");
+                showStatusMessage("Information", "No accounts for given NIC");
             }
         } else if (senz.getAttributes().containsKey("status")) {
             // status, may be error
@@ -238,7 +238,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
 
             if (senz.getAttributes().get("status").equalsIgnoreCase("ERROR")) {
                 // something went wrong
-                displayMessageDialog("ERROR", "Failed to complete the request");
+                showStatusMessage("ERROR", "Failed to complete the request");
             }
         }
     }
@@ -250,7 +250,7 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
      * @param messageHeader message header
      * @param message       message to be display
      */
-    public void displayMessageDialog(String messageHeader, String message) {
+    public void showStatusMessage(String messageHeader, String message) {
         final Dialog dialog = new Dialog(this);
 
         //set layout for dialog

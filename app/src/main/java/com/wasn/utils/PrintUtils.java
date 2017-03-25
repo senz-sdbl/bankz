@@ -151,11 +151,11 @@ public class PrintUtils {
 
 
         // transaction details that print in receipt
-        String accNo  = "      Account No         : "+transaction.getClientAccountNo()+"\r\n";
-        String name   = "      Name               : "+transaction.getClientName()+"\r\n";
-        String mobNo  = "      Mobile No          : "+transaction.getClientMobile()+"\r\n";
-        String time   = "      Transaction time   : "+transaction.getTransactionTime()+"\r\n";
-        String amount = "      Transaction amount : "+transaction.getTransactionAmount()+ ".00" + "\r\n\r\n\r\n";
+        String accNo  = "   Account No         : "+transaction.getClientAccountNo()+"\r\n";
+        String name   = "   Name               : "+transaction.getClientName()+"\r\n";
+        String mobNo  = "   Mobile No          : "+transaction.getClientMobile()+"\r\n";
+        String time   = "   Deposit time       : "+transaction.getTransactionTime()+"\r\n";
+        String amount = "   Deposit amount     : "+transaction.getTransactionAmount()+ ".00" + "\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -286,11 +286,11 @@ public class PrintUtils {
 
 
         // transaction details that print in receipt
-        String accNo  = "      Account No         : "+transaction.getClientAccountNo()+"\r\n";
-        String name   = "      Name               : "+transaction.getClientName()+"\r\n";
-        String mobNo  = "      Mobile No          : "+transaction.getClientMobile()+"\r\n";
-        String time   = "      Transaction time   : "+transaction.getTransactionTime()+"\r\n";
-        String amount = "      Transaction amount : "+transaction.getTransactionAmount()+"\r\n\r\n\r\n";
+        String accNo  = "   Account No         : "+transaction.getClientAccountNo()+"\r\n";
+        String name   = "   Name               : "+transaction.getClientName()+"\r\n";
+        String mobNo  = "   Mobile No          : "+transaction.getClientMobile()+"\r\n";
+        String time   = "   Deposit time       : "+transaction.getTransactionTime()+"\r\n";
+        String amount = "   Deposit amount     : "+transaction.getTransactionAmount()+"\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -503,13 +503,13 @@ public class PrintUtils {
                 + "PRINT\r\n";
 
         // transaction details that print in receipt
-        String accNo  = "      Account No         : "+"Test account"+"\r\n";
-        String name   = "      Name               : "+"Test name"+"\r\n";
-        String mobNo  = "      Mobile No          : "+"Test mobile"+"\r\n";
-        String time   = "      Transaction time   : "+"Test time"+"\r\n";
-        String amount = "      Transaction amount : "+"Test amount"+"\r\n";
-        String balance= "      Balance            : "+"Test balance"+"\r\n";
-        String recNo  = "      Receipt No         : "+"Test receipt"+"\r\n\r\n\r\n";
+        String accNo  = "   Account No         : "+"Test account"+"\r\n";
+        String name   = "   Name               : "+"Test name"+"\r\n";
+        String mobNo  = "   Mobile No          : "+"Test mobile"+"\r\n";
+        String time   = "   Deposit time       : "+"Test time"+"\r\n";
+        String amount = "   Deposit amount     : "+"Test amount"+"\r\n";
+        String balance= "   Balance            : "+"Test balance"+"\r\n";
+        String recNo  = "   Receipt No         : "+"Test receipt"+"\r\n\r\n\r\n";
 
         String sign   = "  ..................        ..................\r\n";
         String end    = "      Customer                     Agent      \r\n\r\n\r\n";

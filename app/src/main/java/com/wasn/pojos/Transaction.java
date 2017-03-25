@@ -7,19 +7,18 @@ import android.os.Parcelable;
  * To hold attributes of transaction
  *
  * @author erangaeb@gmail.com (eranga bandara)
- *         TODO implements Parcelable
  */
 public class Transaction implements Parcelable {
 
-    int id;
-    String clientName;
-    String clientNic;
-    String clientAccountNo;
-    String clientMobile;
-    String previousBalance;
-    int transactionAmount;
-    String transactionTime;
-    String transactionType;
+    private int id;
+    private String clientName;
+    private String clientNic;
+    private String clientAccountNo;
+    private String clientMobile;
+    private String previousBalance;
+    private int transactionAmount;
+    private String transactionTime;
+    private String transactionType;
 
     public Transaction(int id,
                        String clientName,

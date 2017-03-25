@@ -210,18 +210,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             // back to main activity
             TransactionActivity.this.finish();
         } else if (view == done) {
-            if (transaction == null) {
-                // no transaction yet
-                onClickPut();
-            } else {
-                // resend transaction
-                if (NetworkUtil.isAvailableNetwork(this)) {
-                    String message = "<font size=10 color=#636363>Are you sure you want to RESUBMIT the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + TransactionUtils.formatAmount(transaction.getTransactionAmount()) + "</b>" + "</font> ";
-                    displayTransactionPostMessage(message);
-                } else {
-                    displayMessageDialog("ERROR", "No network connection");
-                }
-            }
+            onClickPut();
         } else if (view == search) {
             navigateBalanceQuery();
         }
@@ -248,24 +237,20 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                     TransactionUtils.getCurrentTime(),
                     "");
 
-            if (NetworkUtil.isAvailableNetwork(this)) {
-                String message = "<font size=10 color=#636363>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + TransactionUtils.formatAmount(transaction.getTransactionAmount()) + "</b>" + "</font> ";
-                displayTransactionPostMessage(message);
-            } else {
-                displayMessageDialog("ERROR", "No network connection");
-            }
+            String message = "<font size=10 color=#636363>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + TransactionUtils.formatAmount(transaction.getTransactionAmount()) + "</b>" + "</font> ";
+            showConfirmMessage("CONFIRM", message, false);
         } catch (InvalidAccountException e) {
             e.printStackTrace();
 
-            displayMessageDialog("ERROR", "Account no should be 5-12 character length");
+            showStatusMessage("ERROR", "Account no should be 5-12 character length");
         } catch (InvalidTelephoneNoException e) {
             e.printStackTrace();
 
-            displayMessageDialog("ERROR", "Invalid mobile no");
+            showStatusMessage("ERROR", "Invalid mobile no");
         } catch (InvalidAmountException e) {
             e.printStackTrace();
 
-            displayMessageDialog("ERROR", "Invalid amount");
+            showStatusMessage("ERROR", "Invalid amount");
         }
     }
 
@@ -296,13 +281,13 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                 if (isServiceBound) {
                     senzService.send(senz);
                 } else {
-                    Toast.makeText(this, "Failed to connect", Toast.LENGTH_LONG).show();
+                    showStatusMessage("ERROR", "Fail to connect");
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(this, "No internet", Toast.LENGTH_LONG).show();
+            showStatusMessage("ERROR", "No network connection");
         }
     }
 
@@ -325,13 +310,16 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                 Toast.makeText(this, "Transaction successful", Toast.LENGTH_LONG).show();
 
                 // save transaction in db
-                // TODO update transaction
                 new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
 
                 navigateTransactionDetails(transaction);
             } else {
+                // ERROR response received
                 ActivityUtils.cancelProgressDialog();
-                displayMessageDialog("Error", "Failed to complete the transaction");
+
+                // ask to resubmit deposit
+                String message = "<font size=10 color=#636363>Failed to complete the deposit, do you want to </font> <font color=#00a1e4>" + "<b>" + "Retry? " + "</b>" + "</font>";
+                showConfirmMessage("RETRY?", message, true);
             }
         }
     }
@@ -342,7 +330,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
      * @param messageHeader message header
      * @param message       message to be display
      */
-    public void displayMessageDialog(String messageHeader, String message) {
+    public void showStatusMessage(String messageHeader, String message) {
         final Dialog dialog = new Dialog(this);
 
         //set layout for dialog
@@ -374,22 +362,24 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     }
 
     /**
-     * Display message dialog
+     * Display confirm message dialog
      *
      * @param message
      */
-    public void displayTransactionPostMessage(String message) {
+    public void showConfirmMessage(String title, String message, final boolean retry) {
         final Dialog dialog = new Dialog(this);
 
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.share_confirm_message_dialog);
+        dialog.setContentView(R.layout.confirm_message_dialog);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 
-        // set dialog texts
         TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
         TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
+
+        // set texts
+        messageHeaderTextView.setText(title);
         messageTextView.setText(Html.fromHtml(message));
 
         // set custom font
@@ -416,6 +406,9 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
+
+                // for re deposit(retry), exit from the activity
+                if (retry) TransactionActivity.this.finish();
             }
         });
 

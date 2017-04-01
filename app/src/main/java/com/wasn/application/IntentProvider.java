@@ -17,9 +17,6 @@ public class IntentProvider {
     // intent actions
     public static final String ACTION_SENZ = "com.score.bankz.SENZ";
     public static final String ACTION_TIMEOUT = "com.score.bankz.TIMEOUT";
-    public static final String ACTION_SMS_REQUEST_ACCEPT = "com.score.bankz.SMS_REQUEST_ACCEPT";
-    public static final String ACTION_SMS_REQUEST_REJECT = "com.score.bankz.SMS_REQUEST_REJECT";
-    public static final String ACTION_SMS_REQUEST_CONFIRM = "com.score.bankz.SMS_REQUEST_CONFIRM";
     public static final String ACTION_RESTART = "com.score.bankz.RESTART";
     public static final String ACTION_CONNECTED = "com.score.bankz.CONNECTED";
     private static final String ACTION_PHONE_STATE = "android.intent.action.PHONE_STATE";
@@ -53,12 +50,6 @@ public class IntentProvider {
                 return ACTION_SENZ;
             case TIMEOUT:
                 return ACTION_TIMEOUT;
-            case SMS_REQUEST_ACCEPT:
-                return ACTION_SMS_REQUEST_ACCEPT;
-            case SMS_REQUEST_REJECT:
-                return ACTION_SMS_REQUEST_REJECT;
-            case SMS_REQUEST_CONFIRM:
-                return ACTION_SMS_REQUEST_CONFIRM;
             case CONNECTED:
                 return ACTION_CONNECTED;
             case PHONE_STATE:

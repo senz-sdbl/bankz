@@ -219,38 +219,48 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     private void onClickPut() {
         ActivityUtils.hideSoftKeyboard(this);
 
-        try {
-            String account = accountEditText.getText().toString().trim();
-            String mobile = mobileEditText.getText().toString().trim();
-            String amount = amountEditText.getText().toString().trim();
+        String account = accountEditText.getText().toString().trim();
+        String mobile = mobileEditText.getText().toString().trim();
+        String amount = amountEditText.getText().toString().trim();
 
-            ActivityUtils.isValidTransactionFields(account, mobile, amount);
+        if (transaction == null || (transaction != null && !TransactionUtils.isNewTransaction(transaction.getClientAccountNo(), account))) {
+            // new transaction
+            try {
+                ActivityUtils.isValidTransactionFields(account, mobile, amount);
 
-            // initialize transaction
-            transaction = new Transaction(1,
-                    (getIntent().hasExtra("ACCOUNT") ? ((Account) getIntent().getExtras().getParcelable("ACCOUNT")).getName() : ""),
-                    TransactionUtils.getTransactionAccount(account),
-                    "",
-                    TransactionUtils.getTransactionMobile(mobile),
-                    Integer.parseInt(amount),
-                    "",
-                    TransactionUtils.getCurrentTime(),
-                    "");
+                // initialize transaction
+                Long timestamp = (System.currentTimeMillis() / 1000);
+                String uid = SenzUtils.getUid(this, timestamp.toString());
+                transaction = new Transaction(1,
+                        uid,
+                        (getIntent().hasExtra("ACCOUNT") ? ((Account) getIntent().getExtras().getParcelable("ACCOUNT")).getName() : ""),
+                        TransactionUtils.getTransactionAccount(account),
+                        "",
+                        TransactionUtils.getTransactionMobile(mobile),
+                        Integer.parseInt(amount),
+                        "",
+                        TransactionUtils.getTransactionTime(timestamp),
+                        "");
 
-            String message = "<font size=10 color=#636363>Are you sure you want to do the deposit for account</font> <font color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font color=#00a1e4>" + "<b>" + TransactionUtils.formatAmount(transaction.getTransactionAmount()) + "</b>" + "</font> ";
-            showConfirmMessage("CONFIRM", message, false);
-        } catch (InvalidAccountException e) {
-            e.printStackTrace();
+                String message = "<font size=10 color=#636363>Are you sure you want to do the deposit for account</font> <font size=12 color=#00a1e4>" + "<b>" + transaction.getClientAccountNo() + "</b>" + "</font> <font> with amount</font> <font size=12 color=#00a1e4>" + "<b>" + TransactionUtils.formatAmount(transaction.getTransactionAmount()) + "</b>" + "</font> ";
+                showConfirmMessage("CONFIRM", message);
+            } catch (InvalidAccountException e) {
+                e.printStackTrace();
 
-            showStatusMessage("ERROR", "Account no should be 5-12 character length");
-        } catch (InvalidTelephoneNoException e) {
-            e.printStackTrace();
+                showStatusMessage("ERROR", "Account no should be 5-12 character length");
+            } catch (InvalidTelephoneNoException e) {
+                e.printStackTrace();
 
-            showStatusMessage("ERROR", "Invalid mobile no");
-        } catch (InvalidAmountException e) {
-            e.printStackTrace();
+                showStatusMessage("ERROR", "Invalid mobile no");
+            } catch (InvalidAmountException e) {
+                e.printStackTrace();
 
-            showStatusMessage("ERROR", "Invalid amount");
+                showStatusMessage("ERROR", "Invalid amount");
+            }
+        } else {
+            // ask to resubmit deposit
+            String message = "<font size=10 color=#636363>Are you sure you want to resubmit the deposit</font>";
+            showConfirmMessage("RETRY?", message);
         }
     }
 
@@ -261,10 +271,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         senzAttributes.put("amnt", Integer.toString(transaction.getTransactionAmount()));
         if (!transaction.getClientMobile().isEmpty())
             senzAttributes.put("mob", transaction.getClientMobile());
-
-        Long timestamp = System.currentTimeMillis() / 1000;
-        senzAttributes.put("time", timestamp.toString());
-        senzAttributes.put("uid", SenzUtils.getUid(this, timestamp.toString()));
+        senzAttributes.put("uid", transaction.getUid());
 
         // new senz
         String id = "_ID";
@@ -272,22 +279,23 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         SenzTypeEnum senzType = SenzTypeEnum.PUT;
         User receiver = new User("", "sdbltrans");
 
-        send(new Senz(id, signature, senzType, null, receiver, senzAttributes));
+        if (NetworkUtil.isAvailableNetwork(this)) {
+            ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
+            send(new Senz(id, signature, senzType, null, receiver, senzAttributes));
+        } else {
+            showStatusMessage("ERROR", "No network connection");
+        }
     }
 
     public void send(Senz senz) {
-        if (NetworkUtil.isAvailableNetwork(this)) {
-            try {
-                if (isServiceBound) {
-                    senzService.send(senz);
-                } else {
-                    showStatusMessage("ERROR", "Fail to connect");
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
+        try {
+            if (isServiceBound) {
+                senzService.send(senz);
+            } else {
+                showStatusMessage("ERROR", "Fail to connect");
             }
-        } else {
-            showStatusMessage("ERROR", "No network connection");
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
@@ -300,10 +308,14 @@ public class TransactionActivity extends Activity implements View.OnClickListene
     private void handleSenz(Senz senz) {
         if (senz.getAttributes().containsKey("status")) {
             String msg = senz.getAttributes().get("status");
-            if (msg != null && msg.equalsIgnoreCase("PENDING")) {
-                // pending trans
-                // TODO create transaction with PENDING state
+            if (msg != null && msg.equalsIgnoreCase("INIT")) {
+                // init trans
+                // TODO create transaction with INIT state
                 // new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
+            } else if (msg != null && msg.equalsIgnoreCase("PENDING")) {
+                // pending trans
+                ActivityUtils.cancelProgressDialog();
+                showStatusMessage("WAITING", "Waiting to complete the deposit");
             } else if (msg != null && msg.equalsIgnoreCase("DONE")) {
                 // DONE response received
                 ActivityUtils.cancelProgressDialog();
@@ -316,10 +328,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             } else {
                 // ERROR response received
                 ActivityUtils.cancelProgressDialog();
-
-                // ask to resubmit deposit
-                String message = "<font size=10 color=#636363>Failed to complete the deposit, do you want to </font> <font color=#00a1e4>" + "<b>" + "Retry? " + "</b>" + "</font>";
-                showConfirmMessage("RETRY?", message, true);
+                showStatusMessage("ERROR", "Fail to complete the deposit, please make sure account no is correct");
             }
         }
     }
@@ -366,7 +375,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
      *
      * @param message
      */
-    public void showConfirmMessage(String title, String message, final boolean retry) {
+    public void showConfirmMessage(String title, String message) {
         final Dialog dialog = new Dialog(this);
 
         //set layout for dialog
@@ -393,7 +402,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
             public void onClick(View v) {
                 // do transaction
                 dialog.cancel();
-                ActivityUtils.showProgressDialog(TransactionActivity.this, "Please wait...");
 
                 // send data
                 doPut();
@@ -406,9 +414,6 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         cancelButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 dialog.cancel();
-
-                // for re deposit(retry), exit from the activity
-                if (retry) TransactionActivity.this.finish();
             }
         });
 

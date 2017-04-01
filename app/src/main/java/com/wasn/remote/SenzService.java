@@ -81,7 +81,6 @@ public class SenzService extends Service {
     private BroadcastReceiver connectedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            sendUnAckSenzList();
         }
     };
 
@@ -298,19 +297,6 @@ public class SenzService extends Service {
 
                     //  sends the message to the server
                     write(message);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private void sendUnAckSenzList() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    PrivateKey privateKey = RSAUtils.getPrivateKey(SenzService.this);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

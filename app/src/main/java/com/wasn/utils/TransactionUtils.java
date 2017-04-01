@@ -34,6 +34,26 @@ public class TransactionUtils {
         return simpleDateFormat.format(calendar.getTime());
     }
 
+    public static String getTransactionTime(Long timestamp) {
+        //date format
+        String DATE_FORMAT_NOW = "yyyy/MM/dd HH:mm:ss";
+
+        // generate time
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp * 1000);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT_NOW);
+
+        return simpleDateFormat.format(calendar.getTime());
+    }
+
+    /**
+     * Compare account no of two transaction to determine weather they are same
+     * @return
+     */
+    public static boolean isNewTransaction(String preAccount, String curAccount) {
+         return preAccount.equalsIgnoreCase(getTransactionAccount(curAccount));
+    }
+
     /**
      * Format account with 12 digits
      *

@@ -30,6 +30,8 @@ import com.wasn.enums.IntentType;
 import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.pojos.Account;
 import com.wasn.utils.ActivityUtils;
+import com.wasn.utils.NetworkUtil;
+import com.wasn.utils.SenzUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -172,7 +174,11 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
             String formattedNic = ActivityUtils.formatNic(nic);
 
             ActivityUtils.showProgressDialog(AccountInquiryActivity.this, "Please wait...");
-            doGet(formattedNic);
+            if (NetworkUtil.isAvailableNetwork(this)) {
+                doGet(formattedNic);
+            } else {
+                showStatusMessage("ERROR", "No network connection");
+            }
         } catch (InvalidInputFieldsException e) {
             e.printStackTrace();
 
@@ -186,7 +192,9 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
             HashMap<String, String> senzAttributes = new HashMap<>();
             senzAttributes.put("nic", nic);
             senzAttributes.put("acc", "");
-            senzAttributes.put("time", ((Long) (System.currentTimeMillis() / 1000)).toString());
+            Long timestamp = System.currentTimeMillis() / 1000;
+            String uid = SenzUtils.getUid(this, timestamp.toString());
+            senzAttributes.put("uid", uid);
 
             // new senz
             String id = "_ID";

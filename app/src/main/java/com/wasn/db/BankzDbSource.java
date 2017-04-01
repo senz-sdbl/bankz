@@ -67,6 +67,7 @@ public class BankzDbSource {
             transactionTime = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_TIME));
 
             Transaction transaction = new Transaction(id,
+                    "UID",
                     clientName,
                     clientAccountNo,
                     "",

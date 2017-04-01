@@ -11,6 +11,7 @@ import android.os.Parcelable;
 public class Transaction implements Parcelable {
 
     private int id;
+    private String uid;
     private String clientName;
     private String clientNic;
     private String clientAccountNo;
@@ -21,6 +22,7 @@ public class Transaction implements Parcelable {
     private String transactionType;
 
     public Transaction(int id,
+                       String uid,
                        String clientName,
                        String clientAccountNo,
                        String clientNic,
@@ -30,6 +32,7 @@ public class Transaction implements Parcelable {
                        String transactionTime,
                        String transactionType) {
         this.id = id;
+        this.uid = uid;
         this.clientName = clientName;
         this.clientAccountNo = clientAccountNo;
         this.clientNic = clientNic;
@@ -42,6 +45,7 @@ public class Transaction implements Parcelable {
 
     protected Transaction(Parcel in) {
         id = in.readInt();
+        uid = in.readString();
         clientName = in.readString();
         clientAccountNo = in.readString();
         clientNic = in.readString();
@@ -70,6 +74,14 @@ public class Transaction implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getClientName() {
@@ -144,6 +156,7 @@ public class Transaction implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
+        parcel.writeString(uid);
         parcel.writeString(clientName);
         parcel.writeString(clientAccountNo);
         parcel.writeString(clientNic);

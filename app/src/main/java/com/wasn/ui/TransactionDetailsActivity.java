@@ -93,6 +93,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
             attributesList.add(new Attribute("Mobile", transaction.getClientMobile()));
             attributesList.add(new Attribute("Amount", TransactionUtils.formatAmount(transaction.getTransactionAmount())));
             attributesList.add(new Attribute("Time", transaction.getTransactionTime()));
+            attributesList.add(new Attribute("Reference", transaction.getUid().substring(9, transaction.getUid().length())));
 
             // add header and footer
             View headerView = View.inflate(this, R.layout.header, null);

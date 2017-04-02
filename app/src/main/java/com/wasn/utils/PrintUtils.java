@@ -155,7 +155,8 @@ public class PrintUtils {
         String name   = "   Name               : "+transaction.getClientName()+"\r\n";
         String mobNo  = "   Mobile No          : "+transaction.getClientMobile()+"\r\n";
         String time   = "   Deposit time       : "+transaction.getTransactionTime()+"\r\n";
-        String amount = "   Deposit amount     : "+transaction.getTransactionAmount()+ ".00" + "\r\n\r\n\r\n";
+        String amount = "   Deposit amount     : "+transaction.getTransactionAmount()+ ".00" + "\r\n";
+        String ref    = "   Reference          : "+transaction.getUid().substring(9, transaction.getUid().length()) + "\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -175,6 +176,7 @@ public class PrintUtils {
             outputStream.write(mobNo.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
+            outputStream.write(ref.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 
@@ -198,6 +200,7 @@ public class PrintUtils {
             outputStream.write(mobNo.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
+            outputStream.write(ref.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 
@@ -290,7 +293,8 @@ public class PrintUtils {
         String name   = "   Name               : "+transaction.getClientName()+"\r\n";
         String mobNo  = "   Mobile No          : "+transaction.getClientMobile()+"\r\n";
         String time   = "   Deposit time       : "+transaction.getTransactionTime()+"\r\n";
-        String amount = "   Deposit amount     : "+transaction.getTransactionAmount()+"\r\n\r\n\r\n";
+        String amount = "   Deposit amount     : "+transaction.getTransactionAmount()+"\r\n";
+        String ref    = "   Reference          : "+transaction.getUid().substring(9, transaction.getUid().length()) + "\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -310,6 +314,7 @@ public class PrintUtils {
             outputStream.write(mobNo.getBytes());
             outputStream.write(time.getBytes());
             outputStream.write(amount.getBytes());
+            outputStream.write(ref.getBytes());
             outputStream.write(sign.getBytes());
             outputStream.write(end.getBytes());
 

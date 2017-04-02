@@ -26,6 +26,7 @@ public class BankzDbSource {
 
         // content values to inset
         ContentValues values = new ContentValues();
+        values.put(BankzDbContract.Transaction.COLUMN_NAME_UID, transaction.getUid());
         values.put(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_NAME, transaction.getClientName());
         values.put(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_ACCOUNT_NO, transaction.getClientAccountNo());
         values.put(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_MOBILE, transaction.getClientMobile());
@@ -51,6 +52,7 @@ public class BankzDbSource {
 
         // transaction attributes
         int id;
+        String uid;
         String clientName;
         String clientAccountNo;
         String clientMobile;
@@ -60,6 +62,7 @@ public class BankzDbSource {
         // extract attributes
         while (cursor.moveToNext()) {
             id = cursor.getInt(cursor.getColumnIndex(BankzDbContract.Transaction._ID));
+            uid = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_UID));
             clientName = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_NAME));
             clientAccountNo = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_ACCOUNT_NO));
             clientMobile = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_CUSTOMER_MOBILE));
@@ -67,7 +70,7 @@ public class BankzDbSource {
             transactionTime = cursor.getString(cursor.getColumnIndex(BankzDbContract.Transaction.COLUMN_NAME_TIME));
 
             Transaction transaction = new Transaction(id,
-                    "UID",
+                    uid,
                     clientName,
                     clientAccountNo,
                     "",

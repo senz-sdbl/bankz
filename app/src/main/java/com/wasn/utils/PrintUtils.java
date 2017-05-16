@@ -29,7 +29,7 @@ public class PrintUtils {
     //private static String bluetoothAddress = "00:22:58:38:AE:90";
 
     /**
-     * Get bluetooth adapter to deal with bluetooth related functionalities
+     * Get bluetooth adapter to deal with bluetooth related functions
      * @return bluetooth adapter
      */
     private static BluetoothAdapter getBluetoothAdapter() {
@@ -156,7 +156,7 @@ public class PrintUtils {
         String mobNo  = "   Mobile No          : "+transaction.getClientMobile()+"\r\n";
         String time   = "   Deposit time       : "+transaction.getTransactionTime()+"\r\n";
         String amount = "   Deposit amount     : "+transaction.getTransactionAmount()+ ".00" + "\r\n";
-        String ref    = "   Reference          : "+transaction.getUid().substring(9, transaction.getUid().length()) + "\r\n\r\n\r\n";
+        String ref    = "   Reference          : "+transaction.getUid().substring(6, transaction.getUid().length() - 3) + "\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";
@@ -287,14 +287,13 @@ public class PrintUtils {
                 "000000000000000434CC993C4C984636ECCD91600000000000000000000000000000000DD1D99BB848BD8423FFF311C00000000000000000000000000000000FDE7FEEF078C6000000000000000000000000000\r\n"
                 + "PRINT\r\n";
 
-
         // transaction details that print in receipt
         String accNo  = "   Account No         : "+transaction.getClientAccountNo()+"\r\n";
         String name   = "   Name               : "+transaction.getClientName()+"\r\n";
         String mobNo  = "   Mobile No          : "+transaction.getClientMobile()+"\r\n";
         String time   = "   Deposit time       : "+transaction.getTransactionTime()+"\r\n";
         String amount = "   Deposit amount     : "+transaction.getTransactionAmount()+"\r\n";
-        String ref    = "   Reference          : "+transaction.getUid().substring(9, transaction.getUid().length()) + "\r\n\r\n\r\n";
+        String ref    = "   Reference          : "+transaction.getUid().substring(6, transaction.getUid().length() - 3) + "\r\n\r\n\r\n";
 
         String sign   = "..................          ..................\r\n";
         String end    = "    Customer                       Agent      \r\n\r\n\r\n";

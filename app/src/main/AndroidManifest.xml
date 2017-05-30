@@ -102,7 +102,12 @@
             android:configChanges="orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar" />
+            android:theme="@android:style/Theme.Holo.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.RegistrationActivity"
             android:clearTaskOnLaunch="true"
@@ -132,12 +137,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
         <activity
             android:name=".ui.BalanceResultActivity"
             android:clearTaskOnLaunch="true"
@@ -154,6 +154,10 @@
                 <action android:name="com.wasn.remote.SenzService" />
             </intent-filter>
         </service>
+
+        <service
+            android:name="com.wasn.service.PrintService"
+            android:enabled="true" />
 
         <receiver android:name=".receivers.BootCompleteReceiver">
             <intent-filter>

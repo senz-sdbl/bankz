@@ -2,6 +2,7 @@ package com.wasn.ui;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -23,6 +24,7 @@ import com.wasn.exceptions.EmptyPrinterAddressException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
 import com.wasn.exceptions.NoUserException;
 import com.wasn.pojos.Setting;
+import com.wasn.service.PrintService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
@@ -273,7 +275,11 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             // back to main activity
             SettingsActivity.this.finish();
         } else if (view == done) {
-            onClickDone();
+            //onClickDone();
+
+            // start service to test print
+            Intent intent = new Intent(this, PrintService.class);
+            startService(intent);
         }
     }
 

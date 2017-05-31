@@ -103,10 +103,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.RegistrationActivity"
@@ -137,7 +133,12 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".ui.BalanceResultActivity"
             android:clearTaskOnLaunch="true"
@@ -146,7 +147,6 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <service
             android:name="com.wasn.remote.SenzService"
             android:enabled="true">
@@ -156,7 +156,15 @@
         </service>
 
         <service
-            android:name="com.wasn.service.PrintService"
+            android:name="com.wasn.service.SettingPrintService"
+            android:enabled="true" />
+
+        <service
+            android:name="com.wasn.service.TransPrintService"
+            android:enabled="true" />
+
+        <service
+            android:name="com.wasn.service.DayEndPrintService"
             android:enabled="true" />
 
         <receiver android:name=".receivers.BootCompleteReceiver">

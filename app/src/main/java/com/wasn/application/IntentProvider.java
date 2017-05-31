@@ -19,6 +19,8 @@ public class IntentProvider {
     public static final String ACTION_TIMEOUT = "com.score.bankz.TIMEOUT";
     public static final String ACTION_RESTART = "com.score.bankz.RESTART";
     public static final String ACTION_CONNECTED = "com.score.bankz.CONNECTED";
+    public static final String ACTION_PRINT = "com.score.bankz.PRINT";
+    public static final String ACTION_PRINT_FAIL = "com.score.bankz.PRINT_FAIL";
     private static final String ACTION_PHONE_STATE = "android.intent.action.PHONE_STATE";
 
     /**
@@ -52,6 +54,8 @@ public class IntentProvider {
                 return ACTION_TIMEOUT;
             case CONNECTED:
                 return ACTION_CONNECTED;
+            case PRINT:
+                return ACTION_PRINT;
             case PHONE_STATE:
                 return ACTION_PHONE_STATE;
             default:

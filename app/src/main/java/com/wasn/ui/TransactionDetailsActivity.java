@@ -2,6 +2,9 @@ package com.wasn.ui;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -16,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
+import com.wasn.application.IntentProvider;
 import com.wasn.async.TransactionPrintService;
+import com.wasn.enums.IntentType;
 import com.wasn.enums.PrintType;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
@@ -50,6 +55,16 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
     private Transaction transaction;
 
+    private BroadcastReceiver printReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.hasExtra("PRINT_STATUS")) {
+                String printStatus = intent.getExtras().getParcelable("PRINT_STATUS");
+                onPostPrint(printStatus);
+            }
+        }
+    };
+
     /**
      * {@inheritDoc}
      */
@@ -60,6 +75,21 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
         init();
         initList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // bind to senz service
+        registerReceiver(printReceiver, IntentProvider.getIntentFilter(IntentType.PRINT));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        unregisterReceiver(printReceiver);
     }
 
     /**

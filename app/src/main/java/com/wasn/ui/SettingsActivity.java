@@ -2,6 +2,8 @@ package com.wasn.ui;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -16,7 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wasn.R;
+import com.wasn.application.IntentProvider;
 import com.wasn.async.TestPrintService;
+import com.wasn.enums.IntentType;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.EmptyBranchNameException;
@@ -24,7 +28,7 @@ import com.wasn.exceptions.EmptyPrinterAddressException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
 import com.wasn.exceptions.NoUserException;
 import com.wasn.pojos.Setting;
-import com.wasn.service.PrintService;
+import com.wasn.service.TransPrintService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
@@ -52,6 +56,16 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     EditText telephoneEditText;
     EditText printerAddressEditText;
 
+    private BroadcastReceiver printReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.hasExtra("PRINT_STATUS")) {
+                String printStatus = intent.getExtras().getParcelable("PRINT_STATUS");
+                onPostPrint(printStatus);
+            }
+        }
+    };
+
     /**
      * {@inheritDoc}
      */
@@ -61,6 +75,21 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.settings_layout);
 
         init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // bind to senz service
+        registerReceiver(printReceiver, IntentProvider.getIntentFilter(IntentType.PRINT));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        unregisterReceiver(printReceiver);
     }
 
     /**
@@ -144,12 +173,12 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         try {
             if (PrintUtils.isEnableBluetooth()) {
                 ActivityUtils.showProgressDialog(this, "Printing...");
-                TestPrintService testPrintService = new TestPrintService(SettingsActivity.this, settings);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    testPrintService.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, printerAddress);
-                } else {
-                    testPrintService.execute(printerAddress);
-                }
+//                TestPrintService testPrintService = new TestPrintService(SettingsActivity.this, settings);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//                    testPrintService.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, printerAddress);
+//                } else {
+//                    testPrintService.execute(printerAddress);
+//                }
             }
         } catch (BluetoothNotEnableException e) {
             displayMessageDialog("ERROR", "Bluetooth not enabled");
@@ -278,7 +307,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             //onClickDone();
 
             // start service to test print
-            Intent intent = new Intent(this, PrintService.class);
+            Intent intent = new Intent(this, TransPrintService.class);
             startService(intent);
         }
     }

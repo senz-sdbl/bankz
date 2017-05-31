@@ -6,8 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +17,14 @@ import android.widget.TextView;
 
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
-import com.wasn.async.TestPrintService;
 import com.wasn.enums.IntentType;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.exceptions.EmptyBranchNameException;
-import com.wasn.exceptions.EmptyPrinterAddressException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
 import com.wasn.exceptions.NoUserException;
 import com.wasn.pojos.Setting;
-import com.wasn.service.TransPrintService;
+import com.wasn.service.SettingPrintService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.PrintUtils;
@@ -60,7 +56,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.hasExtra("PRINT_STATUS")) {
-                String printStatus = intent.getExtras().getParcelable("PRINT_STATUS");
+                String printStatus = intent.getExtras().getString("PRINT_STATUS");
                 onPostPrint(printStatus);
             }
         }
@@ -140,19 +136,14 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     }
 
     private void onClickDone() {
-        String printerAddress = printerAddressEditText.getText().toString().trim();
         String branch = branchEditText.getText().toString().trim();
         String telephone = telephoneEditText.getText().toString().trim();
 
         try {
-            SettingsUtils.validatePrinterAddress(printerAddress);
             SettingsUtils.validateBranchName(branch);
             SettingsUtils.validateTelephoneNo(telephone);
 
             showPasswordInputDialog();
-        } catch (EmptyPrinterAddressException e) {
-            e.printStackTrace();
-            displayMessageDialog("ERROR", "Invalid printer address");
         } catch (EmptyBranchNameException e) {
             e.printStackTrace();
             displayMessageDialog("ERROR", "Invalid branch name");
@@ -169,16 +160,15 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         String branch = branchEditText.getText().toString().trim();
         String telephone = telephoneEditText.getText().toString().trim();
         String printerAddress = printerAddressEditText.getText().toString().trim();
-        Setting settings = new Setting("", branch, telephone, printerAddress);
+        Setting setting = new Setting("", branch, telephone, printerAddress);
         try {
             if (PrintUtils.isEnableBluetooth()) {
                 ActivityUtils.showProgressDialog(this, "Printing...");
-//                TestPrintService testPrintService = new TestPrintService(SettingsActivity.this, settings);
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-//                    testPrintService.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, printerAddress);
-//                } else {
-//                    testPrintService.execute(printerAddress);
-//                }
+
+                // start service to test print
+                Intent intent = new Intent(this, SettingPrintService.class);
+                intent.putExtra("SETTING", setting);
+                startService(intent);
             }
         } catch (BluetoothNotEnableException e) {
             displayMessageDialog("ERROR", "Bluetooth not enabled");
@@ -277,22 +267,10 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
     public void onPostPrint(String status) {
         ActivityUtils.cancelProgressDialog();
 
-        if (status.equals("1")) {
-            // valid print address
+        if (status.equalsIgnoreCase("DONE")) {
             displayMessageDialog("Done", "Settings successfully saved");
-        } else if (status.equals("-2")) {
-            // bluetooth not enable
-            displayMessageDialog("ERROR", "Bluetooth not enabled");
-        } else if (status.equals("-3")) {
-            // bluetooth not available
-            displayMessageDialog("ERROR", "Bluetooth not available");
-        } else if (status.equals("-5")) {
-            // invalid bluetooth address
-            displayMessageDialog("ERROR", "Invalid printer address, Please make sure printer address is correct");
         } else {
-            // cannot print
-            // may be invalid printer address
-            displayMessageDialog("ERROR", "Printer address might be incorrect, Please make sure printer address is correct and printer switched ON");
+            displayMessageDialog("Error", "Error while printing...");
         }
     }
 
@@ -304,11 +282,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
             // back to main activity
             SettingsActivity.this.finish();
         } else if (view == done) {
-            //onClickDone();
-
-            // start service to test print
-            Intent intent = new Intent(this, TransPrintService.class);
-            startService(intent);
+            onClickDone();
         }
     }
 

@@ -156,7 +156,7 @@ public class SettingPrintService extends Service {
             woyoService.setAlignment(1, callback);
             woyoService.printBitmap(logo, callback);
 
-            woyoService.lineWrap(2, callback);
+            woyoService.lineWrap(1, callback);
 
             // print header
             woyoService.setAlignment(1, callback);
@@ -164,7 +164,7 @@ public class SettingPrintService extends Service {
             woyoService.printTextWithFont(branch, "", 24, callback);
             woyoService.printTextWithFont(telephoneNo, "", 24, callback);
 
-            woyoService.lineWrap(4, callback);
+            woyoService.lineWrap(5, callback);
         }
 
         private void saveSetting(Setting setting) {

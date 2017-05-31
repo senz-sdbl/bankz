@@ -243,12 +243,14 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
     public void onPostPrint(String status) {
         ActivityUtils.cancelProgressDialog();
 
-        if (status.equals("1")) {
+        if (status.equals("DONE")) {
             // clear shared objects
             Toast.makeText(TransactionDetailsActivity.this, "Transaction completed", Toast.LENGTH_LONG).show();
 
             // need to go back to transaction activity
             TransactionDetailsActivity.this.finish();
+        } else if(status.equalsIgnoreCase("FAIL")) {
+            Toast.makeText(TransactionDetailsActivity.this, "Fail to print receipt", Toast.LENGTH_LONG).show();
         } else if (status.equals("0")) {
             Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
         } else if (status.equals("-2")) {

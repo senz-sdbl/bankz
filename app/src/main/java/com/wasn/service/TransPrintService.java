@@ -123,8 +123,7 @@ public class TransPrintService extends Service {
         @Override
         protected Boolean doInBackground(String... params) {
             try {
-                //Setting setting = getSetting();
-                Setting setting = new Setting("eranga", "kirolapaa", "077432323", "");
+                Setting setting = getSetting();
                 print(transaction, setting);
 
                 return true;
@@ -156,10 +155,11 @@ public class TransPrintService extends Service {
             String branch       = "Branch       : " + setting.getBranch() + "\n";
             String telephoneNo  = "Telephone No : " + setting.getTelephone() + "\n";
             String type         = "(Deposit Receipt)\n";
-            String name         = "Name         : "+transaction.getClientName()+"\n";
-            String mobNo        = "Mobile No    : "+transaction.getClientMobile()+"\n";
-            String time         = "Data/Time    : "+transaction.getTransactionTime()+"\n";
-            String amount       = "Amount       : "+transaction.getTransactionAmount()+ ".00" + "\n";
+            String account      = "Account    : "+transaction.getClientAccountNo()+"\n";
+            String name         = "Name       : "+transaction.getClientName()+"\n";
+            String mobNo        = "Mobile No  : "+transaction.getClientMobile()+"\n";
+            String amount       = "Amount     : "+transaction.getTransactionAmount()+ ".00" + "\n";
+            String time         = "Data/Time  : "+transaction.getTransactionTime()+"\n";
             //String ref          = "Reference        : "+transaction.getUid().substring(6, transaction.getUid().length() - 3) + "\n";
             String sign         = ".....................\n";
             String end          = "Signature\n";
@@ -182,6 +182,7 @@ public class TransPrintService extends Service {
             // print transaction details
             woyoService.setAlignment(0, callback);
             woyoService.printTextWithFont(name, "", 24, callback);
+            woyoService.printTextWithFont(account, "", 24, callback);
             woyoService.printTextWithFont(mobNo, "", 24, callback);
             woyoService.printTextWithFont(time, "", 24, callback);
             woyoService.printTextWithFont(amount, "", 24, callback);

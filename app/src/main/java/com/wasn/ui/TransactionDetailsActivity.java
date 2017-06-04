@@ -6,8 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +18,13 @@ import android.widget.Toast;
 
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
-import com.wasn.async.TransactionPrintService;
 import com.wasn.enums.IntentType;
-import com.wasn.enums.PrintType;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.listeners.PrintListener;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Transaction;
+import com.wasn.service.TransPrintService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.TransactionUtils;
@@ -59,7 +56,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.hasExtra("PRINT_STATUS")) {
-                String printStatus = intent.getExtras().getParcelable("PRINT_STATUS");
+                String printStatus = intent.getExtras().getString("PRINT_STATUS");
                 onPostPrint(printStatus);
             }
         }
@@ -118,8 +115,7 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
         if (transaction != null) {
             attributesList = new ArrayList<>();
             attributesList.add(new Attribute("Account No", transaction.getClientAccountNo()));
-            if (!transaction.getClientName().isEmpty())
-                attributesList.add(new Attribute("Name", transaction.getClientName()));
+            attributesList.add(new Attribute("Name", transaction.getClientName()));
             attributesList.add(new Attribute("Mobile", transaction.getClientMobile()));
             attributesList.add(new Attribute("Amount", TransactionUtils.formatAmount(transaction.getTransactionAmount())));
             attributesList.add(new Attribute("Time", transaction.getTransactionTime()));
@@ -171,12 +167,11 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
                         ActivityUtils.showProgressDialog(TransactionDetailsActivity.this, "Printing...");
-                        TransactionPrintService service = new TransactionPrintService(TransactionDetailsActivity.this, TransactionDetailsActivity.this, transaction, PrintType.PRINT);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                            service.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                        } else {
-                            service.execute();
-                        }
+
+                        // start service to test print
+                        Intent intent = new Intent(TransactionDetailsActivity.this, TransPrintService.class);
+                        intent.putExtra("TRANSACTION", transaction);
+                        startService(intent);
                     }
                 } catch (BluetoothNotEnableException e) {
                     Toast.makeText(TransactionDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
@@ -245,11 +240,11 @@ public class TransactionDetailsActivity extends Activity implements View.OnClick
 
         if (status.equals("DONE")) {
             // clear shared objects
-            Toast.makeText(TransactionDetailsActivity.this, "Transaction completed", Toast.LENGTH_LONG).show();
+            Toast.makeText(TransactionDetailsActivity.this, "Successfully printed receipt", Toast.LENGTH_LONG).show();
 
             // need to go back to transaction activity
             TransactionDetailsActivity.this.finish();
-        } else if(status.equalsIgnoreCase("FAIL")) {
+        } else if (status.equalsIgnoreCase("FAIL")) {
             Toast.makeText(TransactionDetailsActivity.this, "Fail to print receipt", Toast.LENGTH_LONG).show();
         } else if (status.equals("0")) {
             Toast.makeText(TransactionDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();

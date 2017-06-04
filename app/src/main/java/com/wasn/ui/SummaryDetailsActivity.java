@@ -6,8 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +18,12 @@ import android.widget.Toast;
 
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
-import com.wasn.async.SummaryPrintService;
 import com.wasn.enums.IntentType;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
 import com.wasn.pojos.Attribute;
 import com.wasn.pojos.Summary;
+import com.wasn.service.DayEndPrintService;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PrintUtils;
 import com.wasn.utils.TransactionUtils;
@@ -57,7 +55,7 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.hasExtra("PRINT_STATUS")) {
-                String printStatus = intent.getExtras().getParcelable("PRINT_STATUS");
+                String printStatus = intent.getExtras().getString("PRINT_STATUS");
                 onPostPrint(printStatus);
             }
         }
@@ -166,12 +164,11 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
                 try {
                     if (PrintUtils.isEnableBluetooth()) {
                         ActivityUtils.showProgressDialog(SummaryDetailsActivity.this, "Printing...");
-                        SummaryPrintService service = new SummaryPrintService(SummaryDetailsActivity.this, summary);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                            service.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "SUMMARY");
-                        } else {
-                            service.execute("SUMMARY");
-                        }
+
+                        // start service to test print
+                        Intent intent = new Intent(SummaryDetailsActivity.this, DayEndPrintService.class);
+                        intent.putExtra("SUMMARY", summary);
+                        startService(intent);
                     }
                 } catch (BluetoothNotEnableException e) {
                     Toast.makeText(SummaryDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();
@@ -239,12 +236,12 @@ public class SummaryDetailsActivity extends Activity implements View.OnClickList
         // close progress dialog
         ActivityUtils.cancelProgressDialog();
 
-        if (status.equals("1")) {
+        if (status.equals("DONE")) {
             Toast.makeText(SummaryDetailsActivity.this, "Summary printed", Toast.LENGTH_LONG).show();
 
             // back to transaction list
             SummaryDetailsActivity.this.finish();
-        } else if (status.equals("0")) {
+        } else if (status.equals("FAIL")) {
             Toast.makeText(SummaryDetailsActivity.this, "Cannot print receipt", Toast.LENGTH_LONG).show();
         } else if (status.equals("-2")) {
             Toast.makeText(SummaryDetailsActivity.this, "Bluetooth not enabled", Toast.LENGTH_LONG).show();

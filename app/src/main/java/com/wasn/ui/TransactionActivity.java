@@ -404,7 +404,11 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                 dialog.cancel();
 
                 // send data
-                doPut();
+                //doPut();
+                // save transaction in db
+                new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
+
+                navigateTransactionDetails(transaction);
             }
         });
 

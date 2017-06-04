@@ -16,6 +16,7 @@ import android.util.Log;
 
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
+import com.wasn.db.BankzDbSource;
 import com.wasn.pojos.Setting;
 import com.wasn.pojos.Summary;
 import com.wasn.utils.BitmapUtils;
@@ -123,11 +124,11 @@ public class DayEndPrintService extends Service {
         @Override
         protected Boolean doInBackground(String... params) {
             try {
-                //Setting setting = getSetting();
-                Setting setting = new Setting("eranga", "kirolapaa", "077432323", "");
+                Setting setting = getSetting();
                 print(summary, setting);
 
                 // TODO delete all transactions from db
+                new BankzDbSource(DayEndPrintService.this).deleteAllTransactions();
 
                 return true;
             } catch (Exception e) {
@@ -158,9 +159,9 @@ public class DayEndPrintService extends Service {
             String branch       = "Branch       : " + setting.getBranch() + "\n";
             String telephoneNo  = "Telephone No : " + setting.getTelephone() + "\n";
             String type         = "(Day End Summary)\n";
-            String count        = "Count        : "+summary.getCount()+"\n";
-            String total        = "Total        : "+summary.getCount()+"\n";
-            String time         = "Data/Time    : "+summary.getTime()+"\n";
+            String count        = "Count      : "+summary.getCount()+"\n";
+            String total        = "Total      : "+summary.getTotal() + ".00" +"\n";
+            String time         = "Data/Time  : "+summary.getTime()+"\n";
             String sigLine      = ".....................\n";
             String sig          = "Signature\n";
 

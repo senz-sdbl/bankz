@@ -163,7 +163,7 @@ public class DayEndPrintService extends Service {
             String total        = "Total      : "+summary.getTotal() + ".00" +"\n";
             String time         = "Data/Time  : "+summary.getTime()+"\n";
             String sigLine      = ".....................\n";
-            String sig          = "Signature\n";
+            String sig          = "Agent signature\n";
 
             // print logo
             woyoService.setAlignment(1, callback);

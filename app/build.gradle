@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.0"
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 20
-        versionCode 6
-        versionName "1.5"
+        versionCode 7
+        versionName "1.6"
     }
 
     buildTypes {
@@ -16,6 +16,12 @@ android {
             minifyEnabled true
             debuggable false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
         }
     }
 }

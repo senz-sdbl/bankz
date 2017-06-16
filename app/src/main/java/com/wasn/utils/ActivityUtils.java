@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.inputmethod.InputMethodManager;
 
+import com.wasn.exceptions.AmountExceedLimitException;
+import com.wasn.exceptions.EmptyBranchNameException;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidAmountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
@@ -78,7 +80,22 @@ public class ActivityUtils {
         return true;
     }
 
-    public static boolean isValidTransactionFields(String account, String mobile, String amount) throws InvalidAccountException, InvalidTelephoneNoException, NumberFormatException, InvalidAmountException {
+    public static boolean isValidRegistrationFields(String account, String mobile, String branch) throws InvalidAccountException, InvalidTelephoneNoException, EmptyBranchNameException {
+        if (account.isEmpty() || account.length() < 5 || account.length() > 12) {
+            throw new InvalidAccountException();
+        }
+
+        if (mobile.isEmpty() || mobile.length() < 9 || mobile.length() > 10)
+            throw new InvalidTelephoneNoException();
+
+        if (branch.isEmpty()) {
+            throw new EmptyBranchNameException();
+        }
+
+        return true;
+    }
+
+    public static boolean isValidTransactionFields(String account, String mobile, String amount) throws InvalidAccountException, InvalidTelephoneNoException, NumberFormatException, InvalidAmountException, AmountExceedLimitException {
         if (account.isEmpty() || account.length() < 5 || account.length() > 12) {
             throw new InvalidAccountException();
         }
@@ -90,6 +107,10 @@ public class ActivityUtils {
 
         if (amount.isEmpty() || Integer.parseInt(amount) == 0) {
             throw new InvalidAmountException();
+        }
+
+        if (Integer.parseInt(amount) > 50000) {
+            throw new AmountExceedLimitException();
         }
 
         return true;

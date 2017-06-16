@@ -30,6 +30,7 @@ import com.wasn.R;
 import com.wasn.application.IntentProvider;
 import com.wasn.db.BankzDbSource;
 import com.wasn.enums.IntentType;
+import com.wasn.exceptions.AmountExceedLimitException;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidAmountException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
@@ -223,7 +224,7 @@ public class TransactionActivity extends Activity implements View.OnClickListene
         String mobile = mobileEditText.getText().toString().trim();
         String amount = amountEditText.getText().toString().trim();
 
-        if (transaction == null || (transaction != null && !TransactionUtils.isNewTransaction(transaction.getClientAccountNo(), account))) {
+        if (transaction == null || !TransactionUtils.isNewTransaction(transaction.getClientAccountNo(), account)) {
             // new transaction
             try {
                 ActivityUtils.isValidTransactionFields(account, mobile, amount);
@@ -256,6 +257,10 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                 e.printStackTrace();
 
                 showStatusMessage("ERROR", "Invalid amount");
+            } catch (AmountExceedLimitException e) {
+                e.printStackTrace();
+
+                showStatusMessage("ERROR", "Amount exceed the limit 50000");
             }
         } else {
             // ask to resubmit deposit
@@ -404,11 +409,11 @@ public class TransactionActivity extends Activity implements View.OnClickListene
                 dialog.cancel();
 
                 // send data
-                //doPut();
+                doPut();
                 // save transaction in db
-                new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
+                //new BankzDbSource(TransactionActivity.this).createTransaction(transaction);
 
-                navigateTransactionDetails(transaction);
+                //navigateTransactionDetails(transaction);
             }
         });
 

@@ -162,7 +162,7 @@ public class TransPrintService extends Service {
             String time         = "Data/Time  : "+transaction.getTransactionTime()+"\n";
             //String ref          = "Reference        : "+transaction.getUid().substring(6, transaction.getUid().length() - 3) + "\n";
             String sign         = ".....................\n";
-            String end          = "Signature\n";
+            String end          = "Agent signature\n";
 
             // print logo
             woyoService.setAlignment(1, callback);

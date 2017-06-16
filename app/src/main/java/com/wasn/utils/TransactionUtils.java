@@ -48,10 +48,11 @@ public class TransactionUtils {
 
     /**
      * Compare account no of two transaction to determine weather they are same
+     *
      * @return
      */
     public static boolean isNewTransaction(String preAccount, String curAccount) {
-         return preAccount.equalsIgnoreCase(getTransactionAccount(curAccount));
+        return preAccount.equalsIgnoreCase(getTransactionAccount(curAccount));
     }
 
     /**
@@ -78,11 +79,11 @@ public class TransactionUtils {
     /**
      * Format with 12 digits
      *
-     * @param username
+     * @param account
      * @return
      */
-    public static String getRegUsername(String username) {
-        return "000000000000".substring(username.length()) + username;
+    public static String getRegAccount(String account) {
+        return "000000000000".substring(account.length()) + account;
     }
 
     /**

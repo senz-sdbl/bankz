@@ -28,7 +28,9 @@ import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
 import com.wasn.enums.IntentType;
-import com.wasn.exceptions.InvalidInputFieldsException;
+import com.wasn.exceptions.EmptyBranchNameException;
+import com.wasn.exceptions.InvalidAccountException;
+import com.wasn.exceptions.InvalidTelephoneNoException;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
 import com.wasn.utils.PreferenceUtils;
@@ -53,8 +55,10 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
 
     // UI fields
     private Typeface typeface;
-    private EditText editTextUsername;
     private TextView description;
+    private EditText editTextAccount;
+    private EditText editTextPhone;
+    private EditText editTextBranch;
     private Button signUpButton;
 
     // service interface
@@ -136,16 +140,19 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
      */
     private void initUi() {
         typeface = Typeface.createFromAsset(getAssets(), "fonts/GeosansLight.ttf");
-        editTextUsername = (EditText) findViewById(R.id.registering_user_id);
+
         description = (TextView) findViewById(R.id.welcome_message);
+        editTextAccount = (EditText) findViewById(R.id.registering_user_id);
+        editTextPhone = (EditText) findViewById(R.id.registering_phone_no);
+        editTextBranch = (EditText) findViewById(R.id.registering_branch);
         signUpButton = (Button) findViewById(R.id.register_btn);
         signUpButton.setOnClickListener(RegistrationActivity.this);
 
-        editTextUsername.setTypeface(typeface, Typeface.NORMAL);
         description.setTypeface(typeface, Typeface.BOLD);
+        editTextAccount.setTypeface(typeface, Typeface.BOLD);
+        editTextPhone.setTypeface(typeface, Typeface.BOLD);
+        editTextBranch.setTypeface(typeface, Typeface.BOLD);
         signUpButton.setTypeface(typeface, Typeface.BOLD);
-
-        editTextUsername.setTypeface(typeface, Typeface.NORMAL);
     }
 
     protected void bindToService() {
@@ -176,15 +183,23 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         ActivityUtils.hideSoftKeyboard(this);
 
         // crate user
-        String username = editTextUsername.getText().toString().trim();
+        String account = editTextAccount.getText().toString().trim();
+        String phone = editTextPhone.getText().toString().trim();
+        String branch = editTextBranch.getText().toString().trim();
         try {
-            ActivityUtils.isValidUsername(username);
-            registeringUser = new User("0", TransactionUtils.getRegUsername(username));
+            ActivityUtils.isValidRegistrationFields(account, phone, branch);
+            registeringUser = new User("0", TransactionUtils.getRegAccount(account));
             String confirmationMessage = "<font color=#636363>Are you sure you want to register with account </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font>";
             displayConfirmationMessageDialog(confirmationMessage);
-        } catch (InvalidInputFieldsException e) {
-            displayInformationMessageDialog("Error", "Invalid Account no. Account no should be 5 to 12 character length");
+        } catch (InvalidAccountException e) {
             e.printStackTrace();
+            displayInformationMessageDialog("Error", "Invalid Account no. Account no should be 5 to 12 character length");
+        } catch (InvalidTelephoneNoException e) {
+            e.printStackTrace();
+            displayInformationMessageDialog("Error", "Invalid telephone no");
+        } catch (EmptyBranchNameException e) {
+            e.printStackTrace();
+            displayInformationMessageDialog("Error", "Empty branch name");
         }
     }
 
@@ -264,9 +279,11 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
             if (msg != null && (msg.equalsIgnoreCase("REG_DONE") || msg.equalsIgnoreCase("REG_ALR"))) {
                 Toast.makeText(this, "Registration done", Toast.LENGTH_LONG).show();
 
-                // save user
+                // save user, telephone, branch
                 // navigate home
                 PreferenceUtils.saveUser(this, registeringUser);
+                PreferenceUtils.savePhone(this, editTextPhone.getText().toString().trim());
+                PreferenceUtils.saveBranch(this, editTextBranch.getText().toString().trim());
                 navigateToHome();
             } else if (msg != null && msg.equalsIgnoreCase("REG_FAIL")) {
                 String informationMessage = "<font size=10 color=#636363>Seems username </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font> <font color=#636363> already obtained by some other user, try a different username</font>";
@@ -293,7 +310,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         // set dialog texts
         TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
         TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
-        messageHeaderTextView.setText("Confirm username");
+        messageHeaderTextView.setText("Confirm");
         messageTextView.setText(Html.fromHtml(message));
 
         // set custom font
@@ -345,8 +362,8 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
         messageTextView.setText(Html.fromHtml(message));
 
         // set custom font
-        messageHeaderTextView.setTypeface(typeface);
-        messageTextView.setTypeface(typeface);
+        messageHeaderTextView.setTypeface(typeface, Typeface.BOLD);
+        messageTextView.setTypeface(typeface, Typeface.BOLD);
 
         //set ok button
         Button okButton = (Button) dialog.findViewById(R.id.information_message_dialog_layout_ok_button);

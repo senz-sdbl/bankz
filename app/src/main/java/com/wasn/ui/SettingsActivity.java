@@ -223,6 +223,7 @@ public class SettingsActivity extends Activity implements View.OnClickListener {
         //set layout for dialog
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.input_password_dialog_layout);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.setCancelable(true);
 

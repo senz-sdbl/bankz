@@ -110,6 +110,7 @@
             android:configChanges="orientation"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".ui.HistoryListActivity"

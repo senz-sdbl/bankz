@@ -52,8 +52,13 @@ public class SplashActivity extends Activity {
         try {
             PreferenceUtils.getUser(this);
 
-            // have user, so move to home
-            navigateToHome();
+            if (PreferenceUtils.getBranch(this).isEmpty() || PreferenceUtils.getPhone(this).isEmpty()) {
+                // navigate to configure
+                navigateConfigure();
+            } else {
+                // have user, so move to home
+                navigateToHome();
+            }
         } catch (NoUserException e) {
             e.printStackTrace();
             navigateToSplash();
@@ -78,7 +83,14 @@ public class SplashActivity extends Activity {
         Intent intent = new Intent(this, RegistrationActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        overridePendingTransition(R.anim.right_in, R.anim.right_out);
+        finish();
+    }
+
+    private void navigateConfigure() {
+        // no user, so move to registration
+        Intent intent = new Intent(this, ConfigureActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 

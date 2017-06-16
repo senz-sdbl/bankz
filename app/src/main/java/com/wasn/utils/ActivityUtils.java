@@ -95,6 +95,17 @@ public class ActivityUtils {
         return true;
     }
 
+    public static boolean isValidConfigurationFields(String phone, String branch, String region) throws InvalidTelephoneNoException, EmptyBranchNameException {
+        if (phone.isEmpty() || phone.length() < 9 || phone.length() > 10)
+            throw new InvalidTelephoneNoException();
+
+        if (branch.isEmpty()) {
+            throw new EmptyBranchNameException();
+        }
+
+        return true;
+    }
+
     public static boolean isValidTransactionFields(String account, String mobile, String amount) throws InvalidAccountException, InvalidTelephoneNoException, NumberFormatException, InvalidAmountException, AmountExceedLimitException {
         if (account.isEmpty() || account.length() < 5 || account.length() > 12) {
             throw new InvalidAccountException();

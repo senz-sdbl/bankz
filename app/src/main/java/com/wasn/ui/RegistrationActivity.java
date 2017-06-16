@@ -243,9 +243,10 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
      * Switch to home activity
      * This method will be call after successful login
      */
-    private void navigateToHome() {
-        Intent intent = new Intent(RegistrationActivity.this, BankzActivity.class);
+    private void navigateToConfigure() {
+        Intent intent = new Intent(RegistrationActivity.this, ConfigureActivity.class);
         RegistrationActivity.this.startActivity(intent);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
         RegistrationActivity.this.finish();
     }
 
@@ -279,12 +280,10 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
             if (msg != null && (msg.equalsIgnoreCase("REG_DONE") || msg.equalsIgnoreCase("REG_ALR"))) {
                 Toast.makeText(this, "Registration done", Toast.LENGTH_LONG).show();
 
-                // save user, telephone, branch
+                // save user
                 // navigate home
                 PreferenceUtils.saveUser(this, registeringUser);
-                PreferenceUtils.savePhone(this, editTextPhone.getText().toString().trim());
-                PreferenceUtils.saveBranch(this, editTextBranch.getText().toString().trim());
-                navigateToHome();
+                navigateToConfigure();
             } else if (msg != null && msg.equalsIgnoreCase("REG_FAIL")) {
                 String informationMessage = "<font size=10 color=#636363>Seems username </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font> <font color=#636363> already obtained by some other user, try a different username</font>";
                 displayInformationMessageDialog("Registration fail", informationMessage);

@@ -27,6 +27,7 @@ public class PreferenceUtils {
         //keys should be constants as well, or derived from a constant prefix in a loop.
         editor.putString("id", user.getId());
         editor.putString("username", user.getUsername());
+        editor.putString("username", user.getUsername());
         editor.commit();
     }
 
@@ -145,6 +146,30 @@ public class PreferenceUtils {
     public static String getPhone(Context context) {
         SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         return preferences.getString("PHONE", "");
+    }
+
+    /**
+     * Save password in shared preference
+     *
+     * @param context  application context
+     * @param password
+     */
+    public static void savePassword(Context context, String password) {
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("PASSWORD", password);
+        editor.commit();
+    }
+
+    /**
+     * Get saved password from shared preference
+     *
+     * @param context
+     * @return
+     */
+    public static String getPassword(Context context) {
+        SharedPreferences preferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        return preferences.getString("PASSWORD", "");
     }
 
 }

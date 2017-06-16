@@ -28,9 +28,9 @@ import com.score.senzc.pojos.User;
 import com.wasn.R;
 import com.wasn.application.IntentProvider;
 import com.wasn.enums.IntentType;
-import com.wasn.exceptions.EmptyBranchNameException;
 import com.wasn.exceptions.InvalidAccountException;
-import com.wasn.exceptions.InvalidTelephoneNoException;
+import com.wasn.exceptions.InvalidPasswordException;
+import com.wasn.exceptions.PasswordMisMatchException;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.NetworkUtil;
 import com.wasn.utils.PreferenceUtils;
@@ -57,8 +57,8 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
     private Typeface typeface;
     private TextView description;
     private EditText editTextAccount;
-    private EditText editTextPhone;
-    private EditText editTextBranch;
+    private EditText editTextPassword;
+    private EditText editTextConfirmPassword;
     private Button signUpButton;
 
     // service interface
@@ -143,15 +143,15 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
 
         description = (TextView) findViewById(R.id.welcome_message);
         editTextAccount = (EditText) findViewById(R.id.registering_user_id);
-        editTextPhone = (EditText) findViewById(R.id.registering_phone_no);
-        editTextBranch = (EditText) findViewById(R.id.registering_branch);
+        editTextPassword = (EditText) findViewById(R.id.registering_password);
+        editTextConfirmPassword = (EditText) findViewById(R.id.registering_confirm_password);
         signUpButton = (Button) findViewById(R.id.register_btn);
         signUpButton.setOnClickListener(RegistrationActivity.this);
 
         description.setTypeface(typeface, Typeface.BOLD);
         editTextAccount.setTypeface(typeface, Typeface.BOLD);
-        editTextPhone.setTypeface(typeface, Typeface.BOLD);
-        editTextBranch.setTypeface(typeface, Typeface.BOLD);
+        editTextPassword.setTypeface(typeface, Typeface.BOLD);
+        editTextConfirmPassword.setTypeface(typeface, Typeface.BOLD);
         signUpButton.setTypeface(typeface, Typeface.BOLD);
     }
 
@@ -184,22 +184,22 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
 
         // crate user
         String account = editTextAccount.getText().toString().trim();
-        String phone = editTextPhone.getText().toString().trim();
-        String branch = editTextBranch.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
+        String confirmPassword = editTextConfirmPassword.getText().toString().trim();
         try {
-            ActivityUtils.isValidRegistrationFields(account, phone, branch);
+            ActivityUtils.isValidRegistrationFields(account, password, confirmPassword);
             registeringUser = new User("0", TransactionUtils.getRegAccount(account));
             String confirmationMessage = "<font color=#636363>Are you sure you want to register with account </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font>";
             displayConfirmationMessageDialog(confirmationMessage);
         } catch (InvalidAccountException e) {
             e.printStackTrace();
             displayInformationMessageDialog("Error", "Invalid Account no. Account no should be 5 to 12 character length");
-        } catch (InvalidTelephoneNoException e) {
+        } catch (InvalidPasswordException e) {
             e.printStackTrace();
-            displayInformationMessageDialog("Error", "Invalid telephone no");
-        } catch (EmptyBranchNameException e) {
+            displayInformationMessageDialog("Error", "Invalid password. Password should contains more than 4 characters");
+        } catch (PasswordMisMatchException e) {
             e.printStackTrace();
-            displayInformationMessageDialog("Error", "Empty branch name");
+            displayInformationMessageDialog("Error", "Mismatching password and confirm password");
         }
     }
 
@@ -283,6 +283,7 @@ public class RegistrationActivity extends Activity implements View.OnClickListen
                 // save user
                 // navigate home
                 PreferenceUtils.saveUser(this, registeringUser);
+                PreferenceUtils.savePassword(this, editTextPassword.getText().toString().trim());
                 navigateToConfigure();
             } else if (msg != null && msg.equalsIgnoreCase("REG_FAIL")) {
                 String informationMessage = "<font size=10 color=#636363>Seems username </font> <font color=#00a1e4>" + "<b>" + registeringUser.getUsername() + "</b>" + "</font> <font color=#636363> already obtained by some other user, try a different username</font>";

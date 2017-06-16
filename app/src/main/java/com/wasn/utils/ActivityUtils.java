@@ -10,7 +10,9 @@ import com.wasn.exceptions.EmptyBranchNameException;
 import com.wasn.exceptions.InvalidAccountException;
 import com.wasn.exceptions.InvalidAmountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
+import com.wasn.exceptions.InvalidPasswordException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
+import com.wasn.exceptions.PasswordMisMatchException;
 
 /**
  * Utility class to handle activity related common functions
@@ -80,17 +82,16 @@ public class ActivityUtils {
         return true;
     }
 
-    public static boolean isValidRegistrationFields(String account, String mobile, String branch) throws InvalidAccountException, InvalidTelephoneNoException, EmptyBranchNameException {
+    public static boolean isValidRegistrationFields(String account, String password, String confirmPassword) throws InvalidAccountException, InvalidPasswordException, PasswordMisMatchException {
         if (account.isEmpty() || account.length() < 5 || account.length() > 12) {
             throw new InvalidAccountException();
         }
 
-        if (mobile.isEmpty() || mobile.length() < 9 || mobile.length() > 10)
-            throw new InvalidTelephoneNoException();
+        if (password.isEmpty() || password.length() < 4)
+            throw new InvalidPasswordException();
 
-        if (branch.isEmpty()) {
-            throw new EmptyBranchNameException();
-        }
+        if (!password.equals(confirmPassword))
+            throw new PasswordMisMatchException();
 
         return true;
     }

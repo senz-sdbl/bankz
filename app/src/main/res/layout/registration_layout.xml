@@ -65,7 +65,7 @@
                 android:textSize="25sp" />
 
             <EditText
-                android:id="@+id/registering_phone_no"
+                android:id="@+id/registering_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -74,8 +74,8 @@
                 android:layout_marginTop="35dp"
                 android:textCursorDrawable="@drawable/cursor_drawable"
                 android:background="@drawable/border_bottom"
-                android:hint="Telephone no"
-                android:inputType="number"
+                android:hint="Password"
+                android:inputType="textPassword"
                 android:maxLength="10"
                 android:paddingBottom="10dp"
                 android:textColor="#00a1e4"
@@ -83,7 +83,7 @@
                 android:textSize="25sp" />
 
             <EditText
-                android:id="@+id/registering_branch"
+                android:id="@+id/registering_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -92,8 +92,8 @@
                 android:textCursorDrawable="@drawable/cursor_drawable"
                 android:layout_marginTop="35dp"
                 android:background="@drawable/border_bottom"
-                android:hint="Branch"
-                android:inputType="textCapSentences"
+                android:hint="Confirm password"
+                android:inputType="textPassword"
                 android:maxLength="16"
                 android:paddingBottom="10dp"
                 android:textColor="#00a1e4"

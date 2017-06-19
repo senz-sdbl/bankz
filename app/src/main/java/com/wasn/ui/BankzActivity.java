@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wasn.R;
+import com.wasn.application.BankzApplication;
 
 /**
  * Main activity class of the application
@@ -127,6 +128,7 @@ public class BankzActivity extends Activity implements View.OnClickListener {
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // back to login activity
+                BankzApplication.setLogin(false);
                 startActivity(new Intent(BankzActivity.this, LoginActivity.class));
                 BankzActivity.this.finish();
                 dialog.cancel();

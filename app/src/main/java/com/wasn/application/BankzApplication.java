@@ -8,7 +8,17 @@ import android.app.Application;
  *
  * @author erangaeb@gmail.com (eranga bandara)
  */
-public class MobileBankApplication extends Application {
+public class BankzApplication extends Application {
+
+    private static boolean isLogin;
+
+    public static boolean isLogin() {
+        return isLogin;
+    }
+
+    public static void setLogin(boolean login) {
+        isLogin = login;
+    }
 
     /**
      * {@inheritDoc}

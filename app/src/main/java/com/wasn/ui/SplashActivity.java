@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.widget.TextView;
 
 import com.wasn.R;
+import com.wasn.application.BankzApplication;
 import com.wasn.exceptions.NoUserException;
 import com.wasn.remote.SenzService;
 import com.wasn.utils.PreferenceUtils;
@@ -56,8 +57,11 @@ public class SplashActivity extends Activity {
                 // navigate to configure
                 navigateConfigure();
             } else {
-                // have user, navigate to login
-                navigateToLogin();
+                // have user, navigate to login if not login
+                if (BankzApplication.isLogin())
+                    navigateToHome();
+                else
+                    navigateToLogin();
             }
         } catch (NoUserException e) {
             e.printStackTrace();

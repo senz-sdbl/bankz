@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wasn.R;
+import com.wasn.application.BankzApplication;
 import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.exceptions.MismatchingCredentialsException;
 import com.wasn.exceptions.NoUserException;
@@ -103,6 +104,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             String account = TransactionUtils.getRegAccount(editTextAccount.getText().toString().trim());
             String password = editTextPassword.getText().toString().trim();
             ActivityUtils.isValidLoginFields(account, password, acc, pwd);
+            BankzApplication.setLogin(true);
             navigateToHome();
             Toast.makeText(this, "Login success", Toast.LENGTH_LONG).show();
         } catch (NoUserException e) {

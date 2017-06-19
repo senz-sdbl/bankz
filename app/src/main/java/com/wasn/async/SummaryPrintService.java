@@ -2,7 +2,7 @@ package com.wasn.async;
 
 import android.os.AsyncTask;
 
-import com.wasn.application.MobileBankApplication;
+import com.wasn.application.BankzApplication;
 import com.wasn.db.BankzDbSource;
 import com.wasn.exceptions.BluetoothNotAvailableException;
 import com.wasn.exceptions.BluetoothNotEnableException;
@@ -24,7 +24,7 @@ import java.io.IOException;
 public class SummaryPrintService extends AsyncTask<String, String, String> {
 
     SummaryDetailsActivity activity;
-    MobileBankApplication application;
+    BankzApplication application;
     Summary summary;
 
     /**
@@ -35,7 +35,7 @@ public class SummaryPrintService extends AsyncTask<String, String, String> {
     public SummaryPrintService(SummaryDetailsActivity activity, Summary summary) {
         this.activity = activity;
         this.summary = summary;
-        application = (MobileBankApplication) activity.getApplication();
+        application = (BankzApplication) activity.getApplication();
     }
 
     /**

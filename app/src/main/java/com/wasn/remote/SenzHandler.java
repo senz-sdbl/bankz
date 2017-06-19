@@ -39,8 +39,6 @@ class SenzHandler {
     }
 
     private void handleShare(Senz senz, SenzService senzService) {
-        // broadcast
-
     }
 
     private void handleGet(Senz senz, SenzService senzService) {

@@ -29,12 +29,8 @@ public class BankzActivity extends Activity implements View.OnClickListener {
     RelativeLayout logout;
     TextView logoutText;
     TextView transactionText;
-    TextView transactionIcon;
     TextView summaryText;
-    TextView summaryIcon;
     TextView settingsText;
-    TextView settingsIcon;
-    TextView mbankIcon;
 
     /**
      * {@inheritDoc}
@@ -62,23 +58,14 @@ public class BankzActivity extends Activity implements View.OnClickListener {
         logoutText = (TextView) findViewById(R.id.mobile_bank_layout_logout_text);
         logoutText.setTypeface(typeface, Typeface.BOLD);
 
-        transactionIcon = (TextView) findViewById(R.id.transaction_icon);
         transactionText = (TextView) findViewById(R.id.tranaction_text);
-        transactionIcon.setTypeface(typeface, Typeface.BOLD);
         transactionText.setTypeface(typeface, Typeface.BOLD);
 
-        summaryIcon = (TextView) findViewById(R.id.summary_icon);
         summaryText = (TextView) findViewById(R.id.summary_text);
-        summaryIcon.setTypeface(typeface, Typeface.BOLD);
         summaryText.setTypeface(typeface, Typeface.BOLD);
 
-        settingsIcon = (TextView) findViewById(R.id.settings_icon);
         settingsText = (TextView) findViewById(R.id.settings_text);
-        settingsIcon.setTypeface(typeface, Typeface.BOLD);
         settingsText.setTypeface(typeface, Typeface.BOLD);
-
-        mbankIcon = (TextView) findViewById(R.id.mbank_icon);
-        mbankIcon.setTypeface(typeface, Typeface.BOLD);
 
         balanceQueryLayout.setOnClickListener(BankzActivity.this);
         summaryLayout.setOnClickListener(BankzActivity.this);

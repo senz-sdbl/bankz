@@ -16,7 +16,6 @@ import android.util.Log;
 import com.score.senz.ISenzService;
 import com.score.senzc.pojos.Senz;
 import com.wasn.application.IntentProvider;
-import com.wasn.enums.IntentType;
 import com.wasn.utils.NetworkUtil;
 import com.wasn.utils.PreferenceUtils;
 import com.wasn.utils.RSAUtils;
@@ -35,7 +34,6 @@ public class SenzService extends Service {
     private static final String TAG = SenzService.class.getName();
 
     // socket host, port
-    //private static final String SENZ_HOST = "10.2.2.1";
     private static final String SENZ_HOST = "10.100.31.44";
     public static final int SENZ_PORT = 7070;
 
@@ -75,12 +73,6 @@ public class SenzService extends Service {
                 // init comm
                 initSenzComm();
             }
-        }
-    };
-
-    private BroadcastReceiver connectedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
         }
     };
 
@@ -129,13 +121,11 @@ public class SenzService extends Service {
         IntentFilter networkFilter = new IntentFilter();
         networkFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkStatusReceiver, networkFilter);
-        registerReceiver(connectedReceiver, IntentProvider.getIntentFilter(IntentType.CONNECTED));
     }
 
     private void unRegisterReceivers() {
         // un register receivers
         unregisterReceiver(networkStatusReceiver);
-        unregisterReceiver(connectedReceiver);
     }
 
     private void initWakeLock() {
@@ -205,9 +195,7 @@ public class SenzService extends Service {
                 // handle senz
                 if (senz.equalsIgnoreCase("TAK")) {
                     // connected
-                    // broadcast connected message
-                    Intent intent = new Intent(IntentProvider.ACTION_CONNECTED);
-                    sendBroadcast(intent);
+                    Log.d(TAG, "TAK received");
                 } else if (senz.equalsIgnoreCase("TIK")) {
                     // send tuk
                     write("TUK");
@@ -273,11 +261,6 @@ public class SenzService extends Service {
         if (senz != null) writeSenz(senz);
     }
 
-    private void requestPubKey(String username) {
-        Senz senz = SenzUtils.getPubkeySenz(this, username);
-        writeSenz(senz);
-    }
-
     void writeSenz(final Senz senz) {
         new Thread(new Runnable() {
             public void run() {
@@ -304,7 +287,7 @@ public class SenzService extends Service {
         }).start();
     }
 
-    class SenzComm extends AsyncTask<String, String, Integer> {
+    private class SenzComm extends AsyncTask<String, String, Integer> {
         @Override
         protected Integer doInBackground(String[] params) {
             if (!connectedSwitch) {

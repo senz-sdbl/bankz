@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#e4e4e4"
+    android:background="#fff"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -11,40 +11,11 @@
         android:background="#00a1e4"
         android:layout_marginBottom="12dp">
 
-        <!--<ImageView-->
-            <!--android:layout_width="100dp"-->
-            <!--android:layout_height="100dp"-->
-            <!--android:src="@drawable/sdbl_logo"-->
-            <!--android:id="@+id/mbank_icon"-->
-            <!--android:layout_centerHorizontal="true"/>-->
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/sdb_logo_blue"
             android:layout_centerInParent="true"/>
-
-        <TextView
-            android:layout_width="60dp"
-            android:id="@+id/mbank_icon"
-            android:layout_height="60dp"
-            android:gravity="center"
-            android:text="#"
-            android:textColor="#306d97"
-            android:visibility="gone"
-            android:textSize="40sp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/circle_shape_white"
-            android:layout_centerVertical="true"/>
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:textSize="35sp"-->
-            <!--android:layout_marginLeft="38dp"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:id="@+id/mbank_text"-->
-            <!--android:layout_toRightOf="@+id/mbank_icon"-->
-            <!--android:text="MBank"-->
-            <!--android:textColor="#ffffff"-->
-            <!--android:layout_height="wrap_content" />-->
     </RelativeLayout>
 
     <LinearLayout
@@ -53,20 +24,6 @@
         android:layout_weight="1"
         android:orientation="vertical" >
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/main_button_selector">-->
-
-            <!--<Button-->
-                <!--android:id="@+id/mobile_bank_layout_transaction_button"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="fill_parent"-->
-                <!--android:layout_margin="12dp"-->
-                <!--android:background="@drawable/login_button_selector" >-->
-            <!--</Button>-->
-        <!--</LinearLayout>-->
         <RelativeLayout
             android:layout_width="fill_parent"
             android:id="@+id/transaction_layout"
@@ -145,36 +102,6 @@
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/main_button_selector">-->
-
-            <!--<Button-->
-                <!--android:id="@+id/mobile_bank_layout_summary_button"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="fill_parent"-->
-                <!--android:layout_margin="12dp"-->
-                <!--android:background="@drawable/summary_new" >-->
-            <!--</Button>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@drawable/main_button_selector">-->
-
-            <!--<Button-->
-                <!--android:id="@+id/mobile_bank_layout_settings_button"-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="fill_parent"-->
-                <!--android:layout_margin="12dp"-->
-                <!--android:background="@drawable/settings_new" >-->
-            <!--</Button>-->
-        <!--</LinearLayout>-->
-
         <RelativeLayout
             android:layout_width="fill_parent"
             android:id="@+id/settings_layout"
@@ -219,6 +146,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:visibility="visible"
+        android:layout_marginBottom="10dp"
         android:layout_height="60dp" >
 
         <RelativeLayout
@@ -240,13 +168,6 @@
                 android:id="@+id/mobile_bank_layout_logout_text"
                 android:textColor="#00a1e4">
             </TextView>
-            <!--<ImageView-->
-                <!--android:layout_height="25dp"-->
-                <!--android:layout_width="25dp"-->
-                <!--android:layout_centerInParent="true"-->
-                <!--android:background="@drawable/user">-->
-            <!--</ImageView>-->
-
         </RelativeLayout>
     </RelativeLayout>
 

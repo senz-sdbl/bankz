@@ -12,6 +12,7 @@ import com.wasn.exceptions.InvalidAmountException;
 import com.wasn.exceptions.InvalidInputFieldsException;
 import com.wasn.exceptions.InvalidPasswordException;
 import com.wasn.exceptions.InvalidTelephoneNoException;
+import com.wasn.exceptions.MismatchingCredentialsException;
 import com.wasn.exceptions.PasswordMisMatchException;
 
 /**
@@ -100,9 +101,20 @@ public class ActivityUtils {
         if (phone.isEmpty() || phone.length() < 9 || phone.length() > 10)
             throw new InvalidTelephoneNoException();
 
-        if (branch.isEmpty()) {
+        if (branch.isEmpty())
             throw new EmptyBranchNameException();
-        }
+
+        return true;
+    }
+
+    public static boolean isValidLoginFields(String givenAccount, String givenPassword, String account, String password) throws InvalidInputFieldsException, MismatchingCredentialsException {
+        if (givenAccount.isEmpty() || givenPassword.isEmpty())
+            // empty fields
+            throw new InvalidInputFieldsException();
+
+        if (!givenAccount.equalsIgnoreCase(account) || !givenPassword.equalsIgnoreCase(password))
+            // invalid username/password
+            throw new MismatchingCredentialsException();
 
         return true;
     }

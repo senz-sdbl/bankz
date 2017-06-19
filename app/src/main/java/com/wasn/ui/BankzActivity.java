@@ -92,7 +92,7 @@ public class BankzActivity extends Activity implements View.OnClickListener {
             startActivity(new Intent(BankzActivity.this, SettingsActivity.class));
             //BankzActivity.this.finish();
         } else if (view == logout) {
-            displayInformationMessageDialog("Are you sure, you want to logout? ");
+            displayLogoutMessageDialog("Are you sure, you want to logout? ");
         }
     }
 
@@ -101,7 +101,7 @@ public class BankzActivity extends Activity implements View.OnClickListener {
      *
      * @param message
      */
-    public void displayInformationMessageDialog(String message) {
+    public void displayLogoutMessageDialog(String message) {
         final Dialog dialog = new Dialog(BankzActivity.this);
 
         //set layout for dialog
@@ -125,7 +125,7 @@ public class BankzActivity extends Activity implements View.OnClickListener {
         okButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // back to login activity
-                //startActivity(new Intent(MobileBankActivity.this, LoginActivity.class));
+                startActivity(new Intent(BankzActivity.this, LoginActivity.class));
                 BankzActivity.this.finish();
                 dialog.cancel();
             }

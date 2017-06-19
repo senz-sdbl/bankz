@@ -56,8 +56,8 @@ public class SplashActivity extends Activity {
                 // navigate to configure
                 navigateConfigure();
             } else {
-                // have user, so move to home
-                navigateToHome();
+                // have user, navigate to login
+                navigateToLogin();
             }
         } catch (NoUserException e) {
             e.printStackTrace();
@@ -103,6 +103,12 @@ public class SplashActivity extends Activity {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         SplashActivity.this.finish();
+    }
 
+    public void navigateToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        SplashActivity.this.finish();
     }
 }

@@ -3,171 +3,189 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#fff"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:background="#00a1e4"
-        android:layout_marginBottom="12dp">
+        android:layout_marginBottom="12dp"
+        android:background="#00a1e4">
 
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/sdb_logo_blue"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:src="@drawable/sdb_logo_blue" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_width="fill_parent"
             android:id="@+id/transaction_layout"
-            android:background="@drawable/app_button_selector"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            android:layout_weight="1">
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/app_button_selector"
+            android:clickable="true">
+
             <ImageView
                 android:layout_width="40dp"
-                android:layout_marginLeft="20dp"
                 android:layout_height="40dp"
-                android:src="@drawable/sdb_cash"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/sdb_cash" />
+
             <TextView
-                android:layout_width="40dp"
                 android:id="@+id/transaction_icon"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="0dp"
+                android:background="@drawable/circle_shape_blue"
                 android:gravity="center"
-                android:visibility="invisible"
                 android:text="$"
                 android:textColor="#fff"
                 android:textSize="30sp"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/circle_shape_blue"
-                android:layout_centerVertical="true"/>
+                android:visibility="invisible" />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:textSize="35sp"
-                android:layout_marginLeft="38dp"
-                android:layout_centerInParent="true"
                 android:id="@+id/tranaction_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="38dp"
                 android:layout_toRightOf="@+id/transaction_icon"
                 android:text="Transaction"
                 android:textColor="#00a1e4"
-                android:layout_height="wrap_content" />
-         </RelativeLayout>
+                android:textSize="35sp" />
+        </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="fill_parent"
             android:id="@+id/summary_layout"
-            android:background="@drawable/app_button_selector"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_margin="10dp"
-            android:clickable="true"
-            android:layout_weight="1">
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/app_button_selector"
+            android:clickable="true">
+
             <ImageView
                 android:layout_width="40dp"
-                android:layout_marginLeft="20dp"
                 android:layout_height="40dp"
-                android:src="@drawable/sdb_history"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/sdb_history" />
+
             <TextView
-                android:layout_width="40dp"
                 android:id="@+id/summary_icon"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:visibility="invisible"
+                android:background="@drawable/circle_shape_blue"
                 android:gravity="center"
                 android:text="%"
                 android:textColor="#fff"
                 android:textSize="30sp"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/circle_shape_blue"
-                android:layout_centerVertical="true"/>
+                android:visibility="invisible" />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:textSize="35sp"
-                android:layout_marginLeft="38dp"
-                android:layout_centerInParent="true"
                 android:id="@+id/summary_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="38dp"
                 android:layout_toRightOf="@+id/summary_icon"
                 android:text="History"
                 android:textColor="#00a1e4"
-                android:layout_height="wrap_content" />
+                android:textSize="35sp" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="fill_parent"
             android:id="@+id/settings_layout"
-            android:clickable="true"
-            android:background="@drawable/app_button_selector"
+            android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="1">
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/app_button_selector"
+            android:clickable="true">
+
             <ImageView
                 android:layout_width="40dp"
-                android:layout_marginLeft="20dp"
                 android:layout_height="40dp"
-                android:src="@drawable/sdb_setting"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/sdb_setting" />
+
             <TextView
-                android:layout_width="40dp"
                 android:id="@+id/settings_icon"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:visibility="invisible"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
+                android:background="@drawable/circle_shape_blue"
                 android:gravity="center"
                 android:text="/"
                 android:textColor="#fff"
                 android:textSize="30sp"
-                android:layout_alignParentLeft="true"
-                android:background="@drawable/circle_shape_blue"
-                android:layout_centerVertical="true"/>
+                android:visibility="invisible" />
+
             <TextView
-                android:layout_width="wrap_content"
-                android:textSize="35sp"
-                android:layout_marginLeft="38dp"
-                android:layout_centerInParent="true"
                 android:id="@+id/settings_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="38dp"
                 android:layout_toRightOf="@+id/settings_icon"
                 android:text="Configure"
                 android:textColor="#00a1e4"
-                android:layout_height="wrap_content" />
+                android:textSize="35sp" />
         </RelativeLayout>
 
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:visibility="visible"
+        android:layout_height="60dp"
         android:layout_marginBottom="10dp"
-        android:layout_height="60dp" >
+        android:visibility="visible">
 
         <RelativeLayout
-            android:layout_alignParentRight="true"
+            android:id="@+id/mobile_bank_layout_logout"
             android:layout_width="100dp"
             android:layout_height="34dp"
+            android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:layout_marginRight="13dp"
+            android:layout_marginRight="18dp"
             android:background="@drawable/logout_button_selector"
-            android:clickable="true"
-            android:id="@+id/mobile_bank_layout_logout">
+            android:clickable="true">
+
             <TextView
+                android:id="@+id/mobile_bank_layout_logout_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="Logout"
                 android:layout_marginRight="15dp"
-                android:textSize="16sp"
-                android:id="@+id/mobile_bank_layout_logout_text"
-                android:textColor="#00a1e4">
-            </TextView>
+                android:text="Logout"
+                android:textColor="#00a1e4"
+                android:textSize="16sp" />
         </RelativeLayout>
     </RelativeLayout>
 

@@ -92,16 +92,17 @@ public class BankzActivity extends Activity implements View.OnClickListener {
             startActivity(new Intent(BankzActivity.this, SettingsActivity.class));
             //BankzActivity.this.finish();
         } else if (view == logout) {
-            displayLogoutMessageDialog("Are you sure, you want to logout? ");
+            displayLogoutMessageDialog("Logout", "Are you sure, you want to logout? ");
         }
     }
 
     /**
      * Display message dialog when user going to logout
      *
+     * @param title
      * @param message
      */
-    public void displayLogoutMessageDialog(String message) {
+    public void displayLogoutMessageDialog(String title, String message) {
         final Dialog dialog = new Dialog(BankzActivity.this);
 
         //set layout for dialog
@@ -113,6 +114,7 @@ public class BankzActivity extends Activity implements View.OnClickListener {
         // set dialog texts
         TextView messageHeaderTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_header_text);
         TextView messageTextView = (TextView) dialog.findViewById(R.id.information_message_dialog_layout_message_text);
+        messageHeaderTextView.setText(title);
         messageTextView.setText(message);
 
         // set custom font

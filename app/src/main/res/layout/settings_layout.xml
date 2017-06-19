@@ -113,7 +113,10 @@
                     android:enabled="false"
                     android:focusableInTouchMode="false"
                     android:inputType="text"
-                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
                     android:text="eranga"
                     android:textColor="#ABABAB"
                     android:textCursorDrawable="@null"
@@ -145,7 +148,10 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
                     android:inputType="text"
-                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
                     android:textSize="18sp" />
@@ -177,7 +183,10 @@
                     android:background="@drawable/text_filed_shape"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
                     android:textSize="18sp" />
@@ -188,8 +197,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/settings_printer_bluetooth_address"
@@ -209,7 +218,10 @@
                     android:layout_marginRight="20dp"
                     android:background="@drawable/text_filed_shape"
                     android:inputType="text"
-                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
                     android:textColor="#4a4a4a"
                     android:textCursorDrawable="@null"
                     android:textSize="18sp" />

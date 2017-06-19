@@ -120,7 +120,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
-                    android:visibility="gone"
                     android:text="Account No"
                     android:textColor="#4a4a4a"
                     android:textSize="20sp" />
@@ -129,16 +128,17 @@
                     android:id="@+id/transaction_layout_account_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@drawable/border_bottom"
+                    android:background="@drawable/text_filed_shape"
                     android:inputType="number"
-                    android:hint="Account No"
                     android:maxLength="12"
-                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
                     android:textColor="#4a4a4a"
-                    android:textCursorDrawable="@drawable/cursor_drawable"
+                    android:textCursorDrawable="@null"
                     android:textSize="18dp" />
             </LinearLayout>
 
@@ -153,7 +153,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
-                    android:visibility="gone"
                     android:text="Amount"
                     android:textColor="#4a4a4a"
                     android:textSize="20sp" />
@@ -161,17 +160,18 @@
                 <EditText
                     android:id="@+id/transaction_layout_amount_text"
                     android:layout_width="fill_parent"
-                    android:layout_marginTop="25dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:hint="Amount"
-                    android:background="@drawable/border_bottom"
+                    android:background="@drawable/text_filed_shape"
                     android:inputType="number"
                     android:maxLength="7"
-                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
                     android:textColor="#4a4a4a"
-                    android:textCursorDrawable="@drawable/cursor_drawable"
+                    android:textCursorDrawable="@null"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -185,7 +185,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:visibility="gone"
                     android:layout_marginTop="25dp"
                     android:text="Mobile"
                     android:textColor="#4a4a4a"
@@ -197,14 +196,15 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@drawable/border_bottom"
+                    android:background="@drawable/text_filed_shape"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:hint="Mobile No"
-                    android:layout_marginTop="25dp"
-                    android:padding="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
                     android:textColor="#4a4a4a"
-                    android:textCursorDrawable="@drawable/cursor_drawable"
+                    android:textCursorDrawable="@null"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>

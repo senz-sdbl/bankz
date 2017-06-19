@@ -20,6 +20,7 @@ import com.wasn.exceptions.MismatchingCredentialsException;
 import com.wasn.exceptions.NoUserException;
 import com.wasn.utils.ActivityUtils;
 import com.wasn.utils.PreferenceUtils;
+import com.wasn.utils.TransactionUtils;
 
 /**
  * Activity class that handles login
@@ -99,7 +100,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             String pwd = PreferenceUtils.getPassword(this);
 
             // given credentials
-            String account = editTextAccount.getText().toString().trim();
+            String account = TransactionUtils.getRegAccount(editTextAccount.getText().toString().trim());
             String password = editTextPassword.getText().toString().trim();
             ActivityUtils.isValidLoginFields(account, password, acc, pwd);
             navigateToHome();

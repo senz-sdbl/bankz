@@ -136,7 +136,7 @@
                 android:layout_centerInParent="true"
                 android:id="@+id/settings_text"
                 android:layout_toRightOf="@+id/settings_icon"
-                android:text="Settings"
+                android:text="Configure"
                 android:textColor="#00a1e4"
                 android:layout_height="wrap_content" />
         </RelativeLayout>

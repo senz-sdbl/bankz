@@ -13,11 +13,11 @@ public class BankzApplication extends Application {
     private static boolean isLogin;
 
     public static boolean isLogin() {
-        return isLogin;
+        return BankzApplication.isLogin;
     }
 
     public static void setLogin(boolean login) {
-        isLogin = login;
+        BankzApplication.isLogin = login;
     }
 
     /**

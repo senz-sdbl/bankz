@@ -47,6 +47,10 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
     private RelativeLayout back;
     private RelativeLayout done;
     private TextView headerText;
+    private RelativeLayout x;
+    private TextView xText;
+    private RelativeLayout v;
+    private TextView vText;
 
     // service interface
     private ISenzService senzService;
@@ -137,17 +141,25 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
         idEditText = (EditText) findViewById(R.id.balance_query_layout_nic_text);
         idLabel = (TextView) findViewById(R.id.balance_query_nic_label);
         headerText = (TextView) findViewById(R.id.balance_query_layout_header_text);
+        xText = (TextView) findViewById(R.id.inq_layout_x_text);
+        vText = (TextView) findViewById(R.id.inq_layout_v_text);
 
         // set custom font
         idEditText.setTypeface(typeface, Typeface.BOLD);
         idLabel.setTypeface(typeface);
         headerText.setTypeface(typeface, Typeface.BOLD);
+        xText.setTypeface(typeface, Typeface.BOLD);
+        vText.setTypeface(typeface, Typeface.BOLD);
 
         back = (RelativeLayout) findViewById(R.id.balance_query_layout_back);
         done = (RelativeLayout) findViewById(R.id.balance_query_layout_done);
+        x = (RelativeLayout) findViewById(R.id.inq_layout_x);
+        v = (RelativeLayout) findViewById(R.id.inq_layout_v);
 
         back.setOnClickListener(AccountInquiryActivity.this);
         done.setOnClickListener(AccountInquiryActivity.this);
+        x.setOnClickListener(AccountInquiryActivity.this);
+        v.setOnClickListener(AccountInquiryActivity.this);
     }
 
     protected void bindToService() {
@@ -163,6 +175,12 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
             AccountInquiryActivity.this.finish();
         } else if (view == done) {
             onClickGet();
+        } else if (view == x) {
+            // set x in edit text
+            onClickXOrV(true);
+        } else if (view == v) {
+            // set v in edit text
+            onClickXOrV(false);
         }
     }
 
@@ -182,8 +200,20 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
         } catch (InvalidInputFieldsException e) {
             e.printStackTrace();
 
-            showStatusMessage("ERROR", "NIC no should contains 9 to 12 digits");
+            showStatusMessage("ERROR", "NIC no should contains 9 to 12 digits followed by X or V");
         }
+    }
+
+    private void onClickXOrV(boolean x) {
+        String nic = idEditText.getText().toString().trim();
+        nic = nic.replaceAll("V", "").replaceAll("X", "");
+        if (x)
+            nic = nic + "X";
+        else
+            nic = nic + "V";
+
+        idEditText.setText(nic);
+        idEditText.setSelection(nic.length());
     }
 
     private void doGet(String nic) {
@@ -250,7 +280,6 @@ public class AccountInquiryActivity extends Activity implements View.OnClickList
             }
         }
     }
-
 
     /**
      * Display message dialog

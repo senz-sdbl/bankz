@@ -142,10 +142,14 @@ public class ActivityUtils {
 
     public static String formatNic(String nic) throws InvalidInputFieldsException {
         if (!nic.isEmpty()) {
-            if (nic.length() == 9) {
-                return nic + "V";
-            } else if (nic.length() == 12) {
-                return nic;
+            if (nic.length() == 10 || nic.length() == 13) {
+                String c = nic.substring(nic.length() - 1);
+                if (c.toUpperCase().equalsIgnoreCase("X") || c.toUpperCase().equalsIgnoreCase("V")) {
+                    // valid nic
+                    return nic.toUpperCase();
+                } else {
+                    throw new InvalidInputFieldsException();
+                }
             } else {
                 throw new InvalidInputFieldsException();
             }
